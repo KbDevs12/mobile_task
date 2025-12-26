@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "340022226838",
+    "project_id": "tugas-mobile-67672",
+    "storage_bucket": "tugas-mobile-67672.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340022226838:android:8234abb4fbd1e0713ef7b7",
+        "android_client_info": {
+          "package_name": "com.example.tugas_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkAhPJNqna2fksuUcEQ1lWsNZZYaYsjDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
