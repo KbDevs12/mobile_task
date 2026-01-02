@@ -19,4 +19,16 @@ class Atlet {
     required this.beratBadan,
     required this.tinggiBadan,
   });
+
+  // Method untuk mengubah instance Atlet menjadi Map (JSON) agar bisa disimpan di Firestore.
+  Map<String, dynamic> toMap() {
+    return {
+      'nama': nama,
+      'cabangAtlet': cabangAtlet,
+      'umur': umur,
+      'jenisKelamin': jenisKelamin,
+      'beratBadan': beratBadan,
+      'tinggiBadan': tinggiBadan,
+    };
+  }
 }
