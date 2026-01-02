@@ -20,4 +20,10 @@ class FirestoreService {
   Stream<QuerySnapshot> getAtletStream() {
     return _atletCollection.orderBy('nama').snapshots();
   }
+
+  // Method untuk memperbarui data atlet yang sudah ada di Firestore.
+  // Membutuhkan ID dokumen dari atlet yang akan di-update.
+  Future<void> updateAtlet(Atlet atlet) {
+    return _atletCollection.doc(atlet.id).update(atlet.toMap());
+  }
 }
