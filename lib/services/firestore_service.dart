@@ -26,4 +26,10 @@ class FirestoreService {
   Future<void> updateAtlet(Atlet atlet) {
     return _atletCollection.doc(atlet.id).update(atlet.toMap());
   }
+
+  // Method untuk menghapus data atlet dari Firestore.
+  // Hanya membutuhkan ID dokumen untuk melakukan penghapusan.
+  Future<void> deleteAtlet(String atletId) {
+    return _atletCollection.doc(atletId).delete();
+  }
 }
