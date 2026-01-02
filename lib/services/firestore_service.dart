@@ -13,4 +13,11 @@ class FirestoreService {
   Future<void> addAtlet(Atlet atlet) {
     return _atletCollection.add(atlet.toMap());
   }
+
+  // Method untuk mendapatkan stream (aliran data) dari koleksi atlet.
+  // Stream akan otomatis memberi notifikasi jika ada data baru, perubahan, atau data yang dihapus.
+  // Ini sangat berguna untuk membangun UI yang reaktif.
+  Stream<QuerySnapshot> getAtletStream() {
+    return _atletCollection.orderBy('nama').snapshots();
+  }
 }
