@@ -31,4 +31,19 @@ class Atlet {
       'tinggiBadan': tinggiBadan,
     };
   }
+
+  // Factory constructor untuk membuat instance Atlet dari sebuah DocumentSnapshot Firestore.
+  factory Atlet.fromFirestore(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return Atlet(
+      id: doc.id,
+      nama: data['nama'] ?? '',
+      cabangAtlet: data['cabangAtlet'] ?? '',
+      umur: data['umur'] ?? 0,
+      jenisKelamin: data['jenisKelamin'] ?? '',
+      // Konversi ke double untuk memastikan tipe data benar
+      beratBadan: (data['beratBadan'] as num?)?.toDouble() ?? 0.0,
+      tinggiBadan: (data['tinggiBadan'] as num?)?.toDouble() ?? 0.0,
+    );
+  }
 }
