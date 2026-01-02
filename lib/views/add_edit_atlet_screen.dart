@@ -101,6 +101,15 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       ),
       keyboardType: keyboardType,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return '$label tidak boleh kosong.';
+        }
+        if (keyboardType == TextInputType.number && double.tryParse(value) == null) {
+          return 'Masukkan angka yang valid.';
+        }
+        return null;
+      },
     );
   }
 
@@ -123,6 +132,7 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
           _jenisKelamin = newValue;
         });
       },
+      validator: (value) => value == null ? 'Pilih jenis kelamin.' : null,
     );
   }
 }
