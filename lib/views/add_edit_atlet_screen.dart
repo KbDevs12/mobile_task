@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/atlet.dart';
 
+import 'package:tugas_mobile/services/firestore_service.dart';
+import 'package:tugas_mobile/utils/notifikasi.dart';
+
 // Halaman ini berfungsi untuk menambah atau mengedit data atlet.
 class AddEditAtletScreen extends StatefulWidget {
   // Atlet opsional, jika ada berarti mode 'Edit', jika null berarti mode 'Tambah'.
@@ -24,6 +27,12 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
   late TextEditingController _tinggiController;
   String? _jenisKelamin; // Variabel untuk menyimpan pilihan dropdown.
 
+  // Instance dari FirestoreService.
+  final FirestoreService _firestoreService = FirestoreService();
+
+  // Flag untuk menandai apakah sedang dalam proses loading.
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -45,6 +54,42 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
     _beratController.dispose();
     _tinggiController.dispose();
     super.dispose();
+  }
+
+  // Method untuk menyimpan atau memperbarui data.
+  void _saveAtlet() async {
+    // Validasi form terlebih dahulu.
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isLoading = true);
+
+      try {
+        final atletBaru = Atlet(
+          id: widget.atlet?.id, // ID tetap jika mode 'Edit'.
+          nama: _namaController.text,
+          cabangAtlet: _cabangController.text,
+          umur: int.parse(_umurController.text),
+          jenisKelamin: _jenisKelamin!,
+          beratBadan: double.parse(_beratController.text),
+          tinggiBadan: double.parse(_tinggiController.text),
+        );
+
+        if (widget.atlet == null) {
+          // Mode 'Tambah'
+          await _firestoreService.addAtlet(atletBaru);
+           if (context.mounted) Notifikasi.show(context, 'Atlet berhasil ditambahkan.');
+        } else {
+          // Mode 'Edit'
+          await _firestoreService.updateAtlet(atletBaru);
+           if (context.mounted) Notifikasi.show(context, 'Data atlet berhasil diperbarui.');
+        }
+
+        if (context.mounted) Navigator.pop(context); // Kembali ke halaman daftar.
+
+      } catch (e) {
+        setState(() => _isLoading = false);
+        if (context.mounted) Notifikasi.show(context, 'Gagal menyimpan: $e', isSuccess: false);
+      }
+    }
   }
 
   @override
@@ -72,14 +117,15 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
               const SizedBox(height: 16),
               _buildTextFormField(_tinggiController, 'Tinggi Badan (cm)', keyboardType: TextInputType.number),
               const SizedBox(height: 32),
+              // Tombol simpan, nonaktif saat loading.
               ElevatedButton(
-                onPressed: () {
-                  // Logic akan ditambahkan nanti
-                },
+                onPressed: _isLoading ? null : _saveAtlet,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Simpan'),
+                child: _isLoading
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white,))
+                    : const Text('Simpan'),
               ),
             ],
           ),
