@@ -53,9 +53,76 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
       appBar: AppBar(
         title: Text(widget.atlet == null ? 'Tambah Atlet' : 'Edit Atlet'),
       ),
-      body: const Center(
-        child: Text('Form akan dibuat di sini.'),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildTextFormField(_namaController, 'Nama'),
+              const SizedBox(height: 16),
+              _buildTextFormField(_cabangController, 'Cabang Atlet'),
+              const SizedBox(height: 16),
+              _buildTextFormField(_umurController, 'Umur', keyboardType: TextInputType.number),
+              const SizedBox(height: 16),
+              _buildGenderDropdown(),
+              const SizedBox(height: 16),
+              _buildTextFormField(_beratController, 'Berat Badan (kg)', keyboardType: TextInputType.number),
+              const SizedBox(height: 16),
+              _buildTextFormField(_tinggiController, 'Tinggi Badan (cm)', keyboardType: TextInputType.number),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () {
+                  // Logic akan ditambahkan nanti
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text('Simpan'),
+              ),
+            ],
+          ),
+        ),
       ),
+    );
+  }
+
+  // Helper widget untuk membuat TextFormField agar tidak duplikat kode.
+  TextFormField _buildTextFormField(
+    TextEditingController controller,
+    String label, {
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+      keyboardType: keyboardType,
+    );
+  }
+
+  // Helper widget untuk dropdown jenis kelamin.
+  DropdownButtonFormField<String> _buildGenderDropdown() {
+    return DropdownButtonFormField<String>(
+      value: _jenisKelamin,
+      decoration: InputDecoration(
+        labelText: 'Jenis Kelamin',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+      items: ['Laki-laki', 'Perempuan'].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (newValue) {
+        setState(() {
+          _jenisKelamin = newValue;
+        });
+      },
     );
   }
 }
