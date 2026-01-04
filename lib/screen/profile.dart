@@ -21,6 +21,30 @@ class Profile extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Text('Admin Atlet', style: TextStyle(color: Colors.grey[600])),
+          SizedBox(height: 20),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.email),
+                  title: Text('Email'),
+                  subtitle: Text('dava@email.com'),
+                ),
+                Divider(height: 0),
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text('No. HP'),
+                  subtitle: Text('0812-3456-7890'),
+                ),
+                Divider(height: 0),
+                ListTile(
+                  leading: Icon(Icons.badge),
+                  title: Text('Role'),
+                  subtitle: Text('Administrator'),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
