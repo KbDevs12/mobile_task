@@ -2,8 +2,52 @@ import 'package:flutter/material.dart';
 import '../widgets/info_card.dart';
 import '../widgets/sport_tile.dart';
 
-class DashboardContent extends StatelessWidget {
+class DashboardContent extends StatefulWidget {
   const DashboardContent({super.key});
+
+  @override
+  State<DashboardContent> createState() => _DashboardContentState();
+}
+
+class _DashboardContentState extends State<DashboardContent> {
+  String? expandedSport;
+
+  final Map<String, Map<String, String>> sportData = {
+    'Sepak Bola': {'atlet': '22', 'pelatih': '4'},
+    'Basket': {'atlet': '15', 'pelatih': '2'},
+    'Bulu Tangkis': {'atlet': '10', 'pelatih': '3'},
+  };
+
+  int get totalAtlet =>
+      sportData.values.fold(0, (sum, e) => sum + int.parse(e['atlet']!));
+
+  int get totalPelatih =>
+      sportData.values.fold(0, (sum, e) => sum + int.parse(e['pelatih']!));
+
+  Widget _buildExpandedCard(String sport) {
+    final data = sportData[sport]!;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Row(
+        children: [
+          InfoCard(
+            title: 'Atlet',
+            value: data['atlet']!,
+            icon: Icons.people,
+            color: Colors.green,
+          ),
+          const SizedBox(width: 12),
+
+          InfoCard(
+            title: 'Pelatih',
+            value: data['pelatih']!,
+            icon: Icons.person,
+            color: Colors.blue,
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +79,41 @@ class DashboardContent extends StatelessWidget {
               'Cabang Olahraga',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            SportTile(
+              name: 'Sepak Bola',
+              icon: Icons.sports_soccer,
+              onTap: () {
+                setState(() {
+                  expandedSport = expandedSport == 'Sepak Bola'
+                      ? null
+                      : 'Sepak Bola';
+                });
+              },
+            ),
+            if (expandedSport == 'Sepak Bola') _buildExpandedCard('Sepak Bola'),
+            SportTile(
+              name: 'Basket',
+              icon: Icons.sports_basketball,
+              onTap: () {
+                setState(() {
+                  expandedSport = expandedSport == 'Basket' ? null : 'Basket';
+                });
+              },
+            ),
+            if (expandedSport == 'Basket') _buildExpandedCard('Basket'),
+            SportTile(
+              name: 'Bulu Tangkis',
+              icon: Icons.sports_tennis,
+              onTap: () {
+                setState(() {
+                  expandedSport = expandedSport == 'Bulu Tangkis'
+                      ? null
+                      : 'Bulu Tangkis';
+                });
+              },
+            ),
+            if (expandedSport == 'Bulu Tangkis')
+              _buildExpandedCard('Bulu Tangkis'),
           ],
         ),
       ),
