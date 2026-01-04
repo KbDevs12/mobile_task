@@ -14,6 +14,13 @@ class SportTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Card(
+      child: ListTile(
+        leading: Icon(icon, color: Colors.green),
+        title: Text(name),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: onTap,
+      ),
+    );
   }
 }
