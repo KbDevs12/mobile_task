@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class InfoCard extends StatelessWidget {
-  const InfoCard({super.key});
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color color;
+
+  const InfoCard({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
