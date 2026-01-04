@@ -14,6 +14,11 @@ class Profile extends StatelessWidget {
             backgroundColor: Colors.teal.shade100,
             child: const Icon(Icons.person, size: 60, color: Colors.teal),
           ),
+          SizedBox(height: 12),
+          Text(
+            'Dava Ananda',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
