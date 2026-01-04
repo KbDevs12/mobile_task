@@ -19,6 +19,8 @@ class Profile extends StatelessWidget {
             'Dava Ananda',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: 4),
+          Text('Admin Atlet', style: TextStyle(color: Colors.grey[600])),
         ],
       ),
     );
