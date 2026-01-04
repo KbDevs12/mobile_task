@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:tugas_mobile/views/atlet_list_screen.dart';
 import 'firebase_options.dart';
 import './screen/dashboard.dart';
 
 void main() async {
-  // Pastikan Flutter binding sudah diinisialisasi sebelum menjalankan kode async.
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Inisialisasi Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
@@ -36,7 +33,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      // Halaman awal aplikasi adalah AtletListScreen
       home: const Dashboard(),
     );
   }

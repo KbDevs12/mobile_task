@@ -16,6 +16,7 @@ class _DashboardContentState extends State<DashboardContent> {
     'Sepak Bola': {'atlet': '22', 'pelatih': '4'},
     'Basket': {'atlet': '15', 'pelatih': '2'},
     'Bulu Tangkis': {'atlet': '10', 'pelatih': '3'},
+    'Dayung': {'atlet': '12', 'pelatih': '2'},
   };
 
   int get totalAtlet =>
@@ -65,7 +66,7 @@ class _DashboardContentState extends State<DashboardContent> {
                   icon: Icons.people,
                   color: Colors.green,
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 InfoCard(
                   title: 'Total Pelatih',
                   value: totalPelatih.toString(),
@@ -74,11 +75,12 @@ class _DashboardContentState extends State<DashboardContent> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            const Text(
+            SizedBox(height: 20),
+            Text(
               'Cabang Olahraga',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+
             SportTile(
               name: 'Sepak Bola',
               icon: Icons.sports_soccer,
@@ -91,6 +93,7 @@ class _DashboardContentState extends State<DashboardContent> {
               },
             ),
             if (expandedSport == 'Sepak Bola') _buildExpandedCard('Sepak Bola'),
+
             SportTile(
               name: 'Basket',
               icon: Icons.sports_basketball,
@@ -101,6 +104,7 @@ class _DashboardContentState extends State<DashboardContent> {
               },
             ),
             if (expandedSport == 'Basket') _buildExpandedCard('Basket'),
+
             SportTile(
               name: 'Bulu Tangkis',
               icon: Icons.sports_tennis,
@@ -114,6 +118,17 @@ class _DashboardContentState extends State<DashboardContent> {
             ),
             if (expandedSport == 'Bulu Tangkis')
               _buildExpandedCard('Bulu Tangkis'),
+
+            SportTile(
+              name: 'Dayung',
+              icon: Icons.rowing, // icon dayung
+              onTap: () {
+                setState(() {
+                  expandedSport = expandedSport == 'Dayung' ? null : 'Dayung';
+                });
+              },
+            ),
+            if (expandedSport == 'Dayung') _buildExpandedCard('Dayung'),
           ],
         ),
       ),

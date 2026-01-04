@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/screen/profile.dart';
 import '../views/atlet_list_screen.dart';
 import 'dashboard_content.dart';
 
@@ -12,7 +13,11 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [DashboardContent(), AtletListScreen()];
+  final List<Widget> _pages = const [
+    DashboardContent(),
+    AtletListScreen(),
+    Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
