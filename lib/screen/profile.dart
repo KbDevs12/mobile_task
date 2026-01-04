@@ -45,6 +45,19 @@ class Profile extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.logout),
+              label: const Text('Logout'),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Logout berhasil')),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
