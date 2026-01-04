@@ -7,6 +7,15 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-    )
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.teal.shade100,
+            child: const Icon(Icons.person, size: 60, color: Colors.teal),
+          ),
+        ],
+      ),
+    );
   }
 }
