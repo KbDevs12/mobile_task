@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/screen/profile.dart';
-import 'package:tugas_mobile/screen/crud_menu_screen.dart'; // Add this import
-import '../views/atlet_list_screen.dart';
+import 'package:tugas_mobile/views/atlet_list_screen.dart'; // Import AtletListScreen
+import 'package:tugas_mobile/views/cabang_olahraga_list_screen.dart'; // Import CabangOlahragaListScreen
+import 'package:tugas_mobile/views/pelatih_list_screen.dart'; // Import PelatihListScreen
 import 'dashboard_content.dart';
 
 class Dashboard extends StatefulWidget {
@@ -16,7 +17,9 @@ class _DashboardState extends State<Dashboard> {
 
   final List<Widget> _pages = const [
     DashboardContent(),
-    CrudMenuScreen(), // Replace AtletListScreen() with CrudMenuScreen()
+    CabangOlahragaListScreen(), // New top-level page
+    PelatihListScreen(), // New top-level page
+    AtletListScreen(), // New top-level page
     Profile(),
   ];
 
@@ -29,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.teal,
+        unselectedItemColor: Colors.grey, // Add unselected item color for 5 items
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
@@ -39,8 +43,22 @@ class _DashboardState extends State<Dashboard> {
             icon: Icon(Icons.dashboard),
             label: 'Dashboard',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Data'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center), // Icon for Cabang Olahraga
+            label: 'Cabang',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline), // Icon for Pelatih
+            label: 'Pelatih',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people), // Icon for Atlet
+            label: 'Atlet',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profil',
+          ),
         ],
       ),
     );
