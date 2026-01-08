@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'providers/atlet_provider.dart';
+import 'providers/pelatih_provider.dart';
+import 'providers/cabang_olahraga_provider.dart'; // Import CabangOlahragaProvider
 import 'screen/login_page.dart';
 import 'screen/main_screen.dart';
 import 'screen/profile.dart';
@@ -13,6 +15,8 @@ import 'views/add_edit_atlet_screen.dart';
 import 'views/atlet_list_screen.dart';
 import 'views/cabang_olahraga_list_screen.dart';
 import 'views/pelatih_list_screen.dart';
+import 'views/add_edit_pelatih_screen.dart';
+import 'views/add_edit_cabang_olahraga_screen.dart'; // Import AddEditCabangOlahragaScreen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,8 +31,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AtletProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AtletProvider()),
+        ChangeNotifierProvider(create: (context) => PelatihProvider()),
+        ChangeNotifierProvider(create: (context) => CabangOlahragaProvider()), // Add CabangOlahragaProvider
+      ],
       child: MaterialApp(
         title: 'Sistem Informasi Atlet',
         theme: ThemeData(
@@ -82,6 +90,8 @@ class MyApp extends StatelessWidget {
           '/pelatih-list': (context) => const PelatihListScreen(),
           '/cabang-olahraga-list': (context) => const CabangOlahragaListScreen(),
           '/add-atlet': (context) => const AddEditAtletScreen(),
+          '/add-pelatih': (context) => const AddEditPelatihScreen(),
+          '/add-cabang-olahraga': (context) => const AddEditCabangOlahragaScreen(), // New route for adding/editing Cabang Olahraga
           '/profile': (context) => const Profile(),
         },
       ),
