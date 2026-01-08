@@ -1,89 +1,110 @@
 import 'package:flutter/material.dart';
-import '../models/atlet.dart';
+import 'package:tugas_mobile/models/atlet.dart';
+import 'package:tugas_mobile/services/atlet_service.dart';
+import 'package:tugas_mobile/utils/notifikasi.dart';
+import 'package:tugas_mobile/views/add_edit_atlet_screen.dart';
 
-// Widget kustom untuk menampilkan detail satu atlet dalam daftar
+// Widget kustom untuk menampilkan satu item atlet di dalam daftar.
 class AtletListTile extends StatelessWidget {
-  final Atlet atlet; // Objek atlet yang akan ditampilkan
-  final VoidCallback onTap; // Callback ketika tile di-tap
-  final VoidCallback onDelete; // Callback ketika atlet dihapus
+  final Atlet atlet;
+  final AtletService atletService;
 
   const AtletListTile({
-    Key? key,
+    super.key,
     required this.atlet,
-    required this.onTap,
-    required this.onDelete,
-  }) : super(key: key);
+    required this.atletService,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Card(
-      // Margin dan shape sudah diatur di CardTheme global
-      clipBehavior: Clip.antiAlias, // Ensures the ripple effect stays within the card's rounded corners
-      child: InkWell(
-        onTap: onTap,
-        splashColor: colorScheme.primary.withOpacity(0.1),
-        highlightColor: colorScheme.primary.withOpacity(0.05),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Nama Atlet
-                    Text(
-                      atlet.nama,
-                      style: textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.primary,
+      // Card styling from main.dart CardTheme
+      child: Padding(
+        padding: const EdgeInsets.all(12.0), // Consistent padding
+        child: Row(
+          children: [
+            // Athlete Avatar
+            CircleAvatar(
+              radius: 28,
+              backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              child: Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.primary),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    atlet.nama,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${atlet.cabangOlahragaNama} - ${atlet.umur} tahun',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                  ),
+                  Text(
+                    '${atlet.jenisKelamin}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                  ),
+                ],
+              ),
+            ),
+            // Action Buttons
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddEditAtletScreen(atlet: atlet, atletService: atletService),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-
-                    // Chip untuk Cabang Olahraga
-                    Chip(
-                      label: Text(atlet.cabangAtlet),
-                      avatar: Icon(Icons.sports_soccer, color: colorScheme.onSecondary),
-                      backgroundColor: colorScheme.secondary.withOpacity(0.8),
-                      labelStyle: textTheme.labelLarge?.copyWith(color: colorScheme.onSecondary),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Detail Lainnya
-                    _buildDetailRow(context, Icons.cake_outlined, '${atlet.umur} tahun'),
-                    const SizedBox(height: 6),
-                    _buildDetailRow(context, Icons.person_outline, atlet.jenisKelamin),
-                    const SizedBox(height: 6),
-                    _buildDetailRow(context, Icons.fitness_center_outlined, '${atlet.beratBadan} kg'),
-                    const SizedBox(height: 6),
-                    _buildDetailRow(context, Icons.height_outlined, '${atlet.tinggiBadan} cm'),
-                  ],
+                    );
+                  },
                 ),
-              ),
-              // Tombol Hapus
-              IconButton(
-                icon: Icon(Icons.delete_outline, color: colorScheme.error),
-                onPressed: onDelete,
-                tooltip: 'Hapus Atlet',
-              ),
-            ],
-          ),
+                IconButton(
+                  icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
+                  onPressed: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Konfirmasi Hapus'),
+                        content: Text('Apakah Anda yakin ingin menghapus data ${atlet.nama}?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: const Text('Batal'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            child: const Text('Hapus'),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (confirm == true) {
+                      try {
+                        await atletService.deleteAtlet(atlet.id!);
+                        if (context.mounted) {
+                          Notifikasi.show(context, 'Data atlet berhasil dihapus.');
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          Notifikasi.show(context, 'Gagal menghapus data: $e', isSuccess: false);
+                        }
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget _buildDetailRow(BuildContext context, IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
-        const SizedBox(width: 8),
-        Text(text, style: Theme.of(context).textTheme.bodyMedium),
-      ],
     );
   }
 }

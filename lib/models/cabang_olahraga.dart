@@ -3,16 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CabangOlahraga {
   final String? id;
   final String namaCabang;
-  final String kategori;
-  final String tingkat;
-  final int jumlahAtlet;
+  final String kategori; // Changed from required
+  final String tingkat; // Changed from required
+  // final int jumlahAtlet; // Removed
+  final String? pelatihId;
+  final String pelatihNama;
 
   CabangOlahraga({
     this.id,
     required this.namaCabang,
-    required this.kategori,
-    required this.tingkat,
-    required this.jumlahAtlet,
+    this.kategori = '', // Provide default value
+    this.tingkat = '', // Provide default value
+    // required this.jumlahAtlet, // Removed
+    this.pelatihId,
+    required this.pelatihNama,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,7 +24,9 @@ class CabangOlahraga {
       'namaCabang': namaCabang,
       'kategori': kategori,
       'tingkat': tingkat,
-      'jumlahAtlet': jumlahAtlet,
+      // 'jumlahAtlet': jumlahAtlet, // Removed
+      'pelatihId': pelatihId,
+      'pelatihNama': pelatihNama,
     };
   }
 
@@ -31,7 +37,11 @@ class CabangOlahraga {
       namaCabang: data['namaCabang'] ?? '',
       kategori: data['kategori'] ?? '',
       tingkat: data['tingkat'] ?? '',
-      jumlahAtlet: data['jumlahAtlet'] ?? 0,
+      // jumlahAtlet: data['jumlahAtlet'] ?? 0, // Removed
+      pelatihId: data['pelatihId'],
+      pelatihNama: data['pelatihNama'] ?? 'Tidak Ditentukan', // Default value
     );
   }
 }
+
+

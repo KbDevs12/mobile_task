@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/models/atlet.dart'; // Import Atlet model
+import 'package:tugas_mobile/models/cabang_olahraga.dart'; // Import CabangOlahraga model
+import 'package:tugas_mobile/models/pelatih.dart'; // Import Pelatih model
+import 'package:tugas_mobile/services/atlet_service.dart'; // Import AtletService
+import 'package:tugas_mobile/services/cabang_olahraga.dart'; // Import CabangOlahragaService
+import 'package:tugas_mobile/services/pelatih_service.dart'; // Import PelatihService
+import 'package:tugas_mobile/views/atlet_by_cabang_screen.dart'; // Import AtletByCabangScreen
+import 'package:tugas_mobile/views/pelatih_detail_screen.dart'; // Import PelatihDetailScreen
 import '../widgets/info_card.dart';
 import '../widgets/sport_tile.dart';
 
@@ -10,40 +18,57 @@ class DashboardContent extends StatefulWidget {
 }
 
 class _DashboardContentState extends State<DashboardContent> {
-  String? expandedSport;
+  String? expandedSportId; 
+  final AtletService _atletService = AtletService();
+  final PelatihService _pelatihService = PelatihService();
+  final CabangOlahragaService _cabangOlahragaService = CabangOlahragaService();
 
-  final Map<String, Map<String, String>> sportData = {
-    'Sepak Bola': {'atlet': '22', 'pelatih': '4'},
-    'Basket': {'atlet': '15', 'pelatih': '2'},
-    'Bulu Tangkis': {'atlet': '10', 'pelatih': '3'},
-    'Dayung': {'atlet': '12', 'pelatih': '2'},
-  };
-
-  int get totalAtlet =>
-      sportData.values.fold(0, (sum, e) => sum + int.parse(e['atlet']!));
-
-  int get totalPelatih =>
-      sportData.values.fold(0, (sum, e) => sum + int.parse(e['pelatih']!));
-
-  Widget _buildExpandedCard(String sport) {
-    final data = sportData[sport]!;
+  Widget _buildExpandedCard(CabangOlahraga cabangOlahraga) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: [
-          InfoCard(
-            title: 'Atlet',
-            value: data['atlet']!,
-            icon: Icons.people,
-            color: Colors.green,
+          GestureDetector(
+            onTap: () {
+              if (cabangOlahraga.pelatihId != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PelatihDetailScreen(pelatihId: cabangOlahraga.pelatihId!),
+                  ),
+                );
+              }
+            },
+            child: InfoCard(
+              title: 'Pelatih',
+              value: cabangOlahraga.pelatihNama, 
+              icon: Icons.person,
+            ),
           ),
           const SizedBox(width: 12),
-
-          InfoCard(
-            title: 'Pelatih',
-            value: data['pelatih']!,
-            icon: Icons.person,
-            color: Colors.blue,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AtletByCabangScreen(
+                    cabangOlahragaId: cabangOlahraga.id!,
+                    cabangOlahragaNama: cabangOlahraga.namaCabang,
+                  ),
+                ),
+              );
+            },
+            child: StreamBuilder<int>(
+              stream: _atletService.getAtletCountByCabangOlahraga(cabangOlahraga.id!),
+              builder: (context, snapshot) {
+                final count = snapshot.data ?? 0;
+                return InfoCard(
+                  title: 'Atlet',
+                  value: count.toString(),
+                  icon: Icons.people,
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -60,75 +85,87 @@ class _DashboardContentState extends State<DashboardContent> {
           children: [
             Row(
               children: [
-                InfoCard(
-                  title: 'Total Atlet',
-                  value: totalAtlet.toString(),
-                  icon: Icons.people,
-                  color: Colors.green,
+                StreamBuilder<List<Atlet>>(
+                  stream: _atletService.getAtletStream(),
+                  builder: (context, snapshot) {
+                    final count = snapshot.data?.length ?? 0;
+                    return InfoCard(
+                      title: 'Total Atlet',
+                      value: count.toString(),
+                      icon: Icons.people,
+                    );
+                  },
                 ),
                 SizedBox(width: 12),
-                InfoCard(
-                  title: 'Total Pelatih',
-                  value: totalPelatih.toString(),
-                  icon: Icons.person,
-                  color: Colors.blue,
+                StreamBuilder<List<Pelatih>>(
+                  stream: _pelatihService.getPelatih(),
+                  builder: (context, snapshot) {
+                    final count = snapshot.data?.length ?? 0;
+                    return InfoCard(
+                      title: 'Total Pelatih',
+                      value: count.toString(),
+                      icon: Icons.person,
+                    );
+                  },
                 ),
               ],
             ),
             SizedBox(height: 20),
-            Text(
-              'Cabang Olahraga',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            const Text(
+            'Cabang Olahraga',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
+          ),
+const SizedBox(height: 12),
 
-            SportTile(
-              name: 'Sepak Bola',
-              icon: Icons.sports_soccer,
-              onTap: () {
-                setState(() {
-                  expandedSport = expandedSport == 'Sepak Bola'
-                      ? null
-                      : 'Sepak Bola';
-                });
+            StreamBuilder<List<CabangOlahraga>>(
+              stream: _cabangOlahragaService.getCabang(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Text('Tidak ada cabang olahraga.');
+                }
+
+                final cabangOlahragaList = snapshot.data!;
+
+                return ListView.builder(
+                  shrinkWrap: true, // Important for nested ListView
+                  physics: const NeverScrollableScrollPhysics(), // Important for nested ListView
+                  itemCount: cabangOlahragaList.length,
+                  itemBuilder: (context, index) {
+                    final cabangOlahraga = cabangOlahragaList[index];
+                    return Column(
+                      children: [
+                        SportTile(
+                          name: cabangOlahraga.namaCabang,
+                          icon: Icons.fitness_center, // Generic icon for now
+                          onTap: () {
+                            setState(() {
+                              expandedSportId = expandedSportId == cabangOlahraga.id
+                                  ? null
+                                  : cabangOlahraga.id;
+                            });
+                          },
+                        ),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: expandedSportId == cabangOlahraga.id
+                              ? _buildExpandedCard(cabangOlahraga)
+                              : const SizedBox.shrink(),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
-            if (expandedSport == 'Sepak Bola') _buildExpandedCard('Sepak Bola'),
-
-            SportTile(
-              name: 'Basket',
-              icon: Icons.sports_basketball,
-              onTap: () {
-                setState(() {
-                  expandedSport = expandedSport == 'Basket' ? null : 'Basket';
-                });
-              },
-            ),
-            if (expandedSport == 'Basket') _buildExpandedCard('Basket'),
-
-            SportTile(
-              name: 'Bulu Tangkis',
-              icon: Icons.sports_tennis,
-              onTap: () {
-                setState(() {
-                  expandedSport = expandedSport == 'Bulu Tangkis'
-                      ? null
-                      : 'Bulu Tangkis';
-                });
-              },
-            ),
-            if (expandedSport == 'Bulu Tangkis')
-              _buildExpandedCard('Bulu Tangkis'),
-
-            SportTile(
-              name: 'Dayung',
-              icon: Icons.rowing, // icon dayung
-              onTap: () {
-                setState(() {
-                  expandedSport = expandedSport == 'Dayung' ? null : 'Dayung';
-                });
-              },
-            ),
-            if (expandedSport == 'Dayung') _buildExpandedCard('Dayung'),
           ],
         ),
       ),

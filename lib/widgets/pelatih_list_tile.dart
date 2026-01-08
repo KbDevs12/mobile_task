@@ -1,81 +1,112 @@
 import 'package:flutter/material.dart';
-import '../models/pelatih.dart';
+import 'package:tugas_mobile/models/pelatih.dart';
+import 'package:tugas_mobile/services/pelatih_service.dart';
+import 'package:tugas_mobile/utils/notifikasi.dart';
+import 'package:tugas_mobile/views/add_edit_pelatih_screen.dart';
 
 class PelatihListTile extends StatelessWidget {
   final Pelatih pelatih;
-  final VoidCallback onTap;
-  final VoidCallback onDelete;
+  final PelatihService pelatihService;
 
   const PelatihListTile({
-    Key? key,
+    super.key,
     required this.pelatih,
-    required this.onTap,
-    required this.onDelete,
-  }) : super(key: key);
+    required this.pelatihService,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        splashColor: colorScheme.primary.withOpacity(0.1),
-        highlightColor: colorScheme.primary.withOpacity(0.05),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      pelatih.nama,
-                      style: textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.primary,
+      // Card styling from main.dart CardTheme
+      child: Padding(
+        padding: const EdgeInsets.all(12.0), // Consistent padding
+        child: Row(
+          children: [
+            // Trainer Avatar
+            CircleAvatar(
+              radius: 28,
+              backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+              child: Icon(Icons.person_outline, size: 30, color: Theme.of(context).colorScheme.secondary), // Generic trainer icon
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    pelatih.nama,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${pelatih.cabangOlahraga} - ${pelatih.umur} tahun',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                  ),
+                  Text(
+                    'Pengalaman: ${pelatih.pengalamanTahun} tahun',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                  ),
+                ],
+              ),
+            ),
+            // Action Buttons
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddEditPelatihScreen(
+                          pelatih: pelatih,
+                          pelatihService: pelatihService,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-
-                    Chip(
-                      label: Text(pelatih.cabangOlahraga),
-                      avatar: Icon(Icons.sports_soccer, color: colorScheme.onSecondary),
-                      backgroundColor: colorScheme.secondary.withOpacity(0.8),
-                      labelStyle: textTheme.labelLarge?.copyWith(color: colorScheme.onSecondary),
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildDetailRow(context, Icons.cake_outlined, '${pelatih.umur} tahun'),
-                    const SizedBox(height: 6),
-                    _buildDetailRow(context, Icons.person_outline, pelatih.jenisKelamin),
-                    const SizedBox(height: 6),
-                    _buildDetailRow(context, Icons.work_history_outlined, '${pelatih.pengalamanTahun} tahun pengalaman'),
-                  ],
+                    );
+                  },
                 ),
-              ),
-              IconButton(
-                icon: Icon(Icons.delete_outline, color: colorScheme.error),
-                onPressed: onDelete,
-                tooltip: 'Hapus Pelatih',
-              ),
-            ],
-          ),
+                IconButton(
+                  icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
+                  onPressed: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Konfirmasi Hapus'),
+                        content: Text('Apakah Anda yakin ingin menghapus pelatih ${pelatih.nama}?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: const Text('Batal'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            child: const Text('Hapus'),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (confirm == true) {
+                      try {
+                        await pelatihService.deletePelatih(pelatih.id!);
+                        if (context.mounted) {
+                          Notifikasi.show(context, 'Pelatih berhasil dihapus.');
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          Notifikasi.show(context, 'Gagal menghapus data: $e', isSuccess: false);
+                        }
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget _buildDetailRow(BuildContext context, IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
-        const SizedBox(width: 8),
-        Text(text, style: Theme.of(context).textTheme.bodyMedium),
-      ],
     );
   }
 }

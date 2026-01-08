@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/cabang_olahraga.dart';
-import '../providers/cabang_olahraga_provider.dart';
-import '../utils/notifikasi.dart';
-
+import 'package:tugas_mobile/models/cabang_olahraga.dart';
+import 'package:tugas_mobile/models/pelatih.dart'; // Import Pelatih model
+import 'package:tugas_mobile/services/cabang_olahraga.dart';
+import 'package:tugas_mobile/services/pelatih_service.dart'; // Import PelatihService
+import 'package:tugas_mobile/utils/notifikasi.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/gradient_button.dart'; // Import GradientButton
 
 class AddEditCabangOlahragaScreen extends StatefulWidget {
-  const AddEditCabangOlahragaScreen({Key? key}) : super(key: key);
+  final CabangOlahraga? cabangOlahraga;
+  final CabangOlahragaService cabangOlahragaService;
+
+  const AddEditCabangOlahragaScreen({
+    super.key,
+    this.cabangOlahraga,
+    required this.cabangOlahragaService,
+  });
 
   @override
   State<AddEditCabangOlahragaScreen> createState() => _AddEditCabangOlahragaScreenState();
@@ -14,69 +23,61 @@ class AddEditCabangOlahragaScreen extends StatefulWidget {
 
 class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScreen> {
   final _formKey = GlobalKey<FormState>();
+  late TextEditingController _namaCabangController;
+  // Removed _kategoriController, _tingkatController, _jumlahAtletController
+  String? _selectedPelatihId; // To store selected Pelatih ID
+  String? _selectedPelatihNama; // To store selected Pelatih Name
 
-  final TextEditingController _namaCabangController = TextEditingController();
-  final TextEditingController _kategoriController = TextEditingController();
-  final TextEditingController _tingkatController = TextEditingController();
-  final TextEditingController _jumlahAtletController = TextEditingController();
+  final PelatihService _pelatihService = PelatihService(); // Instantiate PelatihService
 
-  CabangOlahraga? _cabangOlahraga;
-  var _isInit = true;
+  bool _isLoading = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      final cabangOlahragaFromArgs = ModalRoute.of(context)?.settings.arguments as CabangOlahraga?;
-      if (cabangOlahragaFromArgs != null) {
-        _cabangOlahraga = cabangOlahragaFromArgs;
-        _namaCabangController.text = _cabangOlahraga!.namaCabang;
-        _kategoriController.text = _cabangOlahraga!.kategori;
-        _tingkatController.text = _cabangOlahraga!.tingkat;
-        _jumlahAtletController.text = _cabangOlahraga!.jumlahAtlet.toString();
-      }
-    }
-    _isInit = false;
+  void initState() {
+    super.initState();
+    _namaCabangController = TextEditingController(text: widget.cabangOlahraga?.namaCabang);
+    // Removed initialization of _kategoriController, _tingkatController, _jumlahAtletController
+    _selectedPelatihId = widget.cabangOlahraga?.pelatihId; // Initialize for edit mode
+    _selectedPelatihNama = widget.cabangOlahraga?.pelatihNama; // Initialize for edit mode
   }
 
   @override
   void dispose() {
     _namaCabangController.dispose();
-    _kategoriController.dispose();
-    _tingkatController.dispose();
-    _jumlahAtletController.dispose();
+    // Removed disposal of _kategoriController, _tingkatController, _jumlahAtletController
     super.dispose();
   }
 
-  Future<void> _saveCabangOlahraga() async {
+  void _saveCabangOlahraga() async {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-
-      final cabangOlahragaProvider = Provider.of<CabangOlahragaProvider>(context, listen: false);
-
-      final newCabangOlahraga = CabangOlahraga(
-        id: _cabangOlahraga?.id,
-        namaCabang: _namaCabangController.text,
-        kategori: _kategoriController.text,
-        tingkat: _tingkatController.text,
-        jumlahAtlet: int.parse(_jumlahAtletController.text),
-      );
-
-      bool success;
-      String message;
-      if (_cabangOlahraga == null) {
-        success = await cabangOlahragaProvider.addCabangOlahraga(newCabangOlahraga);
-        message = success ? 'Cabang olahraga berhasil ditambahkan!' : (cabangOlahragaProvider.errorMessage ?? 'Gagal menambahkan cabang olahraga.');
-      } else {
-        success = await cabangOlahragaProvider.updateCabangOlahraga(newCabangOlahraga);
-        message = success ? 'Cabang olahraga berhasil diperbarui!' : (cabangOlahragaProvider.errorMessage ?? 'Gagal memperbarui cabang olahraga.');
+      // Ensure a trainer is selected
+      if (_selectedPelatihId == null || _selectedPelatihNama == null) {
+        if (context.mounted) Notifikasi.show(context, 'Pilih pelatih untuk cabang olahraga ini.', isSuccess: false);
+        return;
       }
 
-      if (!mounted) return;
+      setState(() => _isLoading = true);
 
-      Notifikasi.show(context, message, isSuccess: success);
-      if (success) {
-        Navigator.pop(context);
+      try {
+        final newCabangOlahraga = CabangOlahraga(
+          id: widget.cabangOlahraga?.id,
+          namaCabang: _namaCabangController.text,
+          pelatihId: _selectedPelatihId,
+          pelatihNama: _selectedPelatihNama!,
+        );
+
+        if (widget.cabangOlahraga == null) {
+          await widget.cabangOlahragaService.addCabang(newCabangOlahraga);
+          if (context.mounted) Notifikasi.show(context, 'Cabang olahraga berhasil ditambahkan.');
+        } else {
+          await widget.cabangOlahragaService.updateCabang(widget.cabangOlahraga!.id!, newCabangOlahraga);
+          if (context.mounted) Notifikasi.show(context, 'Data cabang olahraga berhasil diperbarui.');
+        }
+
+        if (context.mounted) Navigator.pop(context);
+      } catch (e) {
+        setState(() => _isLoading = false);
+        if (context.mounted) Notifikasi.show(context, 'Gagal menyimpan: $e', isSuccess: false);
       }
     }
   }
@@ -84,66 +85,67 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_cabangOlahraga == null ? 'Tambah Cabang Olahraga Baru' : 'Edit Cabang Olahraga'),
+      appBar: GradientAppBar(
+        title: widget.cabangOlahraga == null ? 'Tambah Cabang Olahraga' : 'Edit Cabang Olahraga', // Dynamic title
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              _buildTextFormField(
-                _namaCabangController,
-                'Nama Cabang Olahraga',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Nama cabang olahraga tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildTextFormField(_namaCabangController, 'Nama Cabang'),
               const SizedBox(height: 16),
-              _buildTextFormField(
-                _kategoriController,
-                'Kategori',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Kategori tidak boleh kosong';
+              // Removed _buildTextFormField(_kategoriController, 'Kategori'),
+              // const SizedBox(height: 16),
+              // Removed _buildTextFormField(_tingkatController, 'Tingkat'),
+              // const SizedBox(height: 16),
+              // Removed _buildTextFormField(_jumlahAtletController, 'Jumlah Atlet', keyboardType: TextInputType.number),
+              // const SizedBox(height: 16),
+              StreamBuilder<List<Pelatih>>(
+                stream: _pelatihService.getPelatih(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
                   }
-                  return null;
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('Tidak ada pelatih tersedia. Tambahkan pelatih terlebih dahulu.');
+                  }
+
+                  final List<Pelatih> pelatihList = snapshot.data!;
+                  return DropdownButtonFormField<String>(
+                    value: _selectedPelatihId,
+                    decoration: InputDecoration(
+                      labelText: 'Pilih Pelatih',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    items: pelatihList.map<DropdownMenuItem<String>>((Pelatih pelatih) {
+                      return DropdownMenuItem<String>(
+                        value: pelatih.id,
+                        child: Text(pelatih.nama),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedPelatihId = newValue;
+                        _selectedPelatihNama = pelatihList.firstWhere((p) => p.id == newValue).nama;
+                      });
+                    },
+                    validator: (value) => value == null ? 'Pilih pelatih.' : null,
+                  );
                 },
               ),
-              const SizedBox(height: 16),
-              _buildTextFormField(
-                _tingkatController,
-                'Tingkat (e.g., Nasional, Provinsi, Kota)',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Tingkat tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              _buildTextFormField(
-                _jumlahAtletController,
-                'Jumlah Atlet',
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Jumlah atlet tidak boleh kosong';
-                  }
-                  if (int.tryParse(value) == null || int.parse(value) < 0) {
-                    return 'Jumlah atlet harus angka non-negatif';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _saveCabangOlahraga,
-                child: Text(_cabangOlahraga == null ? 'Simpan Cabang Olahraga' : 'Perbarui Cabang Olahraga'),
+              const SizedBox(height: 32),
+              GradientButton(
+                onPressed: _isLoading ? null : _saveCabangOlahraga,
+                // height: 50, // Example height if needed
+                child: _isLoading
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white,))
+                    : const Text('Simpan'),
               ),
             ],
           ),
@@ -156,7 +158,6 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
     TextEditingController controller,
     String label, {
     TextInputType keyboardType = TextInputType.text,
-    FormFieldValidator<String>? validator,
   }) {
     return TextFormField(
       controller: controller,
@@ -165,7 +166,15 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       ),
       keyboardType: keyboardType,
-      validator: validator,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return '$label tidak boleh kosong.';
+        }
+        if (keyboardType == TextInputType.number && int.tryParse(value) == null) {
+          return 'Masukkan angka yang valid.';
+        }
+        return null;
+      },
     );
   }
 }

@@ -25,4 +25,13 @@ class PelatihService {
       }).toList();
     });
   }
+
+  // New method to get a single Pelatih by ID
+  Future<Pelatih?> getPelatihById(String id) async {
+    final doc = await _ref.doc(id).get();
+    if (doc.exists) {
+      return Pelatih.fromFirestore(doc);
+    }
+    return null;
+  }
 }

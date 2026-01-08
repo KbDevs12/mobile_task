@@ -1,80 +1,82 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/atlet.dart';
-import '../providers/atlet_provider.dart';
-import '../widgets/atlet_list_tile.dart';
-import '../utils/notifikasi.dart';
+import 'package:tugas_mobile/models/atlet.dart';
+import 'package:tugas_mobile/services/atlet_service.dart'; // Change to AtletService
+import 'package:tugas_mobile/views/add_edit_atlet_screen.dart';
+import 'package:tugas_mobile/widgets/atlet_list_tile.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
 
+// Halaman utama yang menampilkan daftar atlet.
+class AtletListScreen extends StatefulWidget {
+  const AtletListScreen({super.key});
 
-// Layar untuk menampilkan daftar atlet
-class AtletListScreen extends StatelessWidget {
-  const AtletListScreen({Key? key}) : super(key: key);
+  @override
+  State<AtletListScreen> createState() => _AtletListScreenState();
+}
+
+class _AtletListScreenState extends State<AtletListScreen> {
+  // Instance dari AtletService untuk mengakses database.
+  final AtletService _atletService = AtletService(); // Change to AtletService
 
   @override
   Widget build(BuildContext context) {
-    // Mengakses AtletProvider
-    final atletProvider = Provider.of<AtletProvider>(context);
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    return Scaffold(
+      appBar: GradientAppBar(title: 'Daftar Atlet'),
+      body: StreamBuilder<List<Atlet>>(
+        // Stream now returns List<Atlet> directly
+        // Menggunakan stream dari AtletService untuk mendapatkan data atlet secara real-time.
+        stream: _atletService
+            .getAtletStream(), // Use getAtletStream from AtletService
+        builder: (context, snapshot) {
+          // Jika koneksi sedang menunggu data, tampilkan loading indicator.
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingListSkeleton(); // Use LoadingListSkeleton
+          }
+          // Jika tidak ada data, tampilkan pesan.
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            // Check for empty list
+            return const Center(child: Text('Belum ada data atlet.'));
+          }
+          // Jika terjadi error, tampilkan pesan error.
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Terjadi kesalahan: ${snapshot.error}'),
+            ); // Show error message
+          }
 
-    return StreamBuilder<List<Atlet>>(
-      stream: atletProvider.atletsStream,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // Tampilkan indikator loading saat menunggu data
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          // Tampilkan pesan error jika ada
-          return Center(child: Text('Error: ${snapshot.error}', style: textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          // Tampilkan pesan jika tidak ada data atlet
-          return Center(child: Text('Tidak ada data atlet. Tambahkan yang baru!', style: textTheme.bodyLarge));
-        } else {
-          // Tampilkan daftar atlet menggunakan ListView.builder
-          final atlets = snapshot.data!;
+          // Jika data berhasil didapat, bangun daftar atlet.
+          final atletList = snapshot.data!; // atletList is already List<Atlet>
+
           return ListView.builder(
-            itemCount: atlets.length,
+            itemCount: atletList.length,
             itemBuilder: (context, index) {
-              final atlet = atlets[index];
+              // Ubah setiap dokumen menjadi objek Atlet. (No longer needed, already Atlet object)
+              final atlet = atletList[index];
+              // Gunakan widget kustom AtletListTile untuk menampilkan data.
               return AtletListTile(
                 atlet: atlet,
-                onTap: () {
-                  // Navigasi ke AddEditAtletScreen untuk mengedit atlet
-                  Navigator.pushNamed(context, '/add-atlet', arguments: atlet);
-                },
-                onDelete: () async {
-                  // Tampilkan konfirmasi dialog sebelum menghapus
-                  final confirmDelete = await showDialog<bool>(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text('Hapus Atlet', style: textTheme.titleLarge),
-                      content: Text('Apakah Anda yakin ingin menghapus ${atlet.nama}?', style: textTheme.bodyMedium),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, false),
-                          child: Text('Batal', style: textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.primary)),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, true),
-                          child: Text('Hapus', style: textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
-                        ),
-                      ],
-                    ),
-                  );
-
-                  if (confirmDelete == true) {
-                      final success = await atletProvider.deleteAtlet(atlet.id!);
-                      if (success) {
-                        Notifikasi.show(context, 'Atlet berhasil dihapus!');
-                      } else {
-                        Notifikasi.show(context, atletProvider.errorMessage ?? 'Gagal menghapus atlet.', isSuccess: false);
-                      }
-                  }
-                },
+                atletService: _atletService, // Pass AtletService
               );
             },
           );
-        }
-      },
+        },
+      ),
+      // Tombol untuk navigasi ke halaman tambah atlet.
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddEditAtletScreen(
+                atletService: _atletService,
+              ), // Pass AtletService
+            ),
+          );
+        },
+        tooltip: 'Tambah Atlet',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

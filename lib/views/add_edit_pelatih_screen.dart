@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/pelatih.dart';
-import '../providers/pelatih_provider.dart';
-import '../utils/notifikasi.dart';
-
+import 'package:tugas_mobile/models/pelatih.dart';
+import 'package:tugas_mobile/services/pelatih_service.dart';
+import 'package:tugas_mobile/utils/notifikasi.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/gradient_button.dart'; // Import GradientButton
 
 class AddEditPelatihScreen extends StatefulWidget {
-  const AddEditPelatihScreen({Key? key}) : super(key: key);
+  final Pelatih? pelatih;
+  final PelatihService pelatihService;
+
+  const AddEditPelatihScreen({
+    super.key,
+    this.pelatih,
+    required this.pelatihService,
+  });
 
   @override
   State<AddEditPelatihScreen> createState() => _AddEditPelatihScreenState();
@@ -14,72 +21,59 @@ class AddEditPelatihScreen extends StatefulWidget {
 
 class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
   final _formKey = GlobalKey<FormState>();
+  late TextEditingController _namaController;
+  // Removed _cabangOlahragaController
+  late TextEditingController _umurController;
+  late TextEditingController _pengalamanTahunController;
+  String? _jenisKelamin;
 
-  final TextEditingController _namaController = TextEditingController();
-  final TextEditingController _cabangOlahragaController = TextEditingController();
-  final TextEditingController _umurController = TextEditingController();
-  final TextEditingController _pengalamanTahunController = TextEditingController();
-  String? _jenisKelaminSelected;
-
-  Pelatih? _pelatih;
-  var _isInit = true;
+  bool _isLoading = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      final pelatihFromArgs = ModalRoute.of(context)?.settings.arguments as Pelatih?;
-      if (pelatihFromArgs != null) {
-        _pelatih = pelatihFromArgs;
-        _namaController.text = _pelatih!.nama;
-        _cabangOlahragaController.text = _pelatih!.cabangOlahraga;
-        _umurController.text = _pelatih!.umur.toString();
-        _pengalamanTahunController.text = _pelatih!.pengalamanTahun.toString();
-        _jenisKelaminSelected = _pelatih!.jenisKelamin;
-      }
-    }
-    _isInit = false;
+  void initState() {
+    super.initState();
+    _namaController = TextEditingController(text: widget.pelatih?.nama);
+    // Removed initialization of _cabangOlahragaController
+    _umurController = TextEditingController(text: widget.pelatih?.umur.toString());
+    _pengalamanTahunController = TextEditingController(text: widget.pelatih?.pengalamanTahun.toString());
+    _jenisKelamin = widget.pelatih?.jenisKelamin;
   }
 
   @override
   void dispose() {
     _namaController.dispose();
-    _cabangOlahragaController.dispose();
+    // Removed disposal of _cabangOlahragaController
     _umurController.dispose();
     _pengalamanTahunController.dispose();
     super.dispose();
   }
 
-  Future<void> _savePelatih() async {
+  void _savePelatih() async {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+      setState(() => _isLoading = true);
 
-      final pelatihProvider = Provider.of<PelatihProvider>(context, listen: false);
+      try {
+        final newPelatih = Pelatih(
+          id: widget.pelatih?.id,
+          nama: _namaController.text,
+          cabangOlahraga: '', // Set to empty or handle appropriately if the model requires it
+          umur: int.parse(_umurController.text),
+          jenisKelamin: _jenisKelamin!,
+          pengalamanTahun: int.parse(_pengalamanTahunController.text),
+        );
 
-      final newPelatih = Pelatih(
-        id: _pelatih?.id,
-        nama: _namaController.text,
-        cabangOlahraga: _cabangOlahragaController.text,
-        umur: int.parse(_umurController.text),
-        jenisKelamin: _jenisKelaminSelected!,
-        pengalamanTahun: int.parse(_pengalamanTahunController.text),
-      );
+        if (widget.pelatih == null) {
+          await widget.pelatihService.addPelatih(newPelatih);
+          if (context.mounted) Notifikasi.show(context, 'Pelatih berhasil ditambahkan.');
+        } else {
+          await widget.pelatihService.updatePelatih(widget.pelatih!.id!, newPelatih);
+          if (context.mounted) Notifikasi.show(context, 'Data pelatih berhasil diperbarui.');
+        }
 
-      bool success;
-      String message;
-      if (_pelatih == null) {
-        success = await pelatihProvider.addPelatih(newPelatih);
-        message = success ? 'Pelatih berhasil ditambahkan!' : (pelatihProvider.errorMessage ?? 'Gagal menambahkan pelatih.');
-      } else {
-        success = await pelatihProvider.updatePelatih(newPelatih);
-        message = success ? 'Pelatih berhasil diperbarui!' : (pelatihProvider.errorMessage ?? 'Gagal memperbarui pelatih.');
-      }
-
-      if (!mounted) return;
-
-      Notifikasi.show(context, message, isSuccess: success);
-      if (success) {
-        Navigator.pop(context);
+        if (context.mounted) Navigator.pop(context);
+      } catch (e) {
+        setState(() => _isLoading = false);
+        if (context.mounted) Notifikasi.show(context, 'Gagal menyimpan: $e', isSuccess: false);
       }
     }
   }
@@ -87,94 +81,32 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_pelatih == null ? 'Tambah Pelatih Baru' : 'Edit Pelatih'),
+      appBar: GradientAppBar(
+        title: widget.pelatih == null ? 'Tambah Pelatih' : 'Edit Pelatih', // Dynamic title
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              _buildTextFormField(
-                _namaController,
-                'Nama Pelatih',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Nama pelatih tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildTextFormField(_namaController, 'Nama'),
               const SizedBox(height: 16),
-              _buildTextFormField(
-                _cabangOlahragaController,
-                'Cabang Olahraga',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Cabang olahraga tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
+              // Removed _buildTextFormField(_cabangOlahragaController, 'Cabang Olahraga'),
               const SizedBox(height: 16),
-              _buildTextFormField(
-                _umurController,
-                'Umur',
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Umur tidak boleh kosong';
-                  }
-                  if (int.tryParse(value) == null || int.parse(value) <= 0) {
-                    return 'Umur harus angka positif';
-                  }
-                  return null;
-                },
-              ),
+              _buildTextFormField(_umurController, 'Umur', keyboardType: TextInputType.number),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _jenisKelaminSelected,
-                decoration: const InputDecoration(
-                  labelText: 'Jenis Kelamin',
-                ),
-                items: <String>['Laki-laki', 'Perempuan'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _jenisKelaminSelected = newValue;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Pilih jenis kelamin';
-                  }
-                  return null;
-                },
-              ),
+              _buildGenderDropdown(),
               const SizedBox(height: 16),
-              _buildTextFormField(
-                _pengalamanTahunController,
-                'Pengalaman (tahun)',
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Pengalaman tidak boleh kosong';
-                  }
-                  if (int.tryParse(value) == null || int.parse(value) < 0) {
-                    return 'Pengalaman harus angka non-negatif';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _savePelatih,
-                child: Text(_pelatih == null ? 'Simpan Pelatih' : 'Perbarui Pelatih'),
+              _buildTextFormField(_pengalamanTahunController, 'Pengalaman (tahun)', keyboardType: TextInputType.number),
+              const SizedBox(height: 32),
+              GradientButton(
+                onPressed: _isLoading ? null : _savePelatih,
+                // height: 50, // Example height if needed
+                child: _isLoading
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white,))
+                    : const Text('Simpan'),
               ),
             ],
           ),
@@ -187,7 +119,6 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
     TextEditingController controller,
     String label, {
     TextInputType keyboardType = TextInputType.text,
-    FormFieldValidator<String>? validator,
   }) {
     return TextFormField(
       controller: controller,
@@ -196,7 +127,37 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       ),
       keyboardType: keyboardType,
-      validator: validator,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return '$label tidak boleh kosong.';
+        }
+        if (keyboardType == TextInputType.number && int.tryParse(value) == null) {
+          return 'Masukkan angka yang valid.';
+        }
+        return null;
+      },
+    );
+  }
+
+  DropdownButtonFormField<String> _buildGenderDropdown() {
+    return DropdownButtonFormField<String>(
+      value: _jenisKelamin,
+      decoration: InputDecoration(
+        labelText: 'Jenis Kelamin',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+      items: ['Laki-laki', 'Perempuan'].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (newValue) {
+        setState(() {
+          _jenisKelamin = newValue;
+        });
+      },
+      validator: (value) => value == null ? 'Pilih jenis kelamin.' : null,
     );
   }
 }

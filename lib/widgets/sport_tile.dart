@@ -15,11 +15,25 @@ class SportTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ListTile(
-        leading: Icon(icon, color: Colors.green),
-        title: Text(name),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      child: InkWell( // Use InkWell for ripple effect
+        borderRadius: ((Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius?) ?? BorderRadius.circular(16),
         onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              Icon(icon, color: Theme.of(context).colorScheme.primary, size: 28), // Use theme color for icon
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  name,
+                  style: Theme.of(context).textTheme.titleMedium, // Use theme typography
+                ),
+              ),
+              Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
+            ],
+          ),
+        ),
       ),
     );
   }
