@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey),
           ),
+          _buildTextField(hint: "Email address", icon: Icons.mail_outline),
         ],
       ),
     );
