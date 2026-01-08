@@ -11,7 +11,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("test"),
+      body: const Text(
+        "Log in",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
