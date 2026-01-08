@@ -8,6 +8,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool obscurePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +27,21 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(color: Colors.grey),
           ),
           _buildTextField(hint: "Email address", icon: Icons.mail_outline),
+          _buildTextField(
+            hint: "Password",
+            icon: Icons.lock_outline,
+            obscure: obscurePassword,
+            suffixIcon: IconButton(
+              icon: Icon(
+                obscurePassword ? Icons.visibility_off : Icons.visibility,
+              ),
+              onPressed: () {
+                setState(() {
+                  obscurePassword = !obscurePassword;
+                });
+              },
+            ),
+          ),
         ],
       ),
     );
