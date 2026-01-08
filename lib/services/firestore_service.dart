@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tugas_mobile/models/atlet.dart';
+import 'package:tugas_mobile/models/atlet.dart'; // Import Atlet model
 
 // Kelas ini bertanggung jawab untuk semua operasi terkait Firestore.
 class FirestoreService {
@@ -32,4 +32,5 @@ class FirestoreService {
   Future<void> deleteAtlet(String atletId) {
     return _atletCollection.doc(atletId).delete();
   }
+
 }
