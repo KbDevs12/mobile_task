@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/atlet.dart'; // Ensure this path is correct
-import '../services/firestore_service.dart'; // Ensure this path is correct
+import '../models/atlet.dart';
+import '../services/firestore_service.dart';
+
 
 class AtletProvider with ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService();
@@ -12,8 +13,8 @@ class AtletProvider with ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   Stream<List<Atlet>> get atletsStream {
-    return _firestoreService.getAtlets().map((snapshot) {
-      _atlets = snapshot.docs.map((doc) => Atlet.fromMap(doc.data() as Map<String, dynamic>, doc.id)).toList();
+    return _firestoreService.getAtletStream().map((snapshot) {
+      _atlets = snapshot.docs.map((doc) => Atlet.fromFirestore(doc)).toList();
       notifyListeners();
       return _atlets;
     });
@@ -21,7 +22,7 @@ class AtletProvider with ChangeNotifier {
 
   Future<bool> addAtlet(Atlet atlet) async {
     try {
-      await _firestoreService.addAtlet(atlet.toMap());
+      await _firestoreService.addAtlet(atlet);
       _errorMessage = null;
       notifyListeners();
       return true;
@@ -37,7 +38,7 @@ class AtletProvider with ChangeNotifier {
       if (atlet.id == null) {
         throw Exception("Atlet ID cannot be null for update.");
       }
-      await _firestoreService.updateAtlet(atlet.id!, atlet.toMap());
+      await _firestoreService.updateAtlet(atlet);
       _errorMessage = null;
       notifyListeners();
       return true;
