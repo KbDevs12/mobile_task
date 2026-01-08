@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Import Provider
 import '../models/atlet.dart';
 import '../providers/atlet_provider.dart'; // Import AtletProvider
-import '../utils/notifikasi.dart';
+
 
 // Layar untuk menambah atau mengedit data atlet
 class AddEditAtletScreen extends StatefulWidget {

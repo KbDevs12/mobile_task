@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../models/pelatih.dart';
 import '../providers/pelatih_provider.dart';
 import '../widgets/pelatih_list_tile.dart';
-import '../utils/notifikasi.dart';
+
 import 'add_edit_pelatih_screen.dart';
 
 class PelatihListScreen extends StatelessWidget {
