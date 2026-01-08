@@ -19,6 +19,7 @@ import 'views/atlet_list_screen.dart';
 import 'views/cabang_olahraga_list_screen.dart';
 import 'views/pelatih_list_screen.dart';
 import 'views/add_edit_pelatih_screen.dart';
+import 'screen/register_page.dart';
 import 'views/add_edit_cabang_olahraga_screen.dart'; // Import AddEditCabangOlahragaScreen
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -180,6 +181,7 @@ class MyApp extends StatelessWidget {
           '/add-cabang-olahraga': (context) =>
               const AddEditCabangOlahragaScreen(), // New route for adding/editing Cabang Olahraga
           '/profile': (context) => const Profile(),
+          '/register': (context) => const RegisterPage(),
         },
       ),
     );
