@@ -20,7 +20,7 @@ class AddEditPelatihScreen extends StatefulWidget {
 class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _namaController;
-  late TextEditingController _cabangOlahragaController;
+  // Removed _cabangOlahragaController
   late TextEditingController _umurController;
   late TextEditingController _pengalamanTahunController;
   String? _jenisKelamin;
@@ -31,7 +31,7 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
   void initState() {
     super.initState();
     _namaController = TextEditingController(text: widget.pelatih?.nama);
-    _cabangOlahragaController = TextEditingController(text: widget.pelatih?.cabangOlahraga);
+    // Removed initialization of _cabangOlahragaController
     _umurController = TextEditingController(text: widget.pelatih?.umur.toString());
     _pengalamanTahunController = TextEditingController(text: widget.pelatih?.pengalamanTahun.toString());
     _jenisKelamin = widget.pelatih?.jenisKelamin;
@@ -40,7 +40,7 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
   @override
   void dispose() {
     _namaController.dispose();
-    _cabangOlahragaController.dispose();
+    // Removed disposal of _cabangOlahragaController
     _umurController.dispose();
     _pengalamanTahunController.dispose();
     super.dispose();
@@ -54,7 +54,7 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
         final newPelatih = Pelatih(
           id: widget.pelatih?.id,
           nama: _namaController.text,
-          cabangOlahraga: _cabangOlahragaController.text,
+          cabangOlahraga: '', // Set to empty or handle appropriately if the model requires it
           umur: int.parse(_umurController.text),
           jenisKelamin: _jenisKelamin!,
           pengalamanTahun: int.parse(_pengalamanTahunController.text),
@@ -91,7 +91,7 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
             children: [
               _buildTextFormField(_namaController, 'Nama'),
               const SizedBox(height: 16),
-              _buildTextFormField(_cabangOlahragaController, 'Cabang Olahraga'),
+              // Removed _buildTextFormField(_cabangOlahragaController, 'Cabang Olahraga'),
               const SizedBox(height: 16),
               _buildTextFormField(_umurController, 'Umur', keyboardType: TextInputType.number),
               const SizedBox(height: 16),
