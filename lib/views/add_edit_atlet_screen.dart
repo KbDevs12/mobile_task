@@ -1,93 +1,95 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/atlet.dart';
+import 'package:provider/provider.dart'; // Import Provider
+import '../models/atlet.dart';
+import '../providers/atlet_provider.dart'; // Import AtletProvider
+import '../utils/notifikasi.dart';
 
-import 'package:tugas_mobile/services/firestore_service.dart';
-import 'package:tugas_mobile/utils/notifikasi.dart';
-
-// Halaman ini berfungsi untuk menambah atau mengedit data atlet.
+// Layar untuk menambah atau mengedit data atlet
 class AddEditAtletScreen extends StatefulWidget {
-  // Atlet opsional, jika ada berarti mode 'Edit', jika null berarti mode 'Tambah'.
-  final Atlet? atlet;
-
-  const AddEditAtletScreen({super.key, this.atlet});
+  const AddEditAtletScreen({Key? key}) : super(key: key);
 
   @override
   State<AddEditAtletScreen> createState() => _AddEditAtletScreenState();
 }
 
 class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
-  // Kunci global untuk form, digunakan untuk validasi.
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); // Kunci untuk validasi form
 
-  // Controller untuk setiap input field.
-  late TextEditingController _namaController;
-  late TextEditingController _cabangController;
-  late TextEditingController _umurController;
-  late TextEditingController _beratController;
-  late TextEditingController _tinggiController;
-  String? _jenisKelamin; // Variabel untuk menyimpan pilihan dropdown.
+  // Controller untuk setiap input field
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _cabangAtletController = TextEditingController();
+  final TextEditingController _umurController = TextEditingController();
+  final TextEditingController _beratBadanController = TextEditingController();
+  final TextEditingController _tinggiBadanController = TextEditingController();
+  String? _jenisKelaminSelected;
 
-  // Instance dari FirestoreService.
-  final FirestoreService _firestoreService = FirestoreService();
-
-  // Flag untuk menandai apakah sedang dalam proses loading.
-  bool _isLoading = false;
+  Atlet? _atlet;
+  var _isInit = true;
 
   @override
-  void initState() {
-    super.initState();
-    // Inisialisasi controller. Jika mode 'Edit', isi dengan data atlet yang ada.
-    _namaController = TextEditingController(text: widget.atlet?.nama);
-    _cabangController = TextEditingController(text: widget.atlet?.cabangAtlet);
-    _umurController = TextEditingController(text: widget.atlet?.umur.toString());
-    _beratController = TextEditingController(text: widget.atlet?.beratBadan.toString());
-    _tinggiController = TextEditingController(text: widget.atlet?.tinggiBadan.toString());
-    _jenisKelamin = widget.atlet?.jenisKelamin;
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      final atletFromArgs = ModalRoute.of(context)?.settings.arguments as Atlet?;
+      if (atletFromArgs != null) {
+        _atlet = atletFromArgs;
+        // Inisialisasi controller dengan data atlet jika sedang dalam mode edit
+        _namaController.text = _atlet!.nama;
+        _cabangAtletController.text = _atlet!.cabangAtlet;
+        _umurController.text = _atlet!.umur.toString();
+        _beratBadanController.text = _atlet!.beratBadan.toString();
+        _tinggiBadanController.text = _atlet!.tinggiBadan.toString();
+        _jenisKelaminSelected = _atlet!.jenisKelamin;
+      }
+    }
+    _isInit = false;
   }
 
   @override
   void dispose() {
-    // Selalu dispose controller setelah tidak digunakan untuk menghindari memory leak.
+    // Bersihkan controller saat widget di-dispose
     _namaController.dispose();
-    _cabangController.dispose();
+    _cabangAtletController.dispose();
     _umurController.dispose();
-    _beratController.dispose();
-    _tinggiController.dispose();
+    _beratBadanController.dispose();
+    _tinggiBadanController.dispose();
     super.dispose();
   }
 
-  // Method untuk menyimpan atau memperbarui data.
-  void _saveAtlet() async {
-    // Validasi form terlebih dahulu.
+  // Fungsi untuk menyimpan data atlet
+  Future<void> _saveAtlet() async {
     if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
+      _formKey.currentState!.save();
 
-      try {
-        final atletBaru = Atlet(
-          id: widget.atlet?.id, // ID tetap jika mode 'Edit'.
-          nama: _namaController.text,
-          cabangAtlet: _cabangController.text,
-          umur: int.parse(_umurController.text),
-          jenisKelamin: _jenisKelamin!,
-          beratBadan: double.parse(_beratController.text),
-          tinggiBadan: double.parse(_tinggiController.text),
-        );
+      final atletProvider = Provider.of<AtletProvider>(context, listen: false);
 
-        if (widget.atlet == null) {
-          // Mode 'Tambah'
-          await _firestoreService.addAtlet(atletBaru);
-           if (context.mounted) Notifikasi.show(context, 'Atlet berhasil ditambahkan.');
-        } else {
-          // Mode 'Edit'
-          await _firestoreService.updateAtlet(atletBaru);
-           if (context.mounted) Notifikasi.show(context, 'Data atlet berhasil diperbarui.');
-        }
+      final newAtlet = Atlet(
+        id: _atlet?.id, // Pertahankan ID jika update
+        nama: _namaController.text,
+        cabangAtlet: _cabangAtletController.text,
+        umur: int.parse(_umurController.text),
+        jenisKelamin: _jenisKelaminSelected!,
+        beratBadan: double.parse(_beratBadanController.text),
+        tinggiBadan: double.parse(_tinggiBadanController.text),
+      );
 
-        if (context.mounted) Navigator.pop(context); // Kembali ke halaman daftar.
+      bool success;
+      String message;
+      if (_atlet == null) {
+        // Menambah atlet baru
+        success = await atletProvider.addAtlet(newAtlet);
+        message = success ? 'Atlet berhasil ditambahkan!' : (atletProvider.errorMessage ?? 'Gagal menambahkan atlet.');
+      } else {
+        // Mengedit atlet yang sudah ada
+        success = await atletProvider.updateAtlet(newAtlet);
+        message = success ? 'Atlet berhasil diperbarui!' : (atletProvider.errorMessage ?? 'Gagal memperbarui atlet.');
+      }
 
-      } catch (e) {
-        setState(() => _isLoading = false);
-        if (context.mounted) Notifikasi.show(context, 'Gagal menyimpan: $e', isSuccess: false);
+      if (!mounted) return; // Periksa apakah widget masih dalam tree
+
+      showSnackBar(context, message, isError: !success); // Tampilkan notifikasi
+      if (success) {
+        Navigator.pop(context); // Kembali ke layar sebelumnya jika berhasil
       }
     }
   }
@@ -96,36 +98,133 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.atlet == null ? 'Tambah Atlet' : 'Edit Atlet'),
+        title: Text(_atlet == null ? 'Tambah Atlet Baru' : 'Edit Atlet'),
+        // backgroundColor dan foregroundColor sudah diatur di tema utama (main.dart)
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildTextFormField(_namaController, 'Nama'),
-              const SizedBox(height: 16),
-              _buildTextFormField(_cabangController, 'Cabang Atlet'),
-              const SizedBox(height: 16),
-              _buildTextFormField(_umurController, 'Umur', keyboardType: TextInputType.number),
-              const SizedBox(height: 16),
-              _buildGenderDropdown(),
-              const SizedBox(height: 16),
-              _buildTextFormField(_beratController, 'Berat Badan (kg)', keyboardType: TextInputType.number),
-              const SizedBox(height: 16),
-              _buildTextFormField(_tinggiController, 'Tinggi Badan (cm)', keyboardType: TextInputType.number),
-              const SizedBox(height: 32),
-              // Tombol simpan, nonaktif saat loading.
-              ElevatedButton(
-                onPressed: _isLoading ? null : _saveAtlet,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+          child: ListView(
+            children: <Widget>[
+              // Input Nama
+              TextFormField(
+                controller: _namaController,
+                decoration: const InputDecoration(
+                  labelText: 'Nama Atlet',
+                  // Border diatur di inputDecorationTheme global
                 ),
-                child: _isLoading
-                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white,))
-                    : const Text('Simpan'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Nama atlet tidak boleh kosong';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              // Input Cabang Atlet
+              TextFormField(
+                controller: _cabangAtletController,
+                decoration: const InputDecoration(
+                  labelText: 'Cabang Atlet',
+                  // Border diatur di inputDecorationTheme global
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Cabang atlet tidak boleh kosong';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              // Input Umur
+              TextFormField(
+                controller: _umurController,
+                decoration: const InputDecoration(
+                  labelText: 'Umur',
+                  // Border diatur di inputDecorationTheme global
+                ),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Umur tidak boleh kosong';
+                  }
+                  if (int.tryParse(value) == null || int.parse(value) <= 0) {
+                    return 'Umur harus angka positif';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              // Dropdown Jenis Kelamin
+              DropdownButtonFormField<String>(
+                value: _jenisKelaminSelected,
+                decoration: const InputDecoration(
+                  labelText: 'Jenis Kelamin',
+                  // Border diatur di inputDecorationTheme global
+                ),
+                items: <String>['Laki-laki', 'Perempuan'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _jenisKelaminSelected = newValue;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Pilih jenis kelamin';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              // Input Berat Badan
+              TextFormField(
+                controller: _beratBadanController,
+                decoration: const InputDecoration(
+                  labelText: 'Berat Badan (kg)',
+                  // Border diatur di inputDecorationTheme global
+                ),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Berat badan tidak boleh kosong';
+                  }
+                  if (double.tryParse(value) == null || double.parse(value) <= 0) {
+                    return 'Berat badan harus angka positif';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              // Input Tinggi Badan
+              TextFormField(
+                controller: _tinggiBadanController,
+                decoration: const InputDecoration(
+                  labelText: 'Tinggi Badan (cm)',
+                  // Border diatur di inputDecorationTheme global
+                ),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Tinggi badan tidak boleh kosong';
+                  }
+                  if (double.tryParse(value) == null || double.parse(value) <= 0) {
+                    return 'Tinggi badan harus angka positif';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 24),
+              // Tombol Simpan
+              ElevatedButton(
+                onPressed: _saveAtlet,
+                // Style sudah diatur di ElevatedButtonThemeData global
+                child: Text(_atlet == null ? 'Simpan Atlet' : 'Perbarui Atlet'),
               ),
             ],
           ),
@@ -162,7 +261,7 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
   // Helper widget untuk dropdown jenis kelamin.
   DropdownButtonFormField<String> _buildGenderDropdown() {
     return DropdownButtonFormField<String>(
-      value: _jenisKelamin,
+      value: _jenisKelaminSelected,
       decoration: InputDecoration(
         labelText: 'Jenis Kelamin',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -175,7 +274,7 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
       }).toList(),
       onChanged: (newValue) {
         setState(() {
-          _jenisKelamin = newValue;
+          _jenisKelaminSelected = newValue;
         });
       },
       validator: (value) => value == null ? 'Pilih jenis kelamin.' : null,

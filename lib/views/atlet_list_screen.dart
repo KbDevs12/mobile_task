@@ -1,75 +1,79 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/atlet.dart';
-import 'package:tugas_mobile/services/firestore_service.dart';
-import 'package:tugas_mobile/views/add_edit_atlet_screen.dart';
-import 'package:tugas_mobile/widgets/atlet_list_tile.dart';
+import 'package:provider/provider.dart';
+import '../models/atlet.dart';
+import '../providers/atlet_provider.dart';
+import '../widgets/atlet_list_tile.dart';
+import '../utils/notifikasi.dart';
 
-// Halaman utama yang menampilkan daftar atlet.
-class AtletListScreen extends StatefulWidget {
-  const AtletListScreen({super.key});
-
-  @override
-  State<AtletListScreen> createState() => _AtletListScreenState();
-}
-
-class _AtletListScreenState extends State<AtletListScreen> {
-  // Instance dari FirestoreService untuk mengakses database.
-  final FirestoreService _firestoreService = FirestoreService();
+// Layar untuk menampilkan daftar atlet
+class AtletListScreen extends StatelessWidget {
+  const AtletListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Daftar Atlet'),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-        // Menggunakan stream dari FirestoreService untuk mendapatkan data atlet secara real-time.
-        stream: _firestoreService.getAtletStream(),
-        builder: (context, snapshot) {
-          // Jika koneksi sedang menunggu data, tampilkan loading indicator.
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          // Jika tidak ada data, tampilkan pesan.
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('Belum ada data atlet.'));
-          }
-          // Jika terjadi error, tampilkan pesan error.
-          if (snapshot.hasError) {
-            return const Center(child: Text('Terjadi kesalahan.'));
-          }
+    // Mengakses AtletProvider
+    final atletProvider = Provider.of<AtletProvider>(context);
+    final TextTheme textTheme = Theme.of(context).textTheme;
 
-          // Jika data berhasil didapat, bangun daftar atlet.
-          final atletList = snapshot.data!.docs;
-
+    return StreamBuilder<List<Atlet>>(
+      stream: atletProvider.atletsStream,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Tampilkan indikator loading saat menunggu data
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          // Tampilkan pesan error jika ada
+          return Center(child: Text('Error: ${snapshot.error}', style: textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.error)));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          // Tampilkan pesan jika tidak ada data atlet
+          return Center(child: Text('Tidak ada data atlet. Tambahkan yang baru!', style: textTheme.bodyLarge));
+        } else {
+          // Tampilkan daftar atlet menggunakan ListView.builder
+          final atlets = snapshot.data!;
           return ListView.builder(
-            itemCount: atletList.length,
+            itemCount: atlets.length,
             itemBuilder: (context, index) {
-              // Ubah setiap dokumen menjadi objek Atlet.
-              final atlet = Atlet.fromFirestore(atletList[index]);
-              // Gunakan widget kustom AtletListTile untuk menampilkan data.
+              final atlet = atlets[index];
               return AtletListTile(
                 atlet: atlet,
-                firestoreService: _firestoreService,
+                onTap: () {
+                  // Navigasi ke AddEditAtletScreen untuk mengedit atlet
+                  Navigator.pushNamed(context, '/add-atlet', arguments: atlet);
+                },
+                onDelete: () async {
+                  // Tampilkan konfirmasi dialog sebelum menghapus
+                  final confirmDelete = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Hapus Atlet', style: textTheme.titleLarge),
+                      content: Text('Apakah Anda yakin ingin menghapus ${atlet.nama}?', style: textTheme.bodyMedium),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, false),
+                          child: Text('Batal', style: textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          child: Text('Hapus', style: textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.error)),
+                        ),
+                      ],
+                    ),
+                  );
+
+                  if (confirmDelete == true) {
+                      final success = await atletProvider.deleteAtlet(atlet.id!);
+                      if (success) {
+                        showSnackBar(context, 'Atlet berhasil dihapus!');
+                      } else {
+                        showSnackBar(context, atletProvider.errorMessage ?? 'Gagal menghapus atlet.', isError: true);
+                      }
+                  }
+                },
               );
             },
           );
-        },
-      ),
-      // Tombol untuk navigasi ke halaman tambah atlet.
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddEditAtletScreen(),
-            ),
-          );
-        },
-        tooltip: 'Tambah Atlet',
-        child: const Icon(Icons.add),
-      ),
+        }
+      },
     );
   }
 }
