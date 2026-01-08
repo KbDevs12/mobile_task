@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,6 +24,8 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
   runApp(const MyApp());
 }
 
@@ -35,7 +38,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AtletProvider()),
         ChangeNotifierProvider(create: (context) => PelatihProvider()),
-        ChangeNotifierProvider(create: (context) => CabangOlahragaProvider()), // Add CabangOlahragaProvider
+        ChangeNotifierProvider(
+          create: (context) => CabangOlahragaProvider(),
+        ), // Add CabangOlahragaProvider
       ],
       child: MaterialApp(
         title: 'Sistem Informasi Atlet',
@@ -88,13 +93,21 @@ class MyApp extends StatelessWidget {
           '/main': (context) => const MainScreen(),
           '/atlet-list': (context) => const AtletListScreen(),
           '/pelatih-list': (context) => const PelatihListScreen(),
-          '/cabang-olahraga-list': (context) => const CabangOlahragaListScreen(),
+          '/cabang-olahraga-list': (context) =>
+              const CabangOlahragaListScreen(),
           '/add-atlet': (context) => const AddEditAtletScreen(),
           '/add-pelatih': (context) => const AddEditPelatihScreen(),
-          '/add-cabang-olahraga': (context) => const AddEditCabangOlahragaScreen(), // New route for adding/editing Cabang Olahraga
+          '/add-cabang-olahraga': (context) =>
+              const AddEditCabangOlahragaScreen(), // New route for adding/editing Cabang Olahraga
           '/profile': (context) => const Profile(),
         },
       ),
     );
   }
+}
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  debugPrint('Handling a background message: ${message.messageId}');
 }
