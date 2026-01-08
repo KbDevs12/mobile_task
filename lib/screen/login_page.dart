@@ -14,90 +14,93 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: 80),
-          const Text(
-            "Log in",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            "Enter your email and password to securely access\n"
-            "your account and manage your services.",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey),
-          ),
-          const SizedBox(height: 40),
-          _buildTextField(hint: "Email address", icon: Icons.mail_outline),
-          const SizedBox(height: 16),
-          _buildTextField(
-            hint: "Password",
-            icon: Icons.lock_outline,
-            obscure: obscurePassword,
-            suffixIcon: IconButton(
-              icon: Icon(
-                obscurePassword ? Icons.visibility_off : Icons.visibility,
-              ),
-              onPressed: () {
-                setState(() {
-                  obscurePassword = !obscurePassword;
-                });
-              },
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 80),
+            const Text(
+              "Log in",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Checkbox(
-                value: rememberMe,
-                onChanged: (value) {
+            const SizedBox(height: 8),
+            const Text(
+              "Enter your email and password to securely access\n"
+              "your account and manage your services.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 40),
+            _buildTextField(hint: "Email address", icon: Icons.mail_outline),
+            const SizedBox(height: 16),
+            _buildTextField(
+              hint: "Password",
+              icon: Icons.lock_outline,
+              obscure: obscurePassword,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  obscurePassword ? Icons.visibility_off : Icons.visibility,
+                ),
+                onPressed: () {
                   setState(() {
-                    rememberMe = value!;
+                    obscurePassword = !obscurePassword;
                   });
                 },
-                activeColor: Colors.green,
-              ),
-              const Text("Remember me"),
-              const Spacer(),
-              TextButton(
-                onPressed: () {},
-                child: const Text("Forgot Password"),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF3CB371),
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
               ),
             ),
-            child: const Text("Login", style: TextStyle(fontSize: 16)),
-          ),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Don’t have an account? "),
-              GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  "Sign Up here",
-                  style: TextStyle(
-                    color: Color(0xFF3CB371),
-                    fontWeight: FontWeight.bold,
-                  ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Checkbox(
+                  value: rememberMe,
+                  onChanged: (value) {
+                    setState(() {
+                      rememberMe = value!;
+                    });
+                  },
+                  activeColor: Colors.green,
+                ),
+                const Text("Remember me"),
+                const Spacer(),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text("Forgot Password"),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF3CB371),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
-            ],
-          ),
-        ],
+              child: const Text("Login", style: TextStyle(fontSize: 16)),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Don’t have an account? "),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Text(
+                    "Sign Up here",
+                    style: TextStyle(
+                      color: Color(0xFF3CB371),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
