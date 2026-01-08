@@ -22,9 +22,7 @@ class AddEditCabangOlahragaScreen extends StatefulWidget {
 class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _namaCabangController;
-  late TextEditingController _kategoriController;
-  late TextEditingController _tingkatController;
-  late TextEditingController _jumlahAtletController;
+  // Removed _kategoriController, _tingkatController, _jumlahAtletController
   String? _selectedPelatihId; // To store selected Pelatih ID
   String? _selectedPelatihNama; // To store selected Pelatih Name
 
@@ -36,9 +34,7 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
   void initState() {
     super.initState();
     _namaCabangController = TextEditingController(text: widget.cabangOlahraga?.namaCabang);
-    _kategoriController = TextEditingController(text: widget.cabangOlahraga?.kategori);
-    _tingkatController = TextEditingController(text: widget.cabangOlahraga?.tingkat);
-    _jumlahAtletController = TextEditingController(text: widget.cabangOlahraga?.jumlahAtlet.toString());
+    // Removed initialization of _kategoriController, _tingkatController, _jumlahAtletController
     _selectedPelatihId = widget.cabangOlahraga?.pelatihId; // Initialize for edit mode
     _selectedPelatihNama = widget.cabangOlahraga?.pelatihNama; // Initialize for edit mode
   }
@@ -46,9 +42,7 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
   @override
   void dispose() {
     _namaCabangController.dispose();
-    _kategoriController.dispose();
-    _tingkatController.dispose();
-    _jumlahAtletController.dispose();
+    // Removed disposal of _kategoriController, _tingkatController, _jumlahAtletController
     super.dispose();
   }
 
@@ -66,9 +60,9 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
         final newCabangOlahraga = CabangOlahraga(
           id: widget.cabangOlahraga?.id,
           namaCabang: _namaCabangController.text,
-          kategori: _kategoriController.text,
-          tingkat: _tingkatController.text,
-          jumlahAtlet: int.parse(_jumlahAtletController.text),
+          kategori: '', // Set to empty string
+          tingkat: '', // Set to empty string
+          jumlahAtlet: 0, // Set to 0
           pelatihId: _selectedPelatihId,
           pelatihNama: _selectedPelatihNama!,
         );
@@ -104,12 +98,12 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
             children: [
               _buildTextFormField(_namaCabangController, 'Nama Cabang'),
               const SizedBox(height: 16),
-              _buildTextFormField(_kategoriController, 'Kategori'),
-              const SizedBox(height: 16),
-              _buildTextFormField(_tingkatController, 'Tingkat'),
-              const SizedBox(height: 16),
-              _buildTextFormField(_jumlahAtletController, 'Jumlah Atlet', keyboardType: TextInputType.number),
-              const SizedBox(height: 16),
+              // Removed _buildTextFormField(_kategoriController, 'Kategori'),
+              // const SizedBox(height: 16),
+              // Removed _buildTextFormField(_tingkatController, 'Tingkat'),
+              // const SizedBox(height: 16),
+              // Removed _buildTextFormField(_jumlahAtletController, 'Jumlah Atlet', keyboardType: TextInputType.number),
+              // const SizedBox(height: 16),
               StreamBuilder<List<Pelatih>>(
                 stream: _pelatihService.getPelatih(),
                 builder: (context, snapshot) {
