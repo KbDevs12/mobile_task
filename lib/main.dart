@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 import 'firebase_options.dart';
+import 'providers/atlet_provider.dart';
+import 'screen/login_page.dart';
+import 'screen/main_screen.dart';
+import 'screen/profile.dart';
 import 'screen/splash_screen.dart';
+import 'views/add_edit_atlet_screen.dart';
+import 'views/atlet_list_screen.dart';
+import 'views/cabang_olahraga_list_screen.dart';
+import 'views/pelatih_list_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,23 +27,64 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.teal,
-          foregroundColor: Colors.white,
-          elevation: 4,
+    return ChangeNotifierProvider(
+      create: (context) => AtletProvider(),
+      child: MaterialApp(
+        title: 'Sistem Informasi Atlet',
+        theme: ThemeData(
+          useMaterial3: true,
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF3CB371),
+            brightness: Brightness.light,
+            primary: const Color(0xFF3CB371),
+            surface: Colors.grey[50],
+            onSurface: Colors.grey[800],
+          ),
+          scaffoldBackgroundColor: Colors.grey[50],
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            foregroundColor: Colors.black87,
+            surfaceTintColor: Colors.transparent,
+          ),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Colors.white,
+            selectedItemColor: const Color(0xFF3CB371),
+            unselectedItemColor: Colors.grey[500],
+            elevation: 10,
+            type: BottomNavigationBarType.fixed,
+            showUnselectedLabels: true,
+          ),
+          cardTheme: CardThemeData(
+            elevation: 8,
+            shadowColor: Colors.black.withOpacity(0.08),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          ),
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: {
+              TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              TargetPlatform.macOS: FadeUpwardsPageTransitionsBuilder(),
+            },
+          ),
         ),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Colors.teal,
-          foregroundColor: Colors.white,
-        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/splash',
+        routes: {
+          '/splash': (context) => const SplashScreen(),
+          '/login': (context) => const LoginPage(),
+          '/main': (context) => const MainScreen(),
+          '/atlet-list': (context) => const AtletListScreen(),
+          '/pelatih-list': (context) => const PelatihListScreen(),
+          '/cabang-olahraga-list': (context) => const CabangOlahragaListScreen(),
+          '/add-atlet': (context) => const AddEditAtletScreen(),
+          '/profile': (context) => const Profile(),
+        },
       ),
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
     );
   }
 }
