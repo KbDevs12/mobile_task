@@ -4,8 +4,6 @@ import 'package:tugas_mobile/services/pelatih_service.dart';
 import 'package:tugas_mobile/utils/notifikasi.dart';
 import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
 import 'package:tugas_mobile/widgets/gradient_button.dart';
-import 'package:tugas_mobile/services/cabang_olahraga.dart';
-import 'package:tugas_mobile/models/cabang_olahraga.dart';
 
 class AddEditPelatihScreen extends StatefulWidget {
   final Pelatih? pelatih;
