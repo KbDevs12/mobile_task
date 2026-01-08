@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/main.dart'; // For color constants
 
 class GradientButton extends StatelessWidget {
   final Widget child;
@@ -50,14 +49,22 @@ class GradientButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent, // Make button transparent to show gradient
-          shadowColor: Colors.transparent, // No shadow from ElevatedButton itself
-          foregroundColor: Theme.of(context).colorScheme.onPrimary, // Text color
+          backgroundColor:
+              Colors.transparent, // Make button transparent to show gradient
+          shadowColor:
+              Colors.transparent, // No shadow from ElevatedButton itself
+          foregroundColor: Theme.of(
+            context,
+          ).colorScheme.onPrimary, // Text color
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(12),
           ),
-          padding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500), // Use theme text style
+          padding:
+              padding ??
+              const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.w500,
+          ), // Use theme text style
         ),
         child: child,
       ),

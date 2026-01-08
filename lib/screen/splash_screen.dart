@@ -1,5 +1,7 @@
-import 'dart:async';
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import './login_page.dart';
+import "./dashboard.dart";
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,26 +14,35 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToLogin();
+    _checkLogin();
   }
 
-  void _navigateToLogin() {
-    Timer(const Duration(seconds: 3), () {
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, '/login');
-      }
-    });
+  void _checkLogin() async {
+    await Future.delayed(const Duration(seconds: 2));
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Navigator.pushReplacement(
+        mounted ? context : throw Exception("Context is not mounted"),
+        MaterialPageRoute(builder: (_) => const Dashboard()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        mounted ? context : throw Exception("Context is not mounted"),
+        MaterialPageRoute(builder: (_) => const LoginPage()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FlutterLogo(size: 80),
-            SizedBox(height: 24),
+            SizedBox(height: 16),
             CircularProgressIndicator(),
           ],
         ),
