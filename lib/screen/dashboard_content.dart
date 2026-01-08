@@ -5,6 +5,8 @@ import 'package:tugas_mobile/models/pelatih.dart'; // Import Pelatih model
 import 'package:tugas_mobile/services/atlet_service.dart'; // Import AtletService
 import 'package:tugas_mobile/services/cabang_olahraga.dart'; // Import CabangOlahragaService
 import 'package:tugas_mobile/services/pelatih_service.dart'; // Import PelatihService
+import 'package:tugas_mobile/views/atlet_by_cabang_screen.dart'; // Import AtletByCabangScreen
+import 'package:tugas_mobile/views/pelatih_detail_screen.dart'; // Import PelatihDetailScreen
 import '../widgets/info_card.dart';
 import '../widgets/sport_tile.dart';
 
@@ -26,24 +28,49 @@ class _DashboardContentState extends State<DashboardContent> {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: [
-          InfoCard(
-            title: 'Pelatih',
-            value: cabangOlahraga.pelatihNama, // Display pelatih name
-            icon: Icons.person,
-            color: Colors.blue,
+          GestureDetector(
+            onTap: () {
+              if (cabangOlahraga.pelatihId != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PelatihDetailScreen(pelatihId: cabangOlahraga.pelatihId!),
+                  ),
+                );
+              }
+            },
+            child: InfoCard(
+              title: 'Pelatih',
+              value: cabangOlahraga.pelatihNama, // Display pelatih name
+              icon: Icons.person,
+              color: Colors.blue,
+            ),
           ),
           const SizedBox(width: 12),
-          StreamBuilder<int>(
-            stream: _atletService.getAtletCountByCabangOlahraga(cabangOlahraga.id!),
-            builder: (context, snapshot) {
-              final count = snapshot.data ?? 0;
-              return InfoCard(
-                title: 'Atlet',
-                value: count.toString(),
-                icon: Icons.people,
-                color: Colors.green,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AtletByCabangScreen(
+                    cabangOlahragaId: cabangOlahraga.id!,
+                    cabangOlahragaNama: cabangOlahraga.namaCabang,
+                  ),
+                ),
               );
             },
+            child: StreamBuilder<int>(
+              stream: _atletService.getAtletCountByCabangOlahraga(cabangOlahraga.id!),
+              builder: (context, snapshot) {
+                final count = snapshot.data ?? 0;
+                return InfoCard(
+                  title: 'Atlet',
+                  value: count.toString(),
+                  icon: Icons.people,
+                  color: Colors.green,
+                );
+              },
+            ),
           ),
         ],
       ),
