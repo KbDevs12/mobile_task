@@ -41,15 +41,18 @@ class _LoginPageState extends State<LoginPage> {
                 hint: "Password",
                 icon: Icons.lock_outline,
                 obscure: obscurePassword,
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    obscurePassword ? Icons.visibility_off : Icons.visibility,
+                suffixIcon: SizedBox(
+                  width: 60,
+                  child: IconButton(
+                    icon: Icon(
+                      obscurePassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        obscurePassword = !obscurePassword;
+                      });
+                    },
                   ),
-                  onPressed: () {
-                    setState(() {
-                      obscurePassword = !obscurePassword;
-                    });
-                  },
                 ),
               ),
               const SizedBox(height: 16),
@@ -131,7 +134,7 @@ Widget _buildTextField({
       obscureText: obscure,
       decoration: InputDecoration(
         hintText: hint,
-        prefixIcon: Icon(icon),
+        prefixIcon: SizedBox(width: 60, child: Icon(icon)),
         suffixIcon: suffixIcon,
         border: InputBorder.none,
         contentPadding: const EdgeInsets.symmetric(
