@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/screen/profile.dart';
+import 'package:tugas_mobile/screen/crud_menu_screen.dart'; // Add this import
 import '../views/atlet_list_screen.dart';
 import 'dashboard_content.dart';
 
@@ -15,7 +16,7 @@ class _DashboardState extends State<Dashboard> {
 
   final List<Widget> _pages = const [
     DashboardContent(),
-    AtletListScreen(),
+    CrudMenuScreen(), // Replace AtletListScreen() with CrudMenuScreen()
     Profile(),
   ];
 
@@ -38,7 +39,7 @@ class _DashboardState extends State<Dashboard> {
             icon: Icon(Icons.dashboard),
             label: 'Dashboard',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Atlet'),
+          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Data'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
       ),
