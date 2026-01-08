@@ -5,7 +5,7 @@ import '../providers/pelatih_provider.dart';
 import '../widgets/pelatih_list_tile.dart';
 import '../utils/notifikasi.dart';
 
-import 'add_edit_pelatih_screen.dart';
+
 
 class PelatihListScreen extends StatelessWidget {
   const PelatihListScreen({Key? key}) : super(key: key);
