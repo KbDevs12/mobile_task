@@ -14,7 +14,7 @@ class CabangOlahragaProvider with ChangeNotifier {
 
   Stream<List<CabangOlahraga>> get cabangOlahragaStream {
     return _cabangOlahragaService.getCabang().map((snapshot) {
-      _cabangOlahragaList = snapshot.docs.map((doc) => CabangOlahraga.fromFirestore(doc)).toList();
+      _cabangOlahragaList = snapshot.map((cabangOlahraga) => cabangOlahraga).toList();
       notifyListeners();
       return _cabangOlahragaList;
     });

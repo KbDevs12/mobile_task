@@ -14,7 +14,7 @@ class PelatihProvider with ChangeNotifier {
 
   Stream<List<Pelatih>> get pelatihStream {
     return _pelatihService.getPelatih().map((snapshot) {
-      _pelatihList = snapshot.docs.map((doc) => Pelatih.fromFirestore(doc)).toList();
+      _pelatihList = snapshot.map((pelatih) => pelatih).toList();
       notifyListeners();
       return _pelatihList;
     });
