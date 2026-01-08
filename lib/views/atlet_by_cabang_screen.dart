@@ -4,6 +4,7 @@ import 'package:tugas_mobile/services/atlet_service.dart';
 import 'package:tugas_mobile/views/add_edit_atlet_screen.dart'; // For adding new atlet
 import 'package:tugas_mobile/widgets/atlet_list_tile.dart';
 import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
 
 class AtletByCabangScreen extends StatefulWidget {
   final String cabangOlahragaId;
@@ -35,7 +36,7 @@ class _AtletByCabangScreenState extends State<AtletByCabangScreen> {
                 .toList()),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingListSkeleton(); // Use LoadingListSkeleton
           }
           if (snapshot.hasError) {
             return Center(child: Text('Terjadi kesalahan: ${snapshot.error}'));

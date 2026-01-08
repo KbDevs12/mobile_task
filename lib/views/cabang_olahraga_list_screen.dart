@@ -5,6 +5,7 @@ import 'package:tugas_mobile/services/cabang_olahraga.dart';
 import 'package:tugas_mobile/views/add_edit_cabang_olahraga_screen.dart';
 import 'package:tugas_mobile/widgets/cabang_olahraga_list_tile.dart';
 import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
 
 class CabangOlahragaListScreen extends StatefulWidget {
   const CabangOlahragaListScreen({super.key});
@@ -25,7 +26,7 @@ class _CabangOlahragaListScreenState extends State<CabangOlahragaListScreen> {
         stream: _cabangOlahragaService.getCabang(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingListSkeleton(); // Use LoadingListSkeleton
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Belum ada data cabang olahraga.'));

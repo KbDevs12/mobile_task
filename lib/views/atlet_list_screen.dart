@@ -5,6 +5,7 @@ import 'package:tugas_mobile/services/atlet_service.dart'; // Change to AtletSer
 import 'package:tugas_mobile/views/add_edit_atlet_screen.dart';
 import 'package:tugas_mobile/widgets/atlet_list_tile.dart';
 import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
 
 // Halaman utama yang menampilkan daftar atlet.
 class AtletListScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AtletListScreenState extends State<AtletListScreen> {
         builder: (context, snapshot) {
           // Jika koneksi sedang menunggu data, tampilkan loading indicator.
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingListSkeleton(); // Use LoadingListSkeleton
           }
           // Jika tidak ada data, tampilkan pesan.
           if (!snapshot.hasData || snapshot.data!.isEmpty) { // Check for empty list

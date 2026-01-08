@@ -4,6 +4,7 @@ import 'package:tugas_mobile/services/pelatih_service.dart';
 import 'package:tugas_mobile/views/add_edit_pelatih_screen.dart'; // Will create this later
 import 'package:tugas_mobile/widgets/pelatih_list_tile.dart'; // Will create this later
 import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
 
 class PelatihListScreen extends StatefulWidget {
   const PelatihListScreen({super.key});
@@ -23,7 +24,7 @@ class _PelatihListScreenState extends State<PelatihListScreen> {
         stream: _pelatihService.getPelatih(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingListSkeleton(); // Use LoadingListSkeleton
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Belum ada data pelatih.'));
