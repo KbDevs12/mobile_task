@@ -69,10 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(color: Colors.grey),
               ),
               const SizedBox(height: 40),
-              _buildTextField(
-                hint: "Email address",
-                icon: Icons.mail_outline,
-              ),
+              _buildTextField(hint: "Email address", icon: Icons.mail_outline),
               const SizedBox(height: 16),
               _buildTextField(
                 hint: "Password",
@@ -109,6 +106,25 @@ class _LoginPageState extends State<LoginPage> {
                   TextButton(
                     onPressed: () {},
                     child: const Text("Forgot Password"),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Belum punya akun? "),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/register');
+                    },
+                    child: const Text(
+                      "Register",
+                      style: TextStyle(
+                        color: Color(0xFF3CB371),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
