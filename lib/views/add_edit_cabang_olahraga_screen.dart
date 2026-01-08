@@ -60,9 +60,6 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
         final newCabangOlahraga = CabangOlahraga(
           id: widget.cabangOlahraga?.id,
           namaCabang: _namaCabangController.text,
-          kategori: '', // Set to empty string
-          tingkat: '', // Set to empty string
-          jumlahAtlet: 0, // Set to 0
           pelatihId: _selectedPelatihId,
           pelatihNama: _selectedPelatihNama!,
         );
