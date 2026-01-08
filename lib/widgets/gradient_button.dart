@@ -57,7 +57,7 @@ class GradientButton extends StatelessWidget {
             borderRadius: borderRadius ?? BorderRadius.circular(12),
           ),
           padding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.medium), // Use theme text style
+          textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500), // Use theme text style
         ),
         child: child,
       ),

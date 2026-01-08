@@ -69,12 +69,12 @@ class MyApp extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           textStyle: GoogleFonts.poppins(
-            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.medium),
+            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           elevation: 4, // Subtle shadow for buttons
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: secondaryWhite,
         elevation: 4, // Subtle shadow (3D depth)
         shadowColor: Colors.black.withOpacity(0.1),
@@ -86,10 +86,8 @@ class MyApp extends StatelessWidget {
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         backgroundColor: secondaryWhite,
-        selectedItemColor: primaryBlue,
-        unselectedItemColor: darkGreyText.withOpacity(0.6),
-        selectedLabelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.medium),
-        unselectedLabelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.regular),
+        selectedLabelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500),
+        unselectedLabelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.normal),
         elevation: 8, // Material 3 style elevation
         landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
       ),
@@ -156,7 +154,7 @@ class MyApp extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           textStyle: GoogleFonts.poppins(
-            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.medium),
+            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           elevation: 4,
         ),
@@ -174,8 +172,8 @@ class MyApp extends StatelessWidget {
         backgroundColor: const Color(0xFF1E1E1E),
         selectedItemColor: primaryCyan, // Highlight with Cyan
         unselectedItemColor: secondaryWhite.withOpacity(0.6),
-        selectedLabelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.medium),
-        unselectedLabelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.regular),
+        selectedLabelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500),
+        unselectedLabelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.normal),
         elevation: 8,
       ),
       inputDecorationTheme: base.inputDecorationTheme.copyWith(

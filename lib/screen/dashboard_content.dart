@@ -18,7 +18,7 @@ class DashboardContent extends StatefulWidget {
 }
 
 class _DashboardContentState extends State<DashboardContent> {
-  String? expandedSportId; // Changed to store ID
+  String? expandedSportId; 
   final AtletService _atletService = AtletService();
   final PelatihService _pelatihService = PelatihService();
   final CabangOlahragaService _cabangOlahragaService = CabangOlahragaService();
@@ -41,9 +41,8 @@ class _DashboardContentState extends State<DashboardContent> {
             },
             child: InfoCard(
               title: 'Pelatih',
-              value: cabangOlahraga.pelatihNama, // Display pelatih name
+              value: cabangOlahraga.pelatihNama, 
               icon: Icons.person,
-              color: Colors.blue,
             ),
           ),
           const SizedBox(width: 12),
@@ -67,7 +66,6 @@ class _DashboardContentState extends State<DashboardContent> {
                   title: 'Atlet',
                   value: count.toString(),
                   icon: Icons.people,
-                  color: Colors.green,
                 );
               },
             ),
@@ -95,7 +93,6 @@ class _DashboardContentState extends State<DashboardContent> {
                       title: 'Total Atlet',
                       value: count.toString(),
                       icon: Icons.people,
-                      color: Colors.green,
                     );
                   },
                 ),
@@ -108,7 +105,6 @@ class _DashboardContentState extends State<DashboardContent> {
                       title: 'Total Pelatih',
                       value: count.toString(),
                       icon: Icons.person,
-                      color: Colors.blue,
                     );
                   },
                 ),
