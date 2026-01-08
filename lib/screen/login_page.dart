@@ -16,18 +16,22 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Column(
         children: [
+          const SizedBox(height: 80),
           const Text(
             "Log in",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
+          const SizedBox(height: 8),
           const Text(
             "Enter your email and password to securely access\n"
             "your account and manage your services.",
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey),
           ),
+          const SizedBox(height: 40),
           _buildTextField(hint: "Email address", icon: Icons.mail_outline),
+          const SizedBox(height: 16),
           _buildTextField(
             hint: "Password",
             icon: Icons.lock_outline,
@@ -43,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
           ),
+          const SizedBox(height: 16),
           Row(
             children: [
               Checkbox(
@@ -62,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
+          const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
@@ -73,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: const Text("Login", style: TextStyle(fontSize: 16)),
           ),
+          const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
