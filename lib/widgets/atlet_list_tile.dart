@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/atlet.dart';
-import 'package:tugas_mobile/services/firestore_service.dart';
+import 'package:tugas_mobile/services/atlet_service.dart'; // Change to AtletService
 import 'package:tugas_mobile/utils/notifikasi.dart';
 import 'package:tugas_mobile/views/add_edit_atlet_screen.dart';
 
 // Widget kustom untuk menampilkan satu item atlet di dalam daftar.
 class AtletListTile extends StatelessWidget {
   final Atlet atlet;
-  final FirestoreService firestoreService;
+  final AtletService atletService; // Change to AtletService
 
   const AtletListTile({
     super.key,
     required this.atlet,
-    required this.firestoreService,
+    required this.atletService, // Change to AtletService
   });
 
   @override
@@ -33,7 +33,7 @@ class AtletListTile extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AddEditAtletScreen(atlet: atlet),
+                    builder: (context) => AddEditAtletScreen(atlet: atlet, atletService: atletService), // Pass atletService
                   ),
                 );
               },
@@ -64,7 +64,7 @@ class AtletListTile extends StatelessWidget {
                 // Jika pengguna mengkonfirmasi, hapus data.
                 if (confirm == true) {
                   try {
-                    await firestoreService.deleteAtlet(atlet.id!);
+                    await atletService.deleteAtlet(atlet.id!); // Use atletService
                     if (context.mounted) {
                       Notifikasi.show(context, 'Data atlet berhasil dihapus.');
                     }

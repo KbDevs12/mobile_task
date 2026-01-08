@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/atlet.dart';
 
-import 'package:tugas_mobile/services/firestore_service.dart';
+import 'package:tugas_mobile/services/atlet_service.dart'; // Change to AtletService
 import 'package:tugas_mobile/utils/notifikasi.dart';
 
 // Halaman ini berfungsi untuk menambah atau mengedit data atlet.
 class AddEditAtletScreen extends StatefulWidget {
   // Atlet opsional, jika ada berarti mode 'Edit', jika null berarti mode 'Tambah'.
   final Atlet? atlet;
+  final AtletService atletService; // Receive AtletService
 
-  const AddEditAtletScreen({super.key, this.atlet});
+  const AddEditAtletScreen({super.key, this.atlet, required this.atletService}); // Update constructor
 
   @override
   State<AddEditAtletScreen> createState() => _AddEditAtletScreenState();
@@ -27,8 +28,8 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
   late TextEditingController _tinggiController;
   String? _jenisKelamin; // Variabel untuk menyimpan pilihan dropdown.
 
-  // Instance dari FirestoreService.
-  final FirestoreService _firestoreService = FirestoreService();
+  // Instance dari AtletService. (No longer directly instantiated here, received via widget)
+  late final AtletService _atletService;
 
   // Flag untuk menandai apakah sedang dalam proses loading.
   bool _isLoading = false;
@@ -36,6 +37,7 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
   @override
   void initState() {
     super.initState();
+    _atletService = widget.atletService; // Initialize from widget
     // Inisialisasi controller. Jika mode 'Edit', isi dengan data atlet yang ada.
     _namaController = TextEditingController(text: widget.atlet?.nama);
     _cabangController = TextEditingController(text: widget.atlet?.cabangAtlet);
@@ -75,11 +77,11 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
 
         if (widget.atlet == null) {
           // Mode 'Tambah'
-          await _firestoreService.addAtlet(atletBaru);
+          await _atletService.addAtlet(atletBaru);
            if (context.mounted) Notifikasi.show(context, 'Atlet berhasil ditambahkan.');
         } else {
           // Mode 'Edit'
-          await _firestoreService.updateAtlet(atletBaru);
+          await _atletService.updateAtlet(atletBaru);
            if (context.mounted) Notifikasi.show(context, 'Data atlet berhasil diperbarui.');
         }
 
