@@ -111,10 +111,15 @@ class _DashboardContentState extends State<DashboardContent> {
               ],
             ),
             SizedBox(height: 20),
-            Text(
-              'Cabang Olahraga',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            const Text(
+            'Cabang Olahraga',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
+          ),
+const SizedBox(height: 12),
+
             StreamBuilder<List<CabangOlahraga>>(
               stream: _cabangOlahragaService.getCabang(),
               builder: (context, snapshot) {
@@ -149,8 +154,12 @@ class _DashboardContentState extends State<DashboardContent> {
                             });
                           },
                         ),
-                        if (expandedSportId == cabangOlahraga.id)
-                          _buildExpandedCard(cabangOlahraga),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: expandedSportId == cabangOlahraga.id
+                              ? _buildExpandedCard(cabangOlahraga)
+                              : const SizedBox.shrink(),
+                        ),
                       ],
                     );
                   },

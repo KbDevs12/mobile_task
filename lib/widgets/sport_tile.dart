@@ -15,7 +15,6 @@ class SportTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // Card styling from main.dart CardTheme
       child: InkWell( // Use InkWell for ripple effect
         borderRadius: ((Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)?.borderRadius as BorderRadius?) ?? BorderRadius.circular(16),
         onTap: onTap,

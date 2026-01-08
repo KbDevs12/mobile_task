@@ -4,21 +4,18 @@ class InfoCard extends StatelessWidget {
   final String title;
   final String value;
   final IconData icon;
-  // final Color color; // Removed hardcoded color, use theme
 
   const InfoCard({
     super.key,
     required this.title,
     required this.value,
     required this.icon,
-    // required this.color, // Removed
   });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Card(
-        // elevation and shape are handled by CardTheme in main.dart
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -26,7 +23,7 @@ class InfoCard extends StatelessWidget {
               Icon(
                 icon,
                 size: 36,
-                color: Theme.of(context).colorScheme.primary, // Use primary color from theme
+                color: Theme.of(context).colorScheme.primary,
               ),
               const SizedBox(height: 8),
               Text(
