@@ -9,6 +9,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool obscurePassword = true;
+  bool rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,25 @@ class _LoginPageState extends State<LoginPage> {
                 });
               },
             ),
+          ),
+          Row(
+            children: [
+              Checkbox(
+                value: rememberMe,
+                onChanged: (value) {
+                  setState(() {
+                    rememberMe = value!;
+                  });
+                },
+                activeColor: Colors.green,
+              ),
+              const Text("Remember me"),
+              const Spacer(),
+              TextButton(
+                onPressed: () {},
+                child: const Text("Forgot Password"),
+              ),
+            ],
           ),
         ],
       ),
