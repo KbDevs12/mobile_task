@@ -5,6 +5,7 @@ import 'package:tugas_mobile/services/atlet_service.dart';
 import 'package:tugas_mobile/services/cabang_olahraga.dart'; // Import CabangOlahragaService
 import 'package:tugas_mobile/utils/notifikasi.dart';
 import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/gradient_button.dart'; // Import GradientButton
 
 // Halaman ini berfungsi untuk menambah atau mengedit data atlet.
 class AddEditAtletScreen extends StatefulWidget {
@@ -171,11 +172,9 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
               _buildTextFormField(_tinggiController, 'Tinggi Badan (cm)', keyboardType: TextInputType.number),
               const SizedBox(height: 32),
               // Tombol simpan, nonaktif saat loading.
-              ElevatedButton(
+              GradientButton(
                 onPressed: _isLoading ? null : _saveAtlet,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
+                // height: 50, // Example height if needed
                 child: _isLoading
                     ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white,))
                     : const Text('Simpan'),
