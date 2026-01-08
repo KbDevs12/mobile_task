@@ -21,7 +21,7 @@ class CabangOlahragaListTile extends StatelessWidget {
       elevation: 2,
       child: ListTile(
         title: Text(cabangOlahraga.namaCabang, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('${cabangOlahraga.kategori} - ${cabangOlahraga.tingkat} (${cabangOlahraga.jumlahAtlet} atlet)'),
+        subtitle: Text('${cabangOlahraga.kategori} - ${cabangOlahraga.tingkat} (${cabangOlahraga.jumlahAtlet} atlet) - Pelatih: ${cabangOlahraga.pelatihNama}'),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

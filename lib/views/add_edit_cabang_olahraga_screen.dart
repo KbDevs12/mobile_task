@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/cabang_olahraga.dart';
+import 'package:tugas_mobile/models/pelatih.dart'; // Import Pelatih model
 import 'package:tugas_mobile/services/cabang_olahraga.dart';
+import 'package:tugas_mobile/services/pelatih_service.dart'; // Import PelatihService
 import 'package:tugas_mobile/utils/notifikasi.dart';
 
 class AddEditCabangOlahragaScreen extends StatefulWidget {
@@ -23,6 +25,10 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
   late TextEditingController _kategoriController;
   late TextEditingController _tingkatController;
   late TextEditingController _jumlahAtletController;
+  String? _selectedPelatihId; // To store selected Pelatih ID
+  String? _selectedPelatihNama; // To store selected Pelatih Name
+
+  final PelatihService _pelatihService = PelatihService(); // Instantiate PelatihService
 
   bool _isLoading = false;
 
@@ -33,6 +39,8 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
     _kategoriController = TextEditingController(text: widget.cabangOlahraga?.kategori);
     _tingkatController = TextEditingController(text: widget.cabangOlahraga?.tingkat);
     _jumlahAtletController = TextEditingController(text: widget.cabangOlahraga?.jumlahAtlet.toString());
+    _selectedPelatihId = widget.cabangOlahraga?.pelatihId; // Initialize for edit mode
+    _selectedPelatihNama = widget.cabangOlahraga?.pelatihNama; // Initialize for edit mode
   }
 
   @override
@@ -46,6 +54,12 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
 
   void _saveCabangOlahraga() async {
     if (_formKey.currentState!.validate()) {
+      // Ensure a trainer is selected
+      if (_selectedPelatihId == null || _selectedPelatihNama == null) {
+        if (context.mounted) Notifikasi.show(context, 'Pilih pelatih untuk cabang olahraga ini.', isSuccess: false);
+        return;
+      }
+
       setState(() => _isLoading = true);
 
       try {
@@ -55,6 +69,8 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
           kategori: _kategoriController.text,
           tingkat: _tingkatController.text,
           jumlahAtlet: int.parse(_jumlahAtletController.text),
+          pelatihId: _selectedPelatihId,
+          pelatihNama: _selectedPelatihNama!,
         );
 
         if (widget.cabangOlahraga == null) {
@@ -93,6 +109,43 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
               _buildTextFormField(_tingkatController, 'Tingkat'),
               const SizedBox(height: 16),
               _buildTextFormField(_jumlahAtletController, 'Jumlah Atlet', keyboardType: TextInputType.number),
+              const SizedBox(height: 16),
+              StreamBuilder<List<Pelatih>>(
+                stream: _pelatihService.getPelatih(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('Tidak ada pelatih tersedia. Tambahkan pelatih terlebih dahulu.');
+                  }
+
+                  final List<Pelatih> pelatihList = snapshot.data!;
+                  return DropdownButtonFormField<String>(
+                    value: _selectedPelatihId,
+                    decoration: InputDecoration(
+                      labelText: 'Pilih Pelatih',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    items: pelatihList.map<DropdownMenuItem<String>>((Pelatih pelatih) {
+                      return DropdownMenuItem<String>(
+                        value: pelatih.id,
+                        child: Text(pelatih.nama),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedPelatihId = newValue;
+                        _selectedPelatihNama = pelatihList.firstWhere((p) => p.id == newValue).nama;
+                      });
+                    },
+                    validator: (value) => value == null ? 'Pilih pelatih.' : null,
+                  );
+                },
+              ),
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _isLoading ? null : _saveCabangOlahraga,

@@ -6,6 +6,8 @@ class CabangOlahraga {
   final String kategori;
   final String tingkat;
   final int jumlahAtlet;
+  final String? pelatihId; // New field for Pelatih ID
+  final String pelatihNama; // New field for Pelatih Name
 
   CabangOlahraga({
     this.id,
@@ -13,6 +15,8 @@ class CabangOlahraga {
     required this.kategori,
     required this.tingkat,
     required this.jumlahAtlet,
+    this.pelatihId, // Make nullable
+    required this.pelatihNama, // Make required
   });
 
   Map<String, dynamic> toMap() {
@@ -21,6 +25,8 @@ class CabangOlahraga {
       'kategori': kategori,
       'tingkat': tingkat,
       'jumlahAtlet': jumlahAtlet,
+      'pelatihId': pelatihId,
+      'pelatihNama': pelatihNama,
     };
   }
 
@@ -32,6 +38,8 @@ class CabangOlahraga {
       kategori: data['kategori'] ?? '',
       tingkat: data['tingkat'] ?? '',
       jumlahAtlet: data['jumlahAtlet'] ?? 0,
+      pelatihId: data['pelatihId'],
+      pelatihNama: data['pelatihNama'] ?? 'Tidak Ditentukan', // Default value
     );
   }
 }
