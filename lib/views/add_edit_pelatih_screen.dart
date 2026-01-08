@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/pelatih.dart';
 import 'package:tugas_mobile/services/pelatih_service.dart';
 import 'package:tugas_mobile/utils/notifikasi.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
 
 class AddEditPelatihScreen extends StatefulWidget {
   final Pelatih? pelatih;
@@ -79,8 +80,8 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.pelatih == null ? 'Tambah Pelatih' : 'Edit Pelatih'),
+      appBar: GradientAppBar(
+        title: widget.pelatih == null ? 'Tambah Pelatih' : 'Edit Pelatih', // Dynamic title
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

@@ -3,6 +3,7 @@ import 'package:tugas_mobile/models/atlet.dart';
 import 'package:tugas_mobile/services/atlet_service.dart';
 import 'package:tugas_mobile/views/add_edit_atlet_screen.dart'; // For adding new atlet
 import 'package:tugas_mobile/widgets/atlet_list_tile.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
 
 class AtletByCabangScreen extends StatefulWidget {
   final String cabangOlahragaId;
@@ -24,8 +25,8 @@ class _AtletByCabangScreenState extends State<AtletByCabangScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Atlet ${widget.cabangOlahragaNama}'),
+      appBar: GradientAppBar(
+        title: 'Atlet ${widget.cabangOlahragaNama}', // Dynamic title
       ),
       body: StreamBuilder<List<Atlet>>(
         stream: _atletService.getAtletStream().map((atletList) =>

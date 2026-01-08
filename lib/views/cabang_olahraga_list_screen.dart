@@ -4,6 +4,7 @@ import 'package:tugas_mobile/services/atlet_service.dart'; // Import AtletServic
 import 'package:tugas_mobile/services/cabang_olahraga.dart';
 import 'package:tugas_mobile/views/add_edit_cabang_olahraga_screen.dart';
 import 'package:tugas_mobile/widgets/cabang_olahraga_list_tile.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
 
 class CabangOlahragaListScreen extends StatefulWidget {
   const CabangOlahragaListScreen({super.key});
@@ -19,9 +20,7 @@ class _CabangOlahragaListScreenState extends State<CabangOlahragaListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Daftar Cabang Olahraga'),
-      ),
+      appBar: GradientAppBar(title: 'Daftar Cabang Olahraga'),
       body: StreamBuilder<List<CabangOlahraga>>(
         stream: _cabangOlahragaService.getCabang(),
         builder: (context, snapshot) {

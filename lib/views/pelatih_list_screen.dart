@@ -3,6 +3,7 @@ import 'package:tugas_mobile/models/pelatih.dart';
 import 'package:tugas_mobile/services/pelatih_service.dart';
 import 'package:tugas_mobile/views/add_edit_pelatih_screen.dart'; // Will create this later
 import 'package:tugas_mobile/widgets/pelatih_list_tile.dart'; // Will create this later
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
 
 class PelatihListScreen extends StatefulWidget {
   const PelatihListScreen({super.key});
@@ -17,9 +18,7 @@ class _PelatihListScreenState extends State<PelatihListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Daftar Pelatih'),
-      ),
+      appBar: GradientAppBar(title: 'Daftar Pelatih'),
       body: StreamBuilder<List<Pelatih>>(
         stream: _pelatihService.getPelatih(),
         builder: (context, snapshot) {

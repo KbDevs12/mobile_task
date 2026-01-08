@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/pelatih.dart';
 import 'package:tugas_mobile/services/pelatih_service.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
 
 class PelatihDetailScreen extends StatelessWidget {
   final String pelatihId;
@@ -11,8 +12,8 @@ class PelatihDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detail Pelatih'),
+      appBar: GradientAppBar(
+        title: 'Detail Pelatih',
       ),
       body: FutureBuilder<Pelatih?>(
         future: _pelatihService.getPelatihById(pelatihId),
@@ -78,3 +79,4 @@ class PelatihDetailScreen extends StatelessWidget {
     );
   }
 }
+

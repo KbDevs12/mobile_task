@@ -4,6 +4,7 @@ import 'package:tugas_mobile/models/atlet.dart';
 import 'package:tugas_mobile/services/atlet_service.dart'; // Change to AtletService
 import 'package:tugas_mobile/views/add_edit_atlet_screen.dart';
 import 'package:tugas_mobile/widgets/atlet_list_tile.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
 
 // Halaman utama yang menampilkan daftar atlet.
 class AtletListScreen extends StatefulWidget {
@@ -20,9 +21,7 @@ class _AtletListScreenState extends State<AtletListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Daftar Atlet'),
-      ),
+      appBar: GradientAppBar(title: 'Daftar Atlet'),
       body: StreamBuilder<List<Atlet>>( // Stream now returns List<Atlet> directly
         // Menggunakan stream dari AtletService untuk mendapatkan data atlet secara real-time.
         stream: _atletService.getAtletStream(), // Use getAtletStream from AtletService

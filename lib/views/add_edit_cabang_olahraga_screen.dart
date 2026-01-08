@@ -4,6 +4,7 @@ import 'package:tugas_mobile/models/pelatih.dart'; // Import Pelatih model
 import 'package:tugas_mobile/services/cabang_olahraga.dart';
 import 'package:tugas_mobile/services/pelatih_service.dart'; // Import PelatihService
 import 'package:tugas_mobile/utils/notifikasi.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
 
 class AddEditCabangOlahragaScreen extends StatefulWidget {
   final CabangOlahraga? cabangOlahraga;
@@ -83,8 +84,8 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.cabangOlahraga == null ? 'Tambah Cabang Olahraga' : 'Edit Cabang Olahraga'),
+      appBar: GradientAppBar(
+        title: widget.cabangOlahraga == null ? 'Tambah Cabang Olahraga' : 'Edit Cabang Olahraga', // Dynamic title
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

@@ -4,6 +4,7 @@ import 'package:tugas_mobile/models/cabang_olahraga.dart'; // Import CabangOlahr
 import 'package:tugas_mobile/services/atlet_service.dart';
 import 'package:tugas_mobile/services/cabang_olahraga.dart'; // Import CabangOlahragaService
 import 'package:tugas_mobile/utils/notifikasi.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
 
 // Halaman ini berfungsi untuk menambah atau mengedit data atlet.
 class AddEditAtletScreen extends StatefulWidget {
@@ -110,8 +111,8 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.atlet == null ? 'Tambah Atlet' : 'Edit Atlet'),
+      appBar: GradientAppBar(
+        title: widget.atlet == null ? 'Tambah Atlet' : 'Edit Atlet', // Dynamic title
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
