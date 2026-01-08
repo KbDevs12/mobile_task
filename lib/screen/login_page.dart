@@ -73,6 +73,22 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: const Text("Login", style: TextStyle(fontSize: 16)),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Don’t have an account? "),
+              GestureDetector(
+                onTap: () {},
+                child: const Text(
+                  "Sign Up here",
+                  style: TextStyle(
+                    color: Color(0xFF3CB371),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
