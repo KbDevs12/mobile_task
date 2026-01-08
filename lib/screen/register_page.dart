@@ -72,47 +72,89 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Register')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      backgroundColor: const Color(0xFFF6F7F9),
+      appBar: AppBar(title: const Text("Register")),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
+            const SizedBox(height: 40),
+
+            _buildField(
               controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+              hint: "Email",
+              icon: Icons.email,
             ),
             const SizedBox(height: 16),
-            TextField(
+
+            _buildField(
               controller: _passwordController,
-              obscureText: obscurePassword,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    obscurePassword ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      obscurePassword = !obscurePassword;
-                    });
-                  },
+              hint: "Password",
+              icon: Icons.lock,
+              obscure: obscurePassword,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  obscurePassword ? Icons.visibility_off : Icons.visibility,
                 ),
+                onPressed: () {
+                  setState(() {
+                    obscurePassword = !obscurePassword;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 16),
-            TextField(
+
+            _buildField(
               controller: _confirmPasswordController,
-              obscureText: obscurePassword,
-              decoration: const InputDecoration(labelText: 'Confirm Password'),
+              hint: "Confirm Password",
+              icon: Icons.lock_outline,
+              obscure: obscurePassword,
             ),
             const SizedBox(height: 32),
-            isLoading
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: _register,
-                    child: const Text('Register'),
-                  ),
+
+            ElevatedButton(
+              onPressed: isLoading ? null : _register,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF3CB371),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: isLoading
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : const Text(
+                      "Register",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildField({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    bool obscure = false,
+    Widget? suffixIcon,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: obscure,
+      decoration: InputDecoration(
+        hintText: hint,
+        prefixIcon: Icon(icon),
+        suffixIcon: suffixIcon,
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
         ),
       ),
     );
