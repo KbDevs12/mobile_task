@@ -18,6 +18,12 @@ class _LoginPageState extends State<LoginPage> {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
+          const Text(
+            "Enter your email and password to securely access\n"
+            "your account and manage your services.",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.grey),
+          ),
         ],
       ),
     );
