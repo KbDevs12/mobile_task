@@ -21,6 +21,7 @@ import 'views/pelatih_list_screen.dart';
 import 'views/add_edit_pelatih_screen.dart';
 import 'views/add_edit_cabang_olahraga_screen.dart'; // Import AddEditCabangOlahragaScreen
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -33,6 +34,13 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  @override
+  void initState() {
+    _initFCM();
+    _listenTokenRefresh();
+    _setupFCMListeners();
+  }
 
   Future<void> _initFCM() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -83,6 +91,26 @@ class MyApp extends StatelessWidget {
     debugPrint('FCM Token saved to Firestore');
   }
 
+  void _listenTokenRefresh() {
+    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+      debugPrint('🔄 FCM Token refreshed: $newToken');
+      await _saveTokenToFirestore(newToken);
+    });
+  }
+
+  void _setupFCMListeners() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      debugPrint('Foreground message');
+      debugPrint('Title: ${message.notification?.title}');
+      debugPrint('Body: ${message.notification?.body}');
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      debugPrint('👉 Notification clicked');
+      navigatorKey.currentState?.pushNamed('/main');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -95,6 +123,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Sistem Informasi Atlet',
+        navigatorKey: navigatorKey,
         theme: ThemeData(
           useMaterial3: true,
           fontFamily: GoogleFonts.poppins().fontFamily,
