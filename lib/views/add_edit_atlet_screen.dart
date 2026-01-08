@@ -234,51 +234,5 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
     );
   }
 
-  // Helper widget untuk membuat TextFormField agar tidak duplikat kode.
-  TextFormField _buildTextFormField(
-    TextEditingController controller,
-    String label, {
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      keyboardType: keyboardType,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return '$label tidak boleh kosong.';
-        }
-        if (keyboardType == TextInputType.number && double.tryParse(value) == null) {
-          return 'Masukkan angka yang valid.';
-        }
-        return null;
-      },
-    );
-  }
 
-  // Helper widget untuk dropdown jenis kelamin.
-  DropdownButtonFormField<String> _buildGenderDropdown() {
-    return DropdownButtonFormField<String>(
-      value: _jenisKelaminSelected,
-      decoration: InputDecoration(
-        labelText: 'Jenis Kelamin',
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      items: ['Laki-laki', 'Perempuan'].map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: (newValue) {
-        setState(() {
-          _jenisKelaminSelected = newValue;
-        });
-      },
-      validator: (value) => value == null ? 'Pilih jenis kelamin.' : null,
-    );
-  }
 }
