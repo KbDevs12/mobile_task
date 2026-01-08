@@ -130,6 +130,16 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
             ),
+            SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "Sudah punya akun? Login",
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
           ],
         ),
       ),
