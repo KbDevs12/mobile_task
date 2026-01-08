@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,6 +33,55 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  Future<void> _initFCM() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      debugPrint('User granted permission for notifications');
+
+      String? token = await messaging.getToken();
+      debugPrint('FCM Token: $token');
+
+      if (token != null) {
+        await _saveTokenToFirestore(token);
+      }
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        debugPrint('Received a message while in the foreground!');
+        debugPrint('Message data: ${message.data}');
+
+        if (message.notification != null) {
+          debugPrint(
+            'Message also contained a notification: ${message.notification}',
+          );
+        }
+      });
+    } else {
+      debugPrint(
+        'User declined or has not accepted permission for notifications',
+      );
+    }
+  }
+
+  Future<void> _saveTokenToFirestore(String token) async {
+    final firestore = FirebaseFirestore.instance;
+
+    await firestore.collection('fcm_tokens').doc(token).set({
+      'token': token,
+      'platform': Platform.isAndroid ? 'android' : 'ios',
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+
+    debugPrint('FCM Token saved to Firestore');
+  }
 
   @override
   Widget build(BuildContext context) {
