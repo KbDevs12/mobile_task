@@ -73,7 +73,7 @@ class _AddEditCabangOlahragaScreenState extends State<AddEditCabangOlahragaScree
 
       if (!mounted) return;
 
-      showSnackBar(context, message, isError: !success);
+      Notifikasi.show(context, message, isSuccess: success);
       if (success) {
         Navigator.pop(context);
       }

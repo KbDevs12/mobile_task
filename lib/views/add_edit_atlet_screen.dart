@@ -87,7 +87,7 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
 
       if (!mounted) return; // Periksa apakah widget masih dalam tree
 
-      showSnackBar(context, message, isError: !success); // Tampilkan notifikasi
+      Notifikasi.show(context, message, isSuccess: success); // Tampilkan notifikasi
       if (success) {
         Navigator.pop(context); // Kembali ke layar sebelumnya jika berhasil
       }

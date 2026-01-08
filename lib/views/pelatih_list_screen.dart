@@ -32,12 +32,7 @@ class PelatihListScreen extends StatelessWidget {
               return PelatihListTile(
                 pelatih: pelatih,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddEditPelatihScreen(pelatih: pelatih),
-                    ),
-                  );
+                  Navigator.pushNamed(context, '/add-pelatih', arguments: pelatih);
                 },
                 onDelete: () async {
                   final confirmDelete = await showDialog<bool>(
@@ -61,9 +56,9 @@ class PelatihListScreen extends StatelessWidget {
                   if (confirmDelete == true) {
                     final success = await pelatihProvider.deletePelatih(pelatih.id!);
                     if (success) {
-                      showSnackBar(context, 'Pelatih berhasil dihapus!');
+                      Notifikasi.show(context, 'Pelatih berhasil dihapus!');
                     } else {
-                      showSnackBar(context, pelatihProvider.errorMessage ?? 'Gagal menghapus pelatih.', isError: true);
+                      Notifikasi.show(context, pelatihProvider.errorMessage ?? 'Gagal menghapus pelatih.', isSuccess: false);
                     }
                   }
                 },

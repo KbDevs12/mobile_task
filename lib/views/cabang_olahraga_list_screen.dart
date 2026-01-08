@@ -32,12 +32,7 @@ class CabangOlahragaListScreen extends StatelessWidget {
               return CabangOlahragaListTile(
                 cabangOlahraga: cabangOlahraga,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddEditCabangOlahragaScreen(cabangOlahraga: cabangOlahraga),
-                    ),
-                  );
+                  Navigator.pushNamed(context, '/add-cabang-olahraga', arguments: cabangOlahraga);
                 },
                 onDelete: () async {
                   final confirmDelete = await showDialog<bool>(
@@ -61,9 +56,9 @@ class CabangOlahragaListScreen extends StatelessWidget {
                   if (confirmDelete == true) {
                     final success = await cabangOlahragaProvider.deleteCabangOlahraga(cabangOlahraga.id!);
                     if (success) {
-                      showSnackBar(context, 'Cabang Olahraga berhasil dihapus!');
+                      Notifikasi.show(context, 'Cabang Olahraga berhasil dihapus!');
                     } else {
-                      showSnackBar(context, cabangOlahragaProvider.errorMessage ?? 'Gagal menghapus cabang olahraga.', isError: true);
+                      Notifikasi.show(context, cabangOlahragaProvider.errorMessage ?? 'Gagal menghapus cabang olahraga.', isSuccess: false);
                     }
                   }
                 },

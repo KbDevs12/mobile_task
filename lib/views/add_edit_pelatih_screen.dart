@@ -76,7 +76,7 @@ class _AddEditPelatihScreenState extends State<AddEditPelatihScreen> {
 
       if (!mounted) return;
 
-      showSnackBar(context, message, isError: !success);
+      Notifikasi.show(context, message, isSuccess: success);
       if (success) {
         Navigator.pop(context);
       }

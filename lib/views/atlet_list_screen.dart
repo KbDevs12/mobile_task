@@ -63,9 +63,9 @@ class AtletListScreen extends StatelessWidget {
                   if (confirmDelete == true) {
                       final success = await atletProvider.deleteAtlet(atlet.id!);
                       if (success) {
-                        showSnackBar(context, 'Atlet berhasil dihapus!');
+                        Notifikasi.show(context, 'Atlet berhasil dihapus!');
                       } else {
-                        showSnackBar(context, atletProvider.errorMessage ?? 'Gagal menghapus atlet.', isError: true);
+                        Notifikasi.show(context, atletProvider.errorMessage ?? 'Gagal menghapus atlet.', isSuccess: false);
                       }
                   }
                 },
