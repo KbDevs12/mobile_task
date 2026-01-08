@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,8 +10,101 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  bool loading = false;
   bool obscurePassword = true;
   bool rememberMe = false;
+
+  Future<void> login() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter email and password")),
+      );
+      return;
+    }
+
+    setState(() => loading = true);
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const Dashboard()),
+      );
+    } on FirebaseAuthException catch (e) {
+      String message = "An error occurred. Please try again.";
+
+      if (e.code == 'user-not-found') {
+        message = "No user found for that email.";
+      } else if (e.code == 'wrong-password') {
+        message = "Wrong password provided.";
+      }
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+    } finally {
+      if (mounted) {
+        setState(() => loading = false);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildTextField({
+    required String hint,
+    required IconData icon,
+    TextEditingController? controller,
+    bool obscure = false,
+    Widget? suffixIcon,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: TextField(
+        controller: controller,
+        obscureText: obscure,
+        decoration: InputDecoration(
+          hintText: hint,
+          prefixIcon: SizedBox(width: 60, child: Icon(icon)),
+          suffixIcon: suffixIcon,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 18,
+            horizontal: 20,
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +130,16 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(color: Colors.grey),
               ),
               const SizedBox(height: 40),
-              _buildTextField(hint: "Email address", icon: Icons.mail_outline),
+              _buildTextField(
+                hint: "Email address",
+                icon: Icons.mail_outline,
+                controller: emailController,
+              ),
               const SizedBox(height: 16),
               _buildTextField(
                 hint: "Password",
                 icon: Icons.lock_outline,
+                controller: passwordController,
                 obscure: obscurePassword,
                 suffixIcon: SizedBox(
                   width: 60,
@@ -62,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                     value: rememberMe,
                     onChanged: (value) {
                       setState(() {
-                        rememberMe = value!;
+                        rememberMe = value ?? false;
                       });
                     },
                     activeColor: Colors.green,
@@ -77,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: loading ? null : login,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF3CB371),
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -85,63 +185,18 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: const Text("Login", style: TextStyle(fontSize: 16, color: Colors.white)),
+                child: loading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
+                        "Login",
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
               ),
               const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don’t have an account? "),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Text(
-                      "Sign Up here",
-                      style: TextStyle(
-                        color: Color(0xFF3CB371),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
       ),
     );
   }
-}
-
-Widget _buildTextField({
-  required String hint,
-  required IconData icon,
-  bool obscure = false,
-  Widget? suffixIcon,
-}) {
-  return Container(
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(30),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.05),
-          blurRadius: 10,
-          offset: const Offset(0, 4),
-        ),
-      ],
-    ),
-    child: TextField(
-      obscureText: obscure,
-      decoration: InputDecoration(
-        hintText: hint,
-        prefixIcon: SizedBox(width: 60, child: Icon(icon)),
-        suffixIcon: suffixIcon,
-        border: InputBorder.none,
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 18,
-          horizontal: 20,
-        ),
-      ),
-    ),
-  );
 }
