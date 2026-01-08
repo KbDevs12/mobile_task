@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/atlet.dart';
-
-import 'package:tugas_mobile/services/atlet_service.dart'; // Change to AtletService
+import 'package:tugas_mobile/models/cabang_olahraga.dart'; // Import CabangOlahraga model
+import 'package:tugas_mobile/services/atlet_service.dart';
+import 'package:tugas_mobile/services/cabang_olahraga.dart'; // Import CabangOlahragaService
 import 'package:tugas_mobile/utils/notifikasi.dart';
 
 // Halaman ini berfungsi untuk menambah atau mengedit data atlet.
 class AddEditAtletScreen extends StatefulWidget {
   // Atlet opsional, jika ada berarti mode 'Edit', jika null berarti mode 'Tambah'.
   final Atlet? atlet;
-  final AtletService atletService; // Receive AtletService
+  final AtletService atletService;
 
-  const AddEditAtletScreen({super.key, this.atlet, required this.atletService}); // Update constructor
+  const AddEditAtletScreen({super.key, this.atlet, required this.atletService});
 
   @override
   State<AddEditAtletScreen> createState() => _AddEditAtletScreenState();
@@ -22,36 +23,40 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
 
   // Controller untuk setiap input field.
   late TextEditingController _namaController;
-  late TextEditingController _cabangController;
+  // Removed _cabangController, replaced by dropdown selection
   late TextEditingController _umurController;
   late TextEditingController _beratController;
   late TextEditingController _tinggiController;
   String? _jenisKelamin; // Variabel untuk menyimpan pilihan dropdown.
 
-  // Instance dari AtletService. (No longer directly instantiated here, received via widget)
-  late final AtletService _atletService;
+  String? _selectedCabangOlahragaId; // To store selected CabangOlahraga ID
+  String? _selectedCabangOlahragaNama; // To store selected CabangOlahraga display name
+
+  final AtletService _atletService;
+  final CabangOlahragaService _cabangOlahragaService = CabangOlahragaService(); // Instantiate CabangOlahragaService
 
   // Flag untuk menandai apakah sedang dalam proses loading.
   bool _isLoading = false;
 
+  _AddEditAtletScreenState() : _atletService = AtletService(); // Initialize AtletService
+
   @override
   void initState() {
     super.initState();
-    _atletService = widget.atletService; // Initialize from widget
-    // Inisialisasi controller. Jika mode 'Edit', isi dengan data atlet yang ada.
     _namaController = TextEditingController(text: widget.atlet?.nama);
-    _cabangController = TextEditingController(text: widget.atlet?.cabangAtlet);
     _umurController = TextEditingController(text: widget.atlet?.umur.toString());
     _beratController = TextEditingController(text: widget.atlet?.beratBadan.toString());
     _tinggiController = TextEditingController(text: widget.atlet?.tinggiBadan.toString());
     _jenisKelamin = widget.atlet?.jenisKelamin;
+
+    _selectedCabangOlahragaId = widget.atlet?.cabangOlahragaId; // Initialize for edit mode
+    _selectedCabangOlahragaNama = widget.atlet?.cabangOlahragaNama; // Initialize for edit mode
   }
 
   @override
   void dispose() {
     // Selalu dispose controller setelah tidak digunakan untuk menghindari memory leak.
     _namaController.dispose();
-    _cabangController.dispose();
     _umurController.dispose();
     _beratController.dispose();
     _tinggiController.dispose();
@@ -62,17 +67,25 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
   void _saveAtlet() async {
     // Validasi form terlebih dahulu.
     if (_formKey.currentState!.validate()) {
+      // Ensure a sports branch is selected
+      if (_selectedCabangOlahragaId == null || _selectedCabangOlahragaNama == null) {
+        if (context.mounted) Notifikasi.show(context, 'Pilih cabang olahraga untuk atlet ini.', isSuccess: false);
+        return;
+      }
+
       setState(() => _isLoading = true);
 
       try {
         final atletBaru = Atlet(
           id: widget.atlet?.id, // ID tetap jika mode 'Edit'.
           nama: _namaController.text,
-          cabangAtlet: _cabangController.text,
+          cabangAtlet: _selectedCabangOlahragaNama!, // Use the formatted display name
           umur: int.parse(_umurController.text),
           jenisKelamin: _jenisKelamin!,
           beratBadan: double.parse(_beratController.text),
           tinggiBadan: double.parse(_tinggiController.text),
+          cabangOlahragaId: _selectedCabangOlahragaId,
+          cabangOlahragaNama: _selectedCabangOlahragaNama!,
         );
 
         if (widget.atlet == null) {
@@ -109,7 +122,44 @@ class _AddEditAtletScreenState extends State<AddEditAtletScreen> {
             children: [
               _buildTextFormField(_namaController, 'Nama'),
               const SizedBox(height: 16),
-              _buildTextFormField(_cabangController, 'Cabang Atlet'),
+              // Replaced _buildTextFormField(_cabangController, 'Cabang Atlet') with Dropdown
+              StreamBuilder<List<CabangOlahraga>>(
+                stream: _cabangOlahragaService.getCabang(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('Tidak ada cabang olahraga tersedia. Tambahkan cabang olahraga terlebih dahulu.');
+                  }
+
+                  final List<CabangOlahraga> cabangOlahragaList = snapshot.data!;
+                  return DropdownButtonFormField<String>(
+                    value: _selectedCabangOlahragaId,
+                    decoration: InputDecoration(
+                      labelText: 'Pilih Cabang Olahraga',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    items: cabangOlahragaList.map<DropdownMenuItem<String>>((CabangOlahraga cabangOlahraga) {
+                      return DropdownMenuItem<String>(
+                        value: cabangOlahraga.id,
+                        child: Text('${cabangOlahraga.namaCabang} - ${cabangOlahraga.pelatihNama}'), // Display format
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedCabangOlahragaId = newValue;
+                        final selectedCabang = cabangOlahragaList.firstWhere((c) => c.id == newValue);
+                        _selectedCabangOlahragaNama = '${selectedCabang.namaCabang} - ${selectedCabang.pelatihNama}';
+                      });
+                    },
+                    validator: (value) => value == null ? 'Pilih cabang olahraga.' : null,
+                  );
+                },
+              ),
               const SizedBox(height: 16),
               _buildTextFormField(_umurController, 'Umur', keyboardType: TextInputType.number),
               const SizedBox(height: 16),

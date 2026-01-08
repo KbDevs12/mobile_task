@@ -22,7 +22,7 @@ class AtletListTile extends StatelessWidget {
       elevation: 2,
       child: ListTile(
         title: Text(atlet.nama, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('${atlet.cabangAtlet} - ${atlet.umur} tahun'),
+        subtitle: Text('${atlet.cabangOlahragaNama} - ${atlet.umur} tahun'), // Display cabangOlahragaNama
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
