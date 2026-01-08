@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/cabang_olahraga.dart';
+import 'package:tugas_mobile/services/atlet_service.dart'; // Import AtletService
 import 'package:tugas_mobile/services/cabang_olahraga.dart';
-import 'package:tugas_mobile/views/add_edit_cabang_olahraga_screen.dart'; // Will create this later
-import 'package:tugas_mobile/widgets/cabang_olahraga_list_tile.dart'; // Will create this later
+import 'package:tugas_mobile/views/add_edit_cabang_olahraga_screen.dart';
+import 'package:tugas_mobile/widgets/cabang_olahraga_list_tile.dart';
 
 class CabangOlahragaListScreen extends StatefulWidget {
   const CabangOlahragaListScreen({super.key});
@@ -13,6 +14,7 @@ class CabangOlahragaListScreen extends StatefulWidget {
 
 class _CabangOlahragaListScreenState extends State<CabangOlahragaListScreen> {
   final CabangOlahragaService _cabangOlahragaService = CabangOlahragaService();
+  final AtletService _atletService = AtletService(); // Instantiate AtletService
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class _CabangOlahragaListScreenState extends State<CabangOlahragaListScreen> {
               return CabangOlahragaListTile(
                 cabangOlahraga: cabangOlahraga,
                 cabangOlahragaService: _cabangOlahragaService,
+                atletService: _atletService, // Pass AtletService
               );
             },
           );

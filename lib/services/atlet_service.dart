@@ -24,4 +24,12 @@ class AtletService {
   Future<void> deleteAtlet(String atletId) {
     return _atletCollection.doc(atletId).delete();
   }
+
+  // New method to get a stream of athlete count by Cabang Olahraga ID
+  Stream<int> getAtletCountByCabangOlahraga(String cabangOlahragaId) {
+    return _atletCollection
+        .where('cabangOlahragaId', isEqualTo: cabangOlahragaId)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.length);
+  }
 }

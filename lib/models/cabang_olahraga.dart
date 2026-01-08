@@ -5,7 +5,7 @@ class CabangOlahraga {
   final String namaCabang;
   final String kategori;
   final String tingkat;
-  final int jumlahAtlet;
+  // final int jumlahAtlet; // Removed
   final String? pelatihId; // New field for Pelatih ID
   final String pelatihNama; // New field for Pelatih Name
 
@@ -14,7 +14,7 @@ class CabangOlahraga {
     required this.namaCabang,
     required this.kategori,
     required this.tingkat,
-    required this.jumlahAtlet,
+    // required this.jumlahAtlet, // Removed
     this.pelatihId, // Make nullable
     required this.pelatihNama, // Make required
   });
@@ -24,7 +24,7 @@ class CabangOlahraga {
       'namaCabang': namaCabang,
       'kategori': kategori,
       'tingkat': tingkat,
-      'jumlahAtlet': jumlahAtlet,
+      // 'jumlahAtlet': jumlahAtlet, // Removed
       'pelatihId': pelatihId,
       'pelatihNama': pelatihNama,
     };
@@ -37,7 +37,7 @@ class CabangOlahraga {
       namaCabang: data['namaCabang'] ?? '',
       kategori: data['kategori'] ?? '',
       tingkat: data['tingkat'] ?? '',
-      jumlahAtlet: data['jumlahAtlet'] ?? 0,
+      // jumlahAtlet: data['jumlahAtlet'] ?? 0, // Removed
       pelatihId: data['pelatihId'],
       pelatihNama: data['pelatihNama'] ?? 'Tidak Ditentukan', // Default value
     );

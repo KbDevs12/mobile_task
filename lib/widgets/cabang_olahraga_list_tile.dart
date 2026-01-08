@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/cabang_olahraga.dart';
+import 'package:tugas_mobile/services/atlet_service.dart'; // Import AtletService
 import 'package:tugas_mobile/services/cabang_olahraga.dart';
 import 'package:tugas_mobile/utils/notifikasi.dart';
 import 'package:tugas_mobile/views/add_edit_cabang_olahraga_screen.dart';
@@ -7,11 +8,13 @@ import 'package:tugas_mobile/views/add_edit_cabang_olahraga_screen.dart';
 class CabangOlahragaListTile extends StatelessWidget {
   final CabangOlahraga cabangOlahraga;
   final CabangOlahragaService cabangOlahragaService;
+  final AtletService atletService; // Receive AtletService
 
   const CabangOlahragaListTile({
     super.key,
     required this.cabangOlahraga,
     required this.cabangOlahragaService,
+    required this.atletService, // Add to constructor
   });
 
   @override
@@ -21,7 +24,25 @@ class CabangOlahragaListTile extends StatelessWidget {
       elevation: 2,
       child: ListTile(
         title: Text(cabangOlahraga.namaCabang, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('${cabangOlahraga.kategori} - ${cabangOlahraga.tingkat} (${cabangOlahraga.jumlahAtlet} atlet) - Pelatih: ${cabangOlahraga.pelatihNama}'),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Pelatih: ${cabangOlahraga.pelatihNama}'), // Display pelatihNama
+            StreamBuilder<int>(
+              stream: atletService.getAtletCountByCabangOlahraga(cabangOlahraga.id!), // Get dynamic count
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Jumlah Atlet: Menghitung...');
+                }
+                if (snapshot.hasError) {
+                  return const Text('Jumlah Atlet: Error');
+                }
+                final count = snapshot.data ?? 0;
+                return Text('Jumlah Atlet: $count');
+              },
+            ),
+          ],
+        ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
