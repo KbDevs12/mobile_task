@@ -46,10 +46,69 @@ class _SplashDimasState extends State<SplashDimas> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Dashboard"), actions: const []),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(children: []),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Colors.blue.shade800,
+            Colors.purple.shade600,
+            Colors.pink.shade400,
+          ])
+        ),
+        child: Center(
+          child: FadeTransition(opacity: _fadeAnimation,
+          child: ScaleTransition(scale: _scaleAnimation, child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 20,
+                      spreadRadius: 5
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.rocket_launch,
+                  size: 80,
+                  color: Colors.deepPurple,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text('Atlet Manager',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 42,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text('Manage Your Athletes Efficiently',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 18,
+                  letterSpacing: 1.5,
+                ),
+              ),
+              const SizedBox(height: 40),
+              const SizedBox(
+                width: 40,
+                height: 40,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  strokeWidth: 4,
+                ),
+              )
+            ],
+          ),
+          )
+          ),
+        ),
       ),
     );
   }
