@@ -27,6 +27,9 @@ class DetailProfilDimas extends StatelessWidget {
                   ),
                 ),
                 child: Stack(
+                  children: [
+                  
+                  ],
                 
                 ),
               ),
