@@ -16,6 +16,15 @@ class DetailProfilDimas extends StatelessWidget {
               title: const Text('Detail Profil Dimas'),
               background: Container(
                 decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.indigo.shade700,
+                      Colors.blue.shade500,
+                      Colors.cyan.shade400,
+                    ],
+                  ),
                 ),
               ),
             ),
