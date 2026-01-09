@@ -41,10 +41,12 @@ class DetailProfilDimas extends StatelessWidget {
                     )
                   )
                   ],
-                
                 ),
               ),
             ),
+            actions: [
+              
+            ],
           ),
         ],
       ),
