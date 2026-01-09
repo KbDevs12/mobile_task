@@ -13,6 +13,8 @@ class DetailProfilDimas extends StatelessWidget {
             floating: false,
             pinned: false,
             flexibleSpace: FlexibleSpaceBar(
+              title: const Text('Detail Profil Dimas'),
+
             ),
           ),
         ],
