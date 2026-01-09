@@ -1,67 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/cabang_olahraga.dart';
-import 'package:tugas_mobile/services/atlet_service.dart'; // Import AtletService
-import 'package:tugas_mobile/services/cabang_olahraga.dart';
-import 'package:tugas_mobile/views/add_edit_cabang_olahraga_screen.dart';
-import 'package:tugas_mobile/widgets/cabang_olahraga_list_tile.dart';
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
-import 'package:tugas_mobile/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
 
-class CabangOlahragaListScreen extends StatefulWidget {
+class CabangOlahragaListScreen extends StatelessWidget {
   const CabangOlahragaListScreen({super.key});
-
-  @override
-  State<CabangOlahragaListScreen> createState() => _CabangOlahragaListScreenState();
-}
-
-class _CabangOlahragaListScreenState extends State<CabangOlahragaListScreen> {
-  final CabangOlahragaService _cabangOlahragaService = CabangOlahragaService();
-  final AtletService _atletService = AtletService(); // Instantiate AtletService
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GradientAppBar(title: 'Daftar Cabang Olahraga'),
-      body: StreamBuilder<List<CabangOlahraga>>(
-        stream: _cabangOlahragaService.getCabang(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingListSkeleton(); // Use LoadingListSkeleton
-          }
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Belum ada data cabang olahraga.'));
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Terjadi kesalahan: ${snapshot.error}'));
-          }
-
-          final cabangOlahragaList = snapshot.data!;
-
-          return ListView.builder(
-            itemCount: cabangOlahragaList.length,
-            itemBuilder: (context, index) {
-              final cabangOlahraga = cabangOlahragaList[index];
-              return CabangOlahragaListTile(
-                cabangOlahraga: cabangOlahraga,
-                cabangOlahragaService: _cabangOlahragaService,
-                atletService: _atletService, // Pass AtletService
-              );
-            },
-          );
-        },
+      appBar: AppBar(
+        title: const Text('Daftar Cabang Olahraga'),
+      ),
+      body: const Center(
+        child: Text(
+          'Halaman untuk menampilkan daftar cabang olahraga.',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddEditCabangOlahragaScreen(
-                cabangOlahragaService: _cabangOlahragaService,
-              ),
-            ),
-          );
+          // TODO: Implement navigation to add sport branch screen
         },
-        tooltip: 'Tambah Cabang Olahraga',
         child: const Icon(Icons.add),
       ),
     );

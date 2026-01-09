@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/screen/profile.dart';
-import 'package:tugas_mobile/views/atlet_list_screen.dart'; // Import AtletListScreen
-import 'package:tugas_mobile/views/cabang_olahraga_list_screen.dart'; // Import CabangOlahragaListScreen
-import 'package:tugas_mobile/views/pelatih_list_screen.dart'; // Import PelatihListScreen
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/views/atlet_list_screen.dart';
+import 'package:tugas_mobile/views/cabang_olahraga_list_screen.dart';
+import 'package:tugas_mobile/views/pelatih_list_screen.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
 import 'dashboard_content.dart';
 
 class Dashboard extends StatefulWidget {
@@ -13,8 +13,10 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends State<Dashboard>
+    with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
+  late final PageController _pageController;
 
   final List<Widget> _pages = const [
     DashboardContent(),
@@ -25,30 +27,64 @@ class _DashboardState extends State<Dashboard> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() => _selectedIndex = index);
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF6F8FA),
-      appBar: GradientAppBar(title: "Dashboard"), // Use GradientAppBar
+      appBar: const GradientAppBar(title: "Dashboard"),
 
-      /// Smooth page switching (lebih halus dari IndexedStack biasa)
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: _pages[_selectedIndex],
+      /// PAGE VIEW (lebih smooth & responsive)
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() => _selectedIndex = index);
+        },
+        children: _pages.map((page) {
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: 1,
+              child: page,
+            ),
+          );
+        }).toList(),
       ),
 
-      /// Bottom Navigation modern (Material 3)
+      /// BOTTOM NAVIGATION (Material 3 Modern)
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
-        height: 70,
+        height: 72,
+        elevation: 3,
         backgroundColor: Colors.white,
-        indicatorColor: Colors.teal.withOpacity(0.15),
+        indicatorColor: theme.colorScheme.primary.withOpacity(0.15),
+        animationDuration: const Duration(milliseconds: 500),
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        animationDuration: const Duration(milliseconds: 400),
-        onDestinationSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onDestinationSelected: _onItemTapped,
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.dashboard_outlined),
