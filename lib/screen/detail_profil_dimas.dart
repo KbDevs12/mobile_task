@@ -45,7 +45,9 @@ class DetailProfilDimas extends StatelessWidget {
               ),
             ),
             actions: [
-              
+              IconButton(
+                icon: const Icon(Icons.more_vert),
+              )
             ],
           ),
         ],
