@@ -29,17 +29,17 @@ class DetailProfilDimas extends StatelessWidget {
                 child: Stack(
                   children: [
                     Positioned.fill(
-                    child:Opacity(
-                      opacity: 0.1,
-                      child: Image.asset(
-                        'assets/images/profile_background.png',
-                        repeat: ImageRepeat.repeat,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container();
-                        } ,
+                      child: Opacity(
+                        opacity: 0.1,
+                        child: Image.asset(
+                          'assets/images/profile_background.png',
+                          repeat: ImageRepeat.repeat,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container();
+                          },
+                        ),
                       ),
-                    )
-                  )
+                    ),
                   ],
                 ),
               ),
@@ -47,11 +47,46 @@ class DetailProfilDimas extends StatelessWidget {
             actions: [
               IconButton(
                 icon: const Icon(Icons.more_vert),
-              )
+                onPressed: () {
+                  _showMoreOptions(context);
+                },
+              ),
             ],
           ),
         ],
       ),
     );
   }
+}
+
+void _showMoreOptions(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) => Container(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.qr_code),
+            title: const Text('Show QR Code'),
+            onTap: () => Navigator.pop(context),
+          ),
+          ListTile(
+            leading: const Icon(Icons.download),
+            title: const Text('Download Profile'),
+            onTap: () => Navigator.pop(context),
+          ),
+          ListTile(
+            leading: const Icon(Icons.report),
+            title: const Text('Report Issue'),
+            onTap: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    ),
+  );
 }
