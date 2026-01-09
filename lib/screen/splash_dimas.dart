@@ -10,7 +10,11 @@ class SplashDimas extends StatefulWidget {
   State<SplashDimas> createState() => _SplashDimasState();
 }
 
-class _SplashDimasState extends State<SplashDimas> {
+class _SplashDimasState extends State<SplashDimas> with SingleTickerProviderStateMixin 
+{
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
   @override
   void initState() {
     super.initState();
