@@ -7,22 +7,27 @@ class SplashDimas extends StatefulWidget {
   const SplashDimas({super.key});
 
   @override
-  State SplashDimas> createState() =>  SplashDimasState();
+  State<SplashDimas> createState() => _SplashDimasState();
 }
 
-class  SplashDimasState extends State SplashDimas> {
+class _SplashDimasState extends State<SplashDimas> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Dashboard"),
-        actions: const [],
-      ),
+      appBar: AppBar(title: const Text("Dashboard"), actions: const []),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10.0),
-        child: Column(
-            children: [],
-        ),
+        child: Column(children: []),
       ),
     );
   }
