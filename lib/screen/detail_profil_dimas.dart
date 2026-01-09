@@ -6,18 +6,31 @@ class DetailProfilDimas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(
-              title: const Text("Dashboard"),
-              actions: const [],
-            ),
-            body: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.all(20.0),
-                child: const Column(
-                  children: [],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 220,
+            floating: false,
+            pinned: false,
+            flexibleSpace: FlexibleSpaceBar(
+              title: const Text('Detail Profil Dimas'),
+              background: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.indigo.shade700,
+                      Colors.blue.shade500,
+                      Colors.cyan.shade400,
+                    ],
+                  ),
                 ),
               ),
             ),
-          );
+          ),
+        ],
+      ),
+    );
   }
 }
