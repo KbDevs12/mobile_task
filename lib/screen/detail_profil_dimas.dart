@@ -28,7 +28,18 @@ class DetailProfilDimas extends StatelessWidget {
                 ),
                 child: Stack(
                   children: [
-                  
+                    Positioned.fill(
+                    child:Opacity(
+                      opacity: 0.1,
+                      child: Image.asset(
+                        'assets/images/profile_background.png',
+                        repeat: ImageRepeat.repeat,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container();
+                        } ,
+                      ),
+                    )
+                  )
                   ],
                 
                 ),
