@@ -43,6 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
         email: email,
         password: password,
       );
+      await FirebaseAuth.instance.signOut();
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       String message = 'Registration failed';
@@ -133,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 16),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/login');
               },
               child: const Text(
                 "Sudah punya akun? Login",
