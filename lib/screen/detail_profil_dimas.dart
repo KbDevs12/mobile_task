@@ -127,6 +127,13 @@ class DetailProfilDimas extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 6,
                           ),
+                        decoration: BoxDecoration(
+                          color: Colors.indigo.shade50,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.indigo.shade200,
+                          ),
+                        ),
                       )
                     ],
                   ),
