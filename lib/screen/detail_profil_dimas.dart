@@ -113,6 +113,15 @@ class DetailProfilDimas extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 15),
+                      const Text(
+                        'Dimas Prasetyo',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
                     ],
                   ),
                 ),
