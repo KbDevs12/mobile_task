@@ -60,6 +60,11 @@ class DetailProfilDimas extends StatelessWidget {
                   offset: const Offset(0, -60),
                   child: Column(
                     children: [
+                    Stack(
+                      children: [
+                        
+                      ],
+                    )  
                     ],
                   ),
                 )
