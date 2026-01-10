@@ -134,7 +134,11 @@ class DetailProfilDimas extends StatelessWidget {
                             color: Colors.indigo.shade200,
                           ),
                         ),
-                      )
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                        
+                      ),
+                      ),
                     ],
                   ),
                 ),
