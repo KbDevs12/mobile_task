@@ -136,7 +136,22 @@ class DetailProfilDimas extends StatelessWidget {
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
-                        
+                        children: [
+                          Icon(
+                            Icons.code,
+                            size: 16,
+                            color: Colors.indigo.shade700,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Flutter Developer',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.indigo.shade700,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
                       ),
                     ],
