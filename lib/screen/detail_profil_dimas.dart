@@ -122,6 +122,12 @@ class DetailProfilDimas extends StatelessWidget {
                           letterSpacing: 0.5,
                         ),
                       ),
+                      const SizedBox(height: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 6,
+                          ),
+                      )
                     ],
                   ),
                 ),
