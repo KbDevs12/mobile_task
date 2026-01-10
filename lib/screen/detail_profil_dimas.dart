@@ -151,7 +151,19 @@ class DetailProfilDimas extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Text(
+                          'Passionate Flutter developer with 3 years of experience in building beautiful and performant mobile applications. Skilled in Dart, UI/UX design, and state management solutions.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade600,
+                            height: 1.4,
+                          ),
+                        ),
+                      )
+
                     ],
                   ),
                 ),
