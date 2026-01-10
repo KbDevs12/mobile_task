@@ -169,6 +169,16 @@ class DetailProfilDimas extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.indigo.shade50,
+                          Colors.blue.shade50,
+                        ],)
+                    ),
+                  )
 
                 )
               ],
