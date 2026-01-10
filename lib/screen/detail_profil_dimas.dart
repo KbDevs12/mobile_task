@@ -56,6 +56,13 @@ class DetailProfilDimas extends StatelessWidget {
           SliverToBoxAdapter(
             child: Column(
               children: [
+                Transform.translate(
+                  offset: const Offset(0, -60),
+                  child: Column(
+                    children: [
+                    ],
+                  ),
+                )
               ],
             )
           )
