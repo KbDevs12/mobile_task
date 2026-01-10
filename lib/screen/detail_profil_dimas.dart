@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class DetailProfilDimas extends StatelessWidget {
@@ -53,27 +55,29 @@ class DetailProfilDimas extends StatelessWidget {
               ),
             ],
           ),
+          
           SliverToBoxAdapter(
             child: Column(
               children: [
+                // Profile Picture Section dengan Badge
                 Transform.translate(
                   offset: const Offset(0, -60),
                   child: Column(
                     children: [
-                    Stack(
-                      children: [
-                        
-                      ],
-                    )  
+                      Stack(
+                        children: [
+                        ],
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
-            )
-          )
+            ),
+          ),
         ],
       ),
-    );
+    ); 
+          
   }
 }
 
