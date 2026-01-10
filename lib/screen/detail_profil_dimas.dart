@@ -53,6 +53,8 @@ class DetailProfilDimas extends StatelessWidget {
               ),
             ],
           ),
+          SliverToBoxAdapter(
+          )
         ],
       ),
     );
