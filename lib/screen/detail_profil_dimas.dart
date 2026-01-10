@@ -104,6 +104,11 @@ class DetailProfilDimas extends StatelessWidget {
                                   width: 3,
                                 ),
                               ),
+                              child: const Icon(
+                                Icons.verified,
+                                color: Colors.white,
+                                size: 20,
+                              ),
                             ),
                           ),
                         ],
