@@ -167,6 +167,10 @@ class DetailProfilDimas extends StatelessWidget {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+
+                )
               ],
             ),
           ),
