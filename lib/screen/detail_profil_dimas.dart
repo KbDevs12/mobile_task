@@ -73,6 +73,13 @@ class DetailProfilDimas extends StatelessWidget {
                                 color: Colors.white,
                                 width: 6,
                               ),
+                              boxShadow: [		
+                                BoxShadow(
+                                  color: Colors.indigo.withOpacity(0.3),
+                                  blurRadius: 25,
+                                  spreadRadius: 5,
+                                ),
+                              ],
                             ),
                             child: CircleAvatar(
                               radius: 65,
