@@ -55,7 +55,7 @@ class DetailProfilDimas extends StatelessWidget {
               ),
             ],
           ),
-          
+
           SliverToBoxAdapter(
             child: Column(
               children: [
@@ -69,11 +69,8 @@ class DetailProfilDimas extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 6,
-                              ),
-                              boxShadow: [		
+                              border: Border.all(color: Colors.white, width: 6),
+                              boxShadow: [
                                 BoxShadow(
                                   color: Colors.indigo.withOpacity(0.3),
                                   blurRadius: 25,
@@ -125,35 +122,36 @@ class DetailProfilDimas extends StatelessWidget {
                       const SizedBox(height: 8),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 6,
-                          ),
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.indigo.shade50,
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.indigo.shade200,
-                          ),
+                          border: Border.all(color: Colors.indigo.shade200),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.code,
-                            size: 16,
-                            color: Colors.indigo.shade700,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Flutter Developer',
-                            style: TextStyle(
-                              fontSize: 14,
+                          children: [
+                            Icon(
+                              Icons.code,
+                              size: 16,
                               color: Colors.indigo.shade700,
-                              fontWeight: FontWeight.w600,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 6),
+                            Text(
+                              'Flutter Developer',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.indigo.shade700,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      ),
+                      const SizedBox(height: 12),
+                      
                     ],
                   ),
                 ),
@@ -162,8 +160,7 @@ class DetailProfilDimas extends StatelessWidget {
           ),
         ],
       ),
-    ); 
-          
+    );
   }
 }
 
