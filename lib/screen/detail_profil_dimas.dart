@@ -67,6 +67,22 @@ class DetailProfilDimas extends StatelessWidget {
                       Stack(
                         children: [
                           Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 6,
+                              ),
+                            ),
+                            child: CircleAvatar(
+                              radius: 65,
+                              backgroundColor: Colors.indigo.shade100,
+                              child: const Icon(
+                                Icons.person,
+                                size: 70,
+                                color: Colors.indigo,
+                              ),
+                            ),
                           ),
                         ],
                       ),
