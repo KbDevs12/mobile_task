@@ -69,7 +69,7 @@ class DetailProfilDimas extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 6),
+                            border: Border.all(color: Colors.white, width: 6),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.indigo.withOpacity(0.3),
@@ -187,9 +187,20 @@ class DetailProfilDimas extends StatelessWidget {
                       ),
                     ],
                   ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildStatItem('24', 'Projects', Icons.folder_special),
+                      _buildVerticalDivider(),
+                      _buildStatItem('1.5K', 'Followers', Icons.people),
+                      _buildVerticalDivider(),
+                      _buildStatItem('342', 'Following', Icons.person_add),
+                    ],
+                  ),
                 ),
 
                 ),
+                
               ],
             ),
           ),
@@ -198,6 +209,43 @@ class DetailProfilDimas extends StatelessWidget {
     );
   }
 }
+Widget _buildStatItem(String value, String label, IconData icon) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          color: Colors.indigo,
+          size: 28,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.indigo,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            color: Colors.grey.shade600,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVerticalDivider() {
+    return Container(
+      height: 60,
+      width: 1,
+      color: Colors.grey.shade300,
+    );
+  }
+
 
 void _showMoreOptions(BuildContext context) {
   showModalBottomSheet(
