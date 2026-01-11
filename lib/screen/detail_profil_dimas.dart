@@ -436,20 +436,6 @@ const SizedBox(height: 12),
     );
   }
 
-
-
-                
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-        ],
-      ),
-    );
-  }
-}
 Widget _buildStatItem(String value, String label, IconData icon) {
     return Column(
       children: [
@@ -722,4 +708,5 @@ void _showMoreOptions(BuildContext context) {
       ),
     ),
   );
+}
 }
