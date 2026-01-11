@@ -198,12 +198,29 @@ class DetailProfilDimas extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+               // Personal Information Section
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Personal Information',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
 
-                ),
+
                 
               ],
             ),
           ),
+        ],
+      ),
+    ),
         ],
       ),
     );
