@@ -217,10 +217,224 @@ class DetailProfilDimas extends StatelessWidget {
                       _buildInfoCard(
                         icon: Icons.email_rounded,
                         title: 'Email',
-                        value: 'dimas.prasetyo@example.com',
+                        value: '1123150165@global.ac.id',
                         color: Colors.red,
                         onTap: () {},
                       ),
+const SizedBox(height: 12),
+                      
+                      _buildInfoCard(
+                        icon: Icons.phone_android,
+                        title: 'Phone',
+                        value: '+62 812-3456-7890',
+                        color: Colors.green,
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 12),
+                      
+                      _buildInfoCard(
+                        icon: Icons.cake_rounded,
+                        title: 'Birthday',
+                        value: '15 Maret 1999 (25 tahun)',
+                        color: Colors.purple,
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 12),
+                      
+                      _buildInfoCard(
+                        icon: Icons.location_on_rounded,
+                        title: 'Location',
+                        value: 'Jakarta, Indonesia',
+                        color: Colors.orange,
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 12),
+                      
+                      _buildInfoCard(
+                        icon: Icons.work_rounded,
+                        title: 'Company',
+                        value: 'Tech Solutions Inc.',
+                        color: Colors.blue,
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 12),
+                      
+                      _buildInfoCard(
+                        icon: Icons.school_rounded,
+                        title: 'Education',
+                        value: 'S1 Teknik Informatika',
+                        color: Colors.teal,
+                        onTap: () {},
+                      ),
+                      
+                      const SizedBox(height: 30),
+
+                      // Skills Section
+                      const Text(
+                        'Skills & Expertise',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: [
+                          _buildSkillChip('Flutter', Colors.blue),
+                          _buildSkillChip('Dart', Colors.cyan),
+                          _buildSkillChip('Firebase', Colors.orange),
+                          _buildSkillChip('UI/UX Design', Colors.purple),
+                          _buildSkillChip('REST API', Colors.green),
+                          _buildSkillChip('Git', Colors.red),
+                          _buildSkillChip('SQL', Colors.indigo),
+                          _buildSkillChip('Mobile Dev', Colors.teal),
+                        ],
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      // Social Media Section
+                      const Text(
+                        'Connect With Me',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildSocialButton(
+                            icon: Icons.chat_bubble,
+                            label: 'WhatsApp',
+                            color: Colors.green,
+                            onTap: () {},
+                          ),
+                          _buildSocialButton(
+                            icon: Icons.code,
+                            label: 'GitHub',
+                            color: Colors.black87,
+                            onTap: () {},
+                          ),
+                          _buildSocialButton(
+                            icon: Icons.work,
+                            label: 'LinkedIn',
+                            color: Colors.blue,
+                            onTap: () {},
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      // Action Buttons
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                _showEditDialog(context);
+                              },
+                              icon: const Icon(Icons.edit_rounded),
+                              label: const Text('Edit Profile'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.indigo,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                elevation: 3,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: () {
+                                _showShareDialog(context);
+                              },
+                              icon: const Icon(Icons.share_rounded),
+                              label: const Text('Share'),
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: Colors.indigo,
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                side: const BorderSide(
+                                  color: Colors.indigo,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 15),
+
+                      // Settings and Logout
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: () {},
+                          icon: const Icon(Icons.settings_rounded),
+                          label: const Text('Settings'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.grey.shade700,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            side: BorderSide(
+                              color: Colors.grey.shade400,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            _showLogoutDialog(context);
+                          },
+                          icon: const Icon(Icons.logout_rounded),
+                          label: const Text('Logout'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.red,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            side: const BorderSide(
+                              color: Colors.red,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
 
 
