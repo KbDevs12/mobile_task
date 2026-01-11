@@ -617,6 +617,25 @@ Widget _buildStatItem(String value, String label, IconData icon) {
       ),
     );
   }
+  void _showEditDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text('Edit Profile'),
+        content: const Text('Fitur edit profile akan segera hadir!'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
 
 
 
