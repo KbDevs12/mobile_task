@@ -176,11 +176,20 @@ class DetailProfilDimas extends StatelessWidget {
                         colors: [
                           Colors.indigo.shade50,
                           Colors.blue.shade50,
-                        ],)
+                        ],
                     ),
-                  )
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        blurRadius: 15,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                ),
 
-                )
+                ),
               ],
             ),
           ),
