@@ -635,6 +635,29 @@ Widget _buildStatItem(String value, String label, IconData icon) {
       ),
     );
   }
+  void _showShareDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text('Share Profile'),
+        content: const Text('Pilih platform untuk membagikan profile Anda'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Share'),
+          ),
+        ],
+      ),
+    );
+  }
+
 
 
 
