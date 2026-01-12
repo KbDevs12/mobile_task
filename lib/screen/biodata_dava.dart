@@ -115,6 +115,10 @@ class BiodataDava extends StatelessWidget {
                           _simpleInfo('Kelas', 'TI SE 2 P'),
                           _simpleInfo('Keahlian', 'Flutter, UI/UX'),
                           _simpleInfo('Email', 'anandadava93@gmail.com'),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text('GitHub'),
+                          ),
                         ],
                       ),
                     ),
