@@ -9,17 +9,24 @@ class BiodataDava extends StatelessWidget {
       backgroundColor: Color(0xffEEF2F7),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  
-                )
-              ],
-              )
-              ]
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: 260,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/bgprofile.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
               ),
+            ],
+          ),
         ),
       ),
     );
