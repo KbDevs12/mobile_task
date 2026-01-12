@@ -121,6 +121,13 @@ class BiodataDava extends StatelessWidget {
                               'GitHub',
                               style: TextStyle(color: Colors.grey),
                             ),
+                            subtitle: Text(
+                              'github.com/annddvaa',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.blue,
+                              ),
+                            ),
                           ),
                         ],
                       ),
