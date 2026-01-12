@@ -117,7 +117,10 @@ class BiodataDava extends StatelessWidget {
                           _simpleInfo('Email', 'anandadava93@gmail.com'),
                           ListTile(
                             contentPadding: EdgeInsets.zero,
-                            title: Text('GitHub'),
+                            title: Text(
+                              'GitHub',
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           ),
                         ],
                       ),
