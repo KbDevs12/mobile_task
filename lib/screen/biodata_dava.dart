@@ -69,7 +69,10 @@ class BiodataDava extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      Text('1123150164 • TI SE 2 P'),
+                      Text(
+                        '1123150164 • TI SE 2 P',
+                        style: TextStyle(color: Colors.white70),
+                      ),
                     ],
                   ),
                 ],
