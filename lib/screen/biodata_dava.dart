@@ -139,6 +139,8 @@ class BiodataDava extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 20),
+              Padding(padding: EdgeInsets.all(16), child: SizedBox()),
             ],
           ),
         ),
