@@ -31,6 +31,8 @@ class BiodataDava extends StatelessWidget {
                           Colors.black.withOpacity(0.6),
                           Colors.black.withOpacity(0.2),
                         ],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
                       ),
                     ),
                   ),
