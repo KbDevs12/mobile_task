@@ -56,7 +56,7 @@ class BiodataDava extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 48,
                           backgroundImage: AssetImage(
-                            'assets/images/fotodava.jpeg',
+                            'assets/images/fotoprofile.jpeg',
                           ),
                         ),
                       ),
