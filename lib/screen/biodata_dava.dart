@@ -116,6 +116,12 @@ Widget _sectionCard({
 }) {
   return Padding(
     padding: const EdgeInsets.all(16),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, 
+    children: [
+      Row(
+        
+      )
+    ],
+    ),
   );
 }
