@@ -114,5 +114,8 @@ Widget _sectionCard({
   required IconData icon,
   required Widget child,
 }) {
-  return Padding(padding: const EdgeInsets.all(16), child: Column());
+  return Padding(
+    padding: const EdgeInsets.all(16),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start),
+  );
 }
