@@ -153,7 +153,10 @@ class BiodataDava extends StatelessWidget {
                       ),
                     ),
                     icon: Icon(Icons.logout, color: Colors.white),
-                    label: Text('data'),
+                    label: Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     onPressed: () {},
                   ),
                 ),
