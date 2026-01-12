@@ -12,7 +12,11 @@ class BiodataDava extends StatelessWidget {
           child: Column(children: [
             Stack(
               alignment: Alignment.center,
-              
+              children: [
+                Container(
+                  
+                )
+              ],
               )
               ]
               ),
