@@ -95,6 +95,7 @@ class BiodataDava extends StatelessWidget {
                     ),
                   ],
                 ),
+                child: Column(),
               ),
             ],
           ),
