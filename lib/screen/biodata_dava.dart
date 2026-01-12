@@ -114,6 +114,7 @@ class BiodataDava extends StatelessWidget {
                           _simpleInfo('NIM', '1123150164'),
                           _simpleInfo('Kelas', 'TI SE 2 P'),
                           _simpleInfo('Keahlian', 'Flutter, UI/UX'),
+                          _simpleInfo('Email', 'anandadava93@gmail.com'),
                         ],
                       ),
                     ),
