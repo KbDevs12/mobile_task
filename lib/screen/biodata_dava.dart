@@ -109,7 +109,7 @@ class BiodataDava extends StatelessWidget {
                     _sectionCard(
                       title: 'Data Diri',
                       icon: Icons.person_outline,
-                      child: Column(),
+                      child: Column(children: [_simpleInfo()]),
                     ),
                   ],
                 ),
@@ -148,3 +148,5 @@ Widget _sectionCard({
     ),
   );
 }
+
+Widget _simpleInfo(String title, String value) {}
