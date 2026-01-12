@@ -113,6 +113,7 @@ class BiodataDava extends StatelessWidget {
                         children: [
                           _simpleInfo('NIM', '1123150164'),
                           _simpleInfo('Kelas', 'TI SE 2 P'),
+                          _simpleInfo('Keahlian', 'Flutter, UI/UX'),
                         ],
                       ),
                     ),
