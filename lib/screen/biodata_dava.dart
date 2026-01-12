@@ -39,6 +39,10 @@ class BiodataDava extends StatelessWidget {
                   Positioned(
                     child: CircleAvatar(
                       backgroundColor: Colors.black.withOpacity(0.4),
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () => Navigator.pop(context),
+                      ),
                     ),
                   ),
                 ],
