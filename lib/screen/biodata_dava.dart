@@ -142,7 +142,20 @@ class BiodataDava extends StatelessWidget {
               SizedBox(height: 20),
               Padding(
                 padding: EdgeInsets.all(16),
-                child: SizedBox(width: double.infinity),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      backgroundColor: Colors.blueGrey.shade700,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {},
+                    label: Text('data'),
+                  ),
+                ),
               ),
             ],
           ),
