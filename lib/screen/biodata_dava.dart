@@ -95,7 +95,11 @@ class BiodataDava extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Column(),
+                child: Column(
+                  children: [
+                    _sectionCard(title: title, icon: icon, child: child)
+                  ],
+                ),
               ),
             ],
           ),
@@ -103,4 +107,11 @@ class BiodataDava extends StatelessWidget {
       ),
     );
   }
+}
+Widget _sectionCard({
+   required String title,
+  required IconData icon,
+  required Widget child,
+}){
+  return Padding(padding: const EdgeInsets.all(16),);
 }
