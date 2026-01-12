@@ -82,6 +82,11 @@ class BiodataDava extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Color(0xffEEF2F7),
                   borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.9),
+                    )
+                    ]
                 ),
               ),
             ],
