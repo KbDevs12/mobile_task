@@ -85,8 +85,10 @@ class BiodataDava extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.white.withOpacity(0.9),
-                    )
-                    ]
+                      blurRadius: 16,
+                      offset: const Offset(-6, -6),
+                    ),
+                  ],
                 ),
               ),
             ],
