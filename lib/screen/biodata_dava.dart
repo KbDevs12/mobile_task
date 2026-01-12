@@ -97,7 +97,15 @@ class BiodataDava extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _sectionCard(title: title, icon: icon, child: child),
+                    _sectionCard(
+                      title: 'Tentang Saya',
+                      icon: Icons.info_outline,
+                      child: Text(
+                        'Mahasiswa Informatika yang tertarik pada pengembangan '
+                        'aplikasi mobile menggunakan Flutter. '
+                        'Aplikasi ini dibuat sebagai bagian dari tugas akademik.',
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -129,6 +137,8 @@ Widget _sectionCard({
             ),
           ],
         ),
+        const SizedBox(height: 12),
+        child,
       ],
     ),
   );
