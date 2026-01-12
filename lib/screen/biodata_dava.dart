@@ -110,7 +110,10 @@ class BiodataDava extends StatelessWidget {
                       title: 'Data Diri',
                       icon: Icons.person_outline,
                       child: Column(
-                        children: [_simpleInfo('NIM', '1123150164')],
+                        children: [
+                          _simpleInfo('NIM', '1123150164'),
+                          _simpleInfo('Kelas', 'TI SE 2 P'),
+                        ],
                       ),
                     ),
                   ],
