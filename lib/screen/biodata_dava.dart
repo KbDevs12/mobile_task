@@ -23,6 +23,9 @@ class BiodataDava extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Container(
+                    height: 260,
+                  )
                 ],
               ),
             ],
