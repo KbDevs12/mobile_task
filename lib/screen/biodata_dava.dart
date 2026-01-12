@@ -50,11 +50,9 @@ class BiodataDava extends StatelessWidget {
                   Column(
                     children: [
                       SizedBox(height: 30),
-                      CircleAvatar(
-                        
-                      )
+                      CircleAvatar(radius: 52, backgroundColor: Colors.white),
                     ],
-                  )
+                  ),
                 ],
               ),
             ],
