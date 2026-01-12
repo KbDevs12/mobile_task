@@ -6,7 +6,8 @@ class BiodataDava extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffEEF2F7)
+      backgroundColor: Color(0xffEEF2F7),
+      body: SafeArea(child: child),
       );
   }
 }
