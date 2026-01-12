@@ -36,6 +36,7 @@ class BiodataDava extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Positioned(child: CircleAvatar()),
                 ],
               ),
             ],
