@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'biodata_dava.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -14,7 +15,12 @@ class Profile extends StatelessWidget {
             name: 'Dava Ananda',
             nim: '1123150164',
             role: 'Anggota 1',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BiodataDava()),
+              );
+            },
           ),
           const _MemberCard(
             name: 'Fajri Khaerullah',
