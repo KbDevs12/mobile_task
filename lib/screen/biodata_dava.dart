@@ -149,4 +149,8 @@ Widget _sectionCard({
   );
 }
 
-Widget _simpleInfo(String title, String value) {}
+Widget _simpleInfo(String title, String value) {
+  return ListTile(
+    contentPadding: EdgeInsets.zero,
+  )
+}
