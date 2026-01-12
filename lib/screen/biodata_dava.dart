@@ -152,5 +152,6 @@ Widget _sectionCard({
 Widget _simpleInfo(String title, String value) {
   return ListTile(
     contentPadding: EdgeInsets.zero,
-  )
+    title: Text(title, style: const TextStyle(color: Colors.grey)),
+  );
 }
