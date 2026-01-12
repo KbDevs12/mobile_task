@@ -61,7 +61,13 @@ class BiodataDava extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 12),
-                      Text('Dava Ananda', style: TextStyle(fontSize: 22)),
+                      Text(
+                        'Dava Ananda',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ],
