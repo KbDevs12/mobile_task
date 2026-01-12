@@ -77,6 +77,7 @@ class BiodataDava extends StatelessWidget {
                   ),
                 ],
               ),
+              Container(margin: const EdgeInsets.symmetric(horizontal: 16)),
             ],
           ),
         ),
