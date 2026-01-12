@@ -9,12 +9,15 @@ class BiodataDava extends StatelessWidget {
       backgroundColor: Color(0xffEEF2F7),
       body: SafeArea(
         child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack()
-          ],
+          child: Column(children: [
+            Stack(
+              alignment: Alignment.center,
+              
+              )
+              ]
+              ),
         ),
-      )),
+      ),
     );
   }
 }
