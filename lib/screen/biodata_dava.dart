@@ -153,5 +153,9 @@ Widget _simpleInfo(String title, String value) {
   return ListTile(
     contentPadding: EdgeInsets.zero,
     title: Text(title, style: const TextStyle(color: Colors.grey)),
+    subtitle: Text(
+      value,
+      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+    ),
   );
 }
