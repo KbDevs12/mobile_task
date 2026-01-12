@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BiodataDava extends StatelessWidget {
   const BiodataDava({super.key});
@@ -128,6 +129,9 @@ class BiodataDava extends StatelessWidget {
                                 color: Colors.blue,
                               ),
                             ),
+                            trailing: const Icon(Icons.open_in_new, size: 18),
+                            onTap: () =>
+                                _launchUrl('https://github.com/annddvaa'),
                           ),
                         ],
                       ),
@@ -179,4 +183,9 @@ Widget _simpleInfo(String title, String value) {
       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
     ),
   );
+}
+
+Future<void> _launchUrl(String url) async {
+  final uri = Uri.parse(url);
+  await launchUrl(uri, mode: LaunchMode.externalApplication);
 }
