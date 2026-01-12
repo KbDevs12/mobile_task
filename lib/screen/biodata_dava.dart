@@ -106,6 +106,11 @@ class BiodataDava extends StatelessWidget {
                         'Aplikasi ini dibuat sebagai bagian dari tugas akademik.',
                       ),
                     ),
+                    _sectionCard(
+                      title: 'Data Diri',
+                      icon: Icons.person_outline,
+                      child: Column(),
+                    ),
                   ],
                 ),
               ),
