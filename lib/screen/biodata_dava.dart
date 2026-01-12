@@ -123,6 +123,10 @@ Widget _sectionCard({
           children: [
             Icon(icon, color: Colors.blue),
             const SizedBox(width: 8),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ],
