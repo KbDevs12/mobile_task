@@ -5,60 +5,65 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(title: const Text('Anggota Kelompok')),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
         children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.teal.shade100,
-            child: const Icon(Icons.person, size: 60, color: Colors.teal),
+          _MemberCard(
+            name: 'Dava Ananda',
+            nim: '1123150164',
+            role: 'Anggota 1',
+            onTap: () {},
           ),
-          SizedBox(height: 12),
-          Text(
-            'Dava Ananda',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          const _MemberCard(
+            name: 'Fajri Khaerullah',
+            nim: '1123150166',
+            role: 'Anggota 2',
           ),
-          SizedBox(height: 4),
-          Text('Admin Atlet', style: TextStyle(color: Colors.grey[600])),
-          SizedBox(height: 20),
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.email),
-                  title: Text('Email'),
-                  subtitle: Text('dava@email.com'),
-                ),
-                Divider(height: 0),
-                ListTile(
-                  leading: Icon(Icons.phone),
-                  title: Text('No. HP'),
-                  subtitle: Text('0812-3456-7890'),
-                ),
-                Divider(height: 0),
-                ListTile(
-                  leading: Icon(Icons.badge),
-                  title: Text('Role'),
-                  subtitle: Text('Administrator'),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 20),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.logout),
-              label: const Text('Logout'),
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Logout berhasil')),
-                );
-              },
-            ),
+          const _MemberCard(name: 'Adit', nim: '1123150167', role: 'Anggota 3'),
+          const _MemberCard(
+            name: 'Dimas',
+            nim: '1123150168',
+            role: 'Anggota 4',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _MemberCard extends StatelessWidget {
+  final String name;
+  final String nim;
+  final String role;
+  final VoidCallback? onTap;
+
+  const _MemberCard({
+    required this.name,
+    required this.nim,
+    required this.role,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.only(bottom: 16),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: ListTile(
+        onTap: onTap,
+        contentPadding: const EdgeInsets.all(16),
+        leading: CircleAvatar(
+          backgroundColor: Colors.teal.shade100,
+          child: const Icon(Icons.person, color: Colors.teal),
+        ),
+        title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text('NIM: $nim\n$role'),
+        trailing: onTap != null
+            ? const Icon(Icons.arrow_forward_ios, size: 16)
+            : null,
       ),
     );
   }
