@@ -134,6 +134,24 @@ class BiodataDava extends StatelessWidget {
                             onTap: () =>
                                 _launchUrl('https://github.com/annddvaa'),
                           ),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: const Text(
+                              'LinkedIn',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            subtitle: const Text(
+                              'linkedin.com/in/dava-ananda',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.blue,
+                              ),
+                            ),
+                            trailing: const Icon(Icons.open_in_new, size: 18),
+                            onTap: () => _launchUrl(
+                              'https://www.linkedin.com/in/dava-ananda-569a13314/',
+                            ),
+                          ),
                         ],
                       ),
                     ),
