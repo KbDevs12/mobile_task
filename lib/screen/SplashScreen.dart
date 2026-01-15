@@ -39,7 +39,15 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 36),
-            Text('SPORT APP'),
+            Text(
+              'SPORT APP',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+                letterSpacing: 3,
+              ),
+            ),
           ],
         ),
       ),
