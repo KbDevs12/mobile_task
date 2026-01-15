@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/main.dart'; // For color constants
 import 'package:google_fonts/google_fonts.dart';
 
 class GradientAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -36,7 +35,9 @@ class GradientAppBar extends StatelessWidget implements PreferredSizeWidget {
           title,
           style: GoogleFonts.poppins(
             textStyle: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimary, // White text on primary background
+              color: Theme.of(
+                context,
+              ).colorScheme.onPrimary, // White text on primary background
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -44,7 +45,8 @@ class GradientAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         leading: leading,
         actions: actions,
-        backgroundColor: Colors.transparent, // Make AppBar background transparent
+        backgroundColor:
+            Colors.transparent, // Make AppBar background transparent
         elevation: 0, // No shadow from AppBar itself
         foregroundColor: Theme.of(context).colorScheme.onPrimary, // Icon color
         centerTitle: true,

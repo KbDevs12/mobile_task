@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/atlet.dart';
 import 'package:tugas_mobile/services/atlet_service.dart'; // Change to AtletService
@@ -23,21 +22,26 @@ class _AtletListScreenState extends State<AtletListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GradientAppBar(title: 'Daftar Atlet'),
-      body: StreamBuilder<List<Atlet>>( // Stream now returns List<Atlet> directly
+      body: StreamBuilder<List<Atlet>>(
+        // Stream now returns List<Atlet> directly
         // Menggunakan stream dari AtletService untuk mendapatkan data atlet secara real-time.
-        stream: _atletService.getAtletStream(), // Use getAtletStream from AtletService
+        stream: _atletService
+            .getAtletStream(), // Use getAtletStream from AtletService
         builder: (context, snapshot) {
           // Jika koneksi sedang menunggu data, tampilkan loading indicator.
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingListSkeleton(); // Use LoadingListSkeleton
           }
           // Jika tidak ada data, tampilkan pesan.
-          if (!snapshot.hasData || snapshot.data!.isEmpty) { // Check for empty list
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            // Check for empty list
             return const Center(child: Text('Belum ada data atlet.'));
           }
           // Jika terjadi error, tampilkan pesan error.
           if (snapshot.hasError) {
-            return Center(child: Text('Terjadi kesalahan: ${snapshot.error}')); // Show error message
+            return Center(
+              child: Text('Terjadi kesalahan: ${snapshot.error}'),
+            ); // Show error message
           }
 
           // Jika data berhasil didapat, bangun daftar atlet.
@@ -63,7 +67,9 @@ class _AtletListScreenState extends State<AtletListScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddEditAtletScreen(atletService: _atletService), // Pass AtletService
+              builder: (context) => AddEditAtletScreen(
+                atletService: _atletService,
+              ), // Pass AtletService
             ),
           );
         },
