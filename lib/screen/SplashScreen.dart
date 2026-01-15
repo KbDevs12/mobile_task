@@ -32,7 +32,11 @@ class SplashScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Icon(Icons.emoji_events_rounded, size: 90),
+              child: Icon(
+                Icons.emoji_events_rounded,
+                size: 90,
+                color: Color(0xff991B1B),
+              ),
             ),
           ],
         ),
