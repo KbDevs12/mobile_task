@@ -49,7 +49,10 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            Text('Manage Athletes & Sports Data'),
+            Text(
+              'Manage Athletes & Sports Data',
+              style: TextStyle(fontSize: 14),
+            ),
           ],
         ),
       ),
