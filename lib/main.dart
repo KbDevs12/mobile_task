@@ -4,8 +4,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tugas_mobile/screen/dashboard.dart';
 import 'package:tugas_mobile/screen/splash_adit.dart';
-
+import 'services/local_notification_service.dart';
 import 'firebase_options.dart';
 
 const Color primaryBlue = Color(0xFF2563EB);
@@ -38,7 +39,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _initFCM();
-    _listenTokenRefresh();
+    // _listenTokenRefresh();
     _setupFCMListeners();
   }
 
@@ -57,19 +58,19 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Future<void> _saveTokenToFirestore(String token) async {
-    await FirebaseFirestore.instance.collection('fcm_tokens').doc(token).set({
-      'token': token,
-      'platform': Platform.isAndroid ? 'android' : 'ios',
-      'updatedAt': FieldValue.serverTimestamp(),
-    }, SetOptions(merge: true));
-  }
+  // Future<void> _saveTokenToFirestore(String token) async {
+  //   await FirebaseFirestore.instance.collection('fcm_tokens').doc(token).set({
+  //     'token': token,
+  //     'platform': Platform.isAndroid ? 'android' : 'ios',
+  //     'updatedAt': FieldValue.serverTimestamp(),
+  //   }, SetOptions(merge: true));
+  // }
 
-  void _listenTokenRefresh() {
-    FirebaseMessaging.instance.onTokenRefresh.listen((token) async {
-      await _saveTokenToFirestore(token);
-    });
-  }
+  // void _listenTokenRefresh() {
+  //   FirebaseMessaging.instance.onTokenRefresh.listen((token) async {
+  //     await _saveTokenToFirestore(token);
+  //   });
+  // }
 
   void _setupFCMListeners() {
     FirebaseMessaging.onMessage.listen((message) {
@@ -77,10 +78,14 @@ class _MyAppState extends State<MyApp> {
         '📩 Foreground notification: '
         '${message.notification?.title}',
       );
+
+      LocalNotificationService.show(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      navigatorKey.currentState?.pushNamed('/main');
+      navigatorKey.currentState?.push(
+        MaterialPageRoute(builder: (context) => Dashboard()),
+      );
     });
   }
 

@@ -15,4 +15,25 @@ class LocalNotificationService {
 
     await _notificationsPlugin.initialize(settings);
   }
+
+  static Future<void> show(RemoteMessage message) async {
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          "default_channel",
+          "Default Notifications",
+          importance: Importance.high,
+          priority: Priority.high,
+        );
+
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidDetails,
+    );
+
+    await _notificationsPlugin.show(
+      message.notification?.hashCode ?? 0,
+      message.notification?.title,
+      message.notification?.body,
+      notificationDetails,
+    );
+  }
 }
