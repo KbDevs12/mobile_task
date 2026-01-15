@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/screen/dashboard.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -80,6 +81,9 @@ class SplashScreen extends StatelessWidget {
                       ),
                     );
                   },
+                  child: Text(
+                    'GET STARTED',
+                  ),
                 ),
               ),
             ),
