@@ -20,8 +20,9 @@ class SplashScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              
-            )
+              padding: const EdgeInsets.all(34),
+              decoration: BoxDecoration(),
+            ),
           ],
         ),
       ),
