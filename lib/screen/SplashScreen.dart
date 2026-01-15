@@ -7,12 +7,14 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: double.infinity, 
+        width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          
+          gradient: LinearGradient(
+            colors: [Color(0xff991B1B), Color(0xff020617)],
+          ),
         ),
-        ),
+      ),
     );
   }
 }
