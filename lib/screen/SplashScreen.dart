@@ -38,6 +38,7 @@ class SplashScreen extends StatelessWidget {
                 color: Color(0xff991B1B),
               ),
             ),
+            SizedBox(height: 36),
           ],
         ),
       ),
