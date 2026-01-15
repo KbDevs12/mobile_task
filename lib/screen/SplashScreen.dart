@@ -61,7 +61,13 @@ class SplashScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: SizedBox(
-                 width: double.infinity,
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    elevation: 10,
+                  ),
+                ),
               ),
             ),
           ],
