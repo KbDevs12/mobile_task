@@ -16,6 +16,9 @@ class SplashScreen extends StatelessWidget {
             end: Alignment.bottomRight,
           ),
         ),
+        child: Column(
+          
+        ),
       ),
     );
   }
