@@ -57,9 +57,9 @@ class _LoginPageState extends State<LoginPage> {
       }
 
       await http.post(
-        Uri.parse("https://firebase-api-pi.vercel.app/"),
+        Uri.parse("https://firebase-api-pi.vercel.app/login-success"),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"uid": user.uid, "fcm_token": fcmToken}),
+        body: jsonEncode({"userId": user.uid, "fcmToken": fcmToken}),
       );
 
       if (!mounted) return;
