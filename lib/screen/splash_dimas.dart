@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/screen/login_page.dart';
 import 'splash_fajri.dart';
 
 class SplashDimas extends StatefulWidget {

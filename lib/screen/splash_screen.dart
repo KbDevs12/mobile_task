@@ -3,14 +3,14 @@ import "package:firebase_auth/firebase_auth.dart";
 import './login_page.dart';
 import "./dashboard.dart";
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class SplashScreens extends StatefulWidget {
+  const SplashScreens({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreens> createState() => _SplashScreensState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreensState extends State<SplashScreens> {
   @override
   void initState() {
     super.initState();
