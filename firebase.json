@@ -1,1 +1,39 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"tugas-mobile-67672","appId":"1:340022226838:android:8234abb4fbd1e0713ef7b7","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"tugas-mobile-67672","configurations":{"android":"1:340022226838:android:8234abb4fbd1e0713ef7b7","ios":"1:340022226838:ios:3fec2370841d94f13ef7b7","macos":"1:340022226838:ios:3fec2370841d94f13ef7b7","web":"1:340022226838:web:b664a1ce340a5d963ef7b7","windows":"1:340022226838:web:8f87d2f8863b48563ef7b7"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "tugas-mobile-67672",
+          "appId": "1:340022226838:android:8234abb4fbd1e0713ef7b7",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "tugas-mobile-67672",
+          "configurations": {
+            "android": "1:340022226838:android:8234abb4fbd1e0713ef7b7",
+            "ios": "1:340022226838:ios:3fec2370841d94f13ef7b7",
+            "macos": "1:340022226838:ios:3fec2370841d94f13ef7b7",
+            "web": "1:340022226838:web:b664a1ce340a5d963ef7b7",
+            "windows": "1:340022226838:web:8f87d2f8863b48563ef7b7"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}

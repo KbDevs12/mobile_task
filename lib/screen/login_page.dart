@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tugas_mobile/screen/register_page.dart';
 import 'dashboard.dart';
 
 class LoginPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (_) => const Dashboard()),
       );
     } on FirebaseAuthException catch (e) {
-      String message = "An error occurred. Please try again." + e.message!;
+      String message = "An error occurred. Please try again.";
 
       if (e.code == 'user-not-found') {
         message = "No user found for that email.";
@@ -193,6 +194,20 @@ class _LoginPageState extends State<LoginPage> {
                       ),
               ),
               const SizedBox(height: 24),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterPage(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Don't have an account? Register",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
             ],
           ),
         ),
