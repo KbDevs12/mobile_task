@@ -48,6 +48,7 @@ class SplashScreen extends StatelessWidget {
                 letterSpacing: 3,
               ),
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),
