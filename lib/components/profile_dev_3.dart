@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/screen/biodata_dava.dart';
 
 class ProfileDev3 extends StatelessWidget {
   const ProfileDev3({super.key});
@@ -50,21 +51,29 @@ Widget _ProfileLayout(
         const SizedBox(height: 16),
         Text(description, textAlign: TextAlign.center),
         const SizedBox(height: 20),
-        Card(
-          child: Column(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.email),
-                title: const Text('Email'),
-                subtitle: Text(email),
-              ),
-              const Divider(height: 0),
-              ListTile(
-                leading: const Icon(Icons.phone),
-                title: const Text('No. HP'),
-                subtitle: Text(phone),
-              ),
-            ],
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BiodataDava()),
+            );
+          },
+          child: Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.email),
+                  title: const Text('Email'),
+                  subtitle: Text(email),
+                ),
+                const Divider(height: 0),
+                ListTile(
+                  leading: const Icon(Icons.phone),
+                  title: const Text('No. HP'),
+                  subtitle: Text(phone),
+                ),
+              ],
+            ),
           ),
         ),
       ],

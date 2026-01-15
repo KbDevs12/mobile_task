@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/screen/login_page.dart';
+import 'splash_fajri.dart';
 
 class SplashDimas extends StatefulWidget {
   const SplashDimas({super.key});
@@ -33,7 +34,7 @@ class _SplashDimasState extends State<SplashDimas>
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+        MaterialPageRoute(builder: (context) => const SplashFajri()),
       );
     });
   }

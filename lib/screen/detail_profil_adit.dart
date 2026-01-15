@@ -59,6 +59,10 @@ class DetailProfilAdit extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
+                        Text("NIM: 1123150159"),
+                        SizedBox(height: 10),
+                        Text("Kelas: TI SE 23 P 2"),
+                        SizedBox(height: 10),
                         Text(
                           'Responsible for application UI consistency, '
                           'user experience, and design implementation '
