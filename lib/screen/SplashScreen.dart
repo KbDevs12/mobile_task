@@ -58,7 +58,12 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 70),
-            Padding(padding: EdgeInsets.symmetric(horizontal: 40)),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: SizedBox(
+                 width: double.infinity,
+              ),
+            ),
           ],
         ),
       ),
