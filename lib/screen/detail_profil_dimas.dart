@@ -42,7 +42,7 @@ class DetailProfilDimas extends StatelessWidget {
                       child: Opacity(
                         opacity: 0.1,
                         child: Image.asset(
-                          'assets/images/profile_background.png',
+                          'assets/images/dimas.png',
                           repeat: ImageRepeat.repeat,
                           errorBuilder: (context, error, stackTrace) {
                             return Container();
