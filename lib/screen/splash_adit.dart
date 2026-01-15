@@ -44,7 +44,32 @@ class _SplashAditState extends State<SplashAdit>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-    )
+      backgroundColor: const Color(0xFF3CB371),
+      body: Center(
+        child: ScaleTransition(
+          scale: _scale,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.sports, size: 100, color: Colors.white),
+              const SizedBox(height: 20),
+              const Text(
+                "Manajement Atlet",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                "Kelola atlet Anda dengan mudah",
+                style: TextStyle(color: Colors.white70, fontSize: 16),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
