@@ -89,10 +89,9 @@ class DetailProfilDimas extends StatelessWidget {
                             child: CircleAvatar(
                               radius: 65,
                               backgroundColor: Colors.indigo.shade100,
-                              child: const Icon(
-                                Icons.person,
-                                size: 70,
-                                color: Colors.indigo,
+                              child: Image.asset(
+                                'assets/images/dimas.png',
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),

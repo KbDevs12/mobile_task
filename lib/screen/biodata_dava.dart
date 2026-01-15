@@ -1,8 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/screen/login_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BiodataDava extends StatelessWidget {
   const BiodataDava({super.key});
+
+  void logout(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +29,7 @@ class BiodataDava extends StatelessWidget {
                     height: 260,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/bgprofile.jpg'),
+                        image: AssetImage('assets/images/dava.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -56,9 +66,7 @@ class BiodataDava extends StatelessWidget {
                         backgroundColor: Colors.white,
                         child: CircleAvatar(
                           radius: 48,
-                          backgroundImage: AssetImage(
-                            'assets/images/fotoprofile.jpeg',
-                          ),
+                          backgroundImage: AssetImage('assets/images/dava.png'),
                         ),
                       ),
                       SizedBox(height: 12),
@@ -176,7 +184,10 @@ class BiodataDava extends StatelessWidget {
                       'Logout',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                      logout(context);
+                    },
                   ),
                 ),
               ),

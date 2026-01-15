@@ -12,7 +12,7 @@ class ProfileDev2 extends StatelessWidget {
       role: 'Backend & Firebase Developer',
       email: 'fajrisantuy23@gmail.com',
       phone: '0855-4527-3945',
-      imagePath: 'assets/images/fajri.jpg',
+      imagePath: 'assets/images/fajri.png',
       description:
           'Bertanggung jawab atas integrasi Firebase, autentikasi pengguna, '
           'serta pengelolaan database Firestore.',

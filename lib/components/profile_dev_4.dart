@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/screen/detail_profil_dimas.dart';
 
 class ProfileDev4 extends StatelessWidget {
   const ProfileDev4({super.key});
@@ -10,8 +11,8 @@ class ProfileDev4 extends StatelessWidget {
       name: 'Dimas Prasetyo',
       role: 'Project Manager & System Analyst',
       email: 'dimas@email.com',
-      phone: '0812-5555-6666',
-      imagePath: 'assets/images/dimas.jpg',
+      phone: '0895-8015-70384',
+      imagePath: 'assets/images/dimas.png',
       description:
           'Mengatur alur pengembangan aplikasi, menganalisis kebutuhan sistem, '
           'dan memastikan project berjalan sesuai rencana.',
@@ -50,21 +51,33 @@ Widget _ProfileLayout(
         const SizedBox(height: 16),
         Text(description, textAlign: TextAlign.center),
         const SizedBox(height: 20),
-        Card(
-          child: Column(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.email),
-                title: const Text('Email'),
-                subtitle: Text(email),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const DetailProfilDimas();
+                },
               ),
-              const Divider(height: 0),
-              ListTile(
-                leading: const Icon(Icons.phone),
-                title: const Text('No. HP'),
-                subtitle: Text(phone),
-              ),
-            ],
+            );
+          },
+          child: Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.email),
+                  title: const Text('Email'),
+                  subtitle: Text(email),
+                ),
+                const Divider(height: 0),
+                ListTile(
+                  leading: const Icon(Icons.phone),
+                  title: const Text('No. HP'),
+                  subtitle: Text(phone),
+                ),
+              ],
+            ),
           ),
         ),
       ],

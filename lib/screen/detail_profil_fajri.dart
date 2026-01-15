@@ -1,7 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/screen/login_page.dart';
 
 class DetailProfilFajri extends StatelessWidget {
   const DetailProfilFajri({super.key});
+
+  void logout(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +27,7 @@ class DetailProfilFajri extends StatelessWidget {
             const CircleAvatar(
               radius: 60,
               backgroundColor: Colors.teal,
-              child: Icon(Icons.person, size: 60, color: Colors.white),
+              child: Image(image: AssetImage('assets/images/fajri.png')),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -55,6 +65,14 @@ class DetailProfilFajri extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                logout(context);
+              },
+              child: Text('Logout'),
             ),
           ],
         ),

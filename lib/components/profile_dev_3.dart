@@ -10,9 +10,9 @@ class ProfileDev3 extends StatelessWidget {
       context,
       name: 'Dava Ananda',
       role: 'UI/UX & Frontend Developer',
-      email: 'dava@email.com',
-      phone: '0812-3333-4444',
-      imagePath: 'assets/images/dava.jpg',
+      email: 'anandadava93@gmail.com',
+      phone: '0896-1997-7790',
+      imagePath: 'assets/images/dava.png',
       description:
           'Mengembangkan antarmuka aplikasi Flutter, memastikan tampilan '
           'responsif, konsisten, dan mudah digunakan.',
