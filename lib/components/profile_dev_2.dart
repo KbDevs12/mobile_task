@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screen/detail_profil_fajri.dart';
 
 class ProfileDev2 extends StatelessWidget {
   const ProfileDev2({super.key});
@@ -50,22 +51,32 @@ Widget _ProfileLayout(
         const SizedBox(height: 16),
         Text(description, textAlign: TextAlign.center),
         const SizedBox(height: 20),
-        Card(
-          child: Column(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.email),
-                title: const Text('Email'),
-                subtitle: Text(email),
-              ),
-              const Divider(height: 0),
-              ListTile(
-                leading: const Icon(Icons.phone),
-                title: const Text('No. HP'),
-                subtitle: Text(phone),
-              ),
-            ],
+        InkWell(
+          child: Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.email),
+                  title: const Text('Email'),
+                  subtitle: Text(email),
+                ),
+                const Divider(height: 0),
+                ListTile(
+                  leading: const Icon(Icons.phone),
+                  title: const Text('No. HP'),
+                  subtitle: Text(phone),
+                ),
+              ],
+            ),
           ),
+          onTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DetailProfilFajri(),
+              ),
+            ),
+          },
         ),
       ],
     ),

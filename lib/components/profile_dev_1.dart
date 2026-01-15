@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/screen/detail_profil_adit.dart';
 
 class ProfileDev1 extends StatelessWidget {
   const ProfileDev1({super.key});
@@ -30,17 +31,27 @@ class ProfileDev1 extends StatelessWidget {
               ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
             ),
             const SizedBox(height: 24),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  'Bertanggung jawab atas perancangan sistem, '
-                  'koordinasi tim, serta pengambilan keputusan teknis '
-                  'pada aplikasi Atlet Manager.',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
+            InkWell(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    'Bertanggung jawab atas perancangan sistem, '
+                    'koordinasi tim, serta pengambilan keputusan teknis '
+                    'pada aplikasi Atlet Manager.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DetailProfilAdit(),
+                  ),
+                );
+              },
             ),
           ],
         ),
