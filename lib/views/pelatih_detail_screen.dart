@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_mobile/models/pelatih.dart';
 import 'package:tugas_mobile/services/pelatih_service.dart';
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
 
 class PelatihDetailScreen extends StatelessWidget {
   final String pelatihId;
@@ -12,9 +12,7 @@ class PelatihDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GradientAppBar(
-        title: 'Detail Pelatih',
-      ),
+      appBar: GradientAppBar(title: 'Detail Pelatih'),
       body: FutureBuilder<Pelatih?>(
         future: _pelatihService.getPelatihById(pelatihId),
         builder: (context, snapshot) {
@@ -33,7 +31,9 @@ class PelatihDetailScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Card(
               elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -41,13 +41,19 @@ class PelatihDetailScreen extends StatelessWidget {
                   children: [
                     Text(
                       pelatih.nama,
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const Divider(),
-                    _buildDetailRow('Cabang Olahraga', pelatih.cabangOlahraga),
+                    // _buildDetailRow('Cabang Olahraga', pelatih.cabangOlahraga),
                     _buildDetailRow('Umur', '${pelatih.umur} tahun'),
                     _buildDetailRow('Jenis Kelamin', pelatih.jenisKelamin),
-                    _buildDetailRow('Pengalaman', '${pelatih.pengalamanTahun} tahun'),
+                    _buildDetailRow(
+                      'Pengalaman',
+                      '${pelatih.pengalamanTahun} tahun',
+                    ),
                   ],
                 ),
               ),
@@ -71,12 +77,9 @@ class PelatihDetailScreen extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          Expanded(
-            child: Text(value),
-          ),
+          Expanded(child: Text(value)),
         ],
       ),
     );
   }
 }
-

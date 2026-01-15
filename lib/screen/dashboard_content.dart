@@ -18,7 +18,7 @@ class DashboardContent extends StatefulWidget {
 }
 
 class _DashboardContentState extends State<DashboardContent> {
-  String? expandedSportId; 
+  String? expandedSportId;
   final AtletService _atletService = AtletService();
   final PelatihService _pelatihService = PelatihService();
   final CabangOlahragaService _cabangOlahragaService = CabangOlahragaService();
@@ -34,14 +34,16 @@ class _DashboardContentState extends State<DashboardContent> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PelatihDetailScreen(pelatihId: cabangOlahraga.pelatihId!),
+                    builder: (context) => PelatihDetailScreen(
+                      pelatihId: cabangOlahraga.pelatihId!,
+                    ),
                   ),
                 );
               }
             },
             child: InfoCard(
               title: 'Pelatih',
-              value: cabangOlahraga.pelatihNama, 
+              value: cabangOlahraga.pelatihNama,
               icon: Icons.person,
             ),
           ),
@@ -59,7 +61,9 @@ class _DashboardContentState extends State<DashboardContent> {
               );
             },
             child: StreamBuilder<int>(
-              stream: _atletService.getAtletCountByCabangOlahraga(cabangOlahraga.id!),
+              stream: _atletService.getAtletCountByCabangOlahraga(
+                cabangOlahraga.id!,
+              ),
               builder: (context, snapshot) {
                 final count = snapshot.data ?? 0;
                 return InfoCard(
@@ -112,13 +116,10 @@ class _DashboardContentState extends State<DashboardContent> {
             ),
             SizedBox(height: 20),
             const Text(
-            'Cabang Olahraga',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+              'Cabang Olahraga',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-          ),
-const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
             StreamBuilder<List<CabangOlahraga>>(
               stream: _cabangOlahragaService.getCabang(),
@@ -136,8 +137,8 @@ const SizedBox(height: 12),
                 final cabangOlahragaList = snapshot.data!;
 
                 return ListView.builder(
-                  shrinkWrap: true, // Important for nested ListView
-                  physics: const NeverScrollableScrollPhysics(), // Important for nested ListView
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: cabangOlahragaList.length,
                   itemBuilder: (context, index) {
                     final cabangOlahraga = cabangOlahragaList[index];
@@ -145,10 +146,11 @@ const SizedBox(height: 12),
                       children: [
                         SportTile(
                           name: cabangOlahraga.namaCabang,
-                          icon: Icons.fitness_center, // Generic icon for now
+                          icon: Icons.fitness_center,
                           onTap: () {
                             setState(() {
-                              expandedSportId = expandedSportId == cabangOlahraga.id
+                              expandedSportId =
+                                  expandedSportId == cabangOlahraga.id
                                   ? null
                                   : cabangOlahraga.id;
                             });
