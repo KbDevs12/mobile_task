@@ -66,6 +66,7 @@ class SplashScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     elevation: 10,
+                    shadowColor: Colors.black.withOpacity(0.3),
                   ),
                 ),
               ),
