@@ -67,7 +67,19 @@ class SplashScreen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     elevation: 10,
                     shadowColor: Colors.black.withOpacity(0.3),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Dashboard(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
