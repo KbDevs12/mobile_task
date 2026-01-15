@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (_) => const Dashboard()),
       );
     } on FirebaseAuthException catch (e) {
-      String message = "An error occurred. Please try again.";
+      String message = "An error occurred. Please try again." + e.message!;
 
       if (e.code == 'user-not-found') {
         message = "No user found for that email.";

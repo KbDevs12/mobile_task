@@ -41,7 +41,11 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FlutterLogo(size: 80),
+            Image(
+              image: AssetImage("assets/logo.png"),
+              width: 150,
+              height: 150,
+            ),
             SizedBox(height: 16),
             CircularProgressIndicator(),
           ],

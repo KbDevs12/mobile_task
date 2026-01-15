@@ -1,24 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_mobile/models/pelatih.dart';
+import 'package:tugas_mobile/services/pelatih_service.dart';
+import 'package:tugas_mobile/views/add_edit_pelatih_screen.dart';
+import 'package:tugas_mobile/widgets/pelatih_list_tile.dart';
+import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
+import 'package:tugas_mobile/widgets/loading_skeleton.dart';
 
-class PelatihListScreen extends StatelessWidget {
+class PelatihListScreen extends StatefulWidget {
   const PelatihListScreen({super.key});
+
+  @override
+  State<PelatihListScreen> createState() => _PelatihListScreenState();
+}
+
+class _PelatihListScreenState extends State<PelatihListScreen> {
+  final PelatihService _pelatihService = PelatihService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Daftar Pelatih'),
-      ),
-      body: const Center(
-        child: Text(
-          'Halaman untuk menampilkan daftar pelatih.',
-          style: TextStyle(fontSize: 18),
-        ),
+      appBar: GradientAppBar(title: 'Daftar Pelatih'),
+      body: StreamBuilder<List<Pelatih>>(
+        stream: _pelatihService.getPelatih(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingListSkeleton();
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('Belum ada data pelatih.'));
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Terjadi kesalahan: ${snapshot.error}'));
+          }
+
+          final pelatihList = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: pelatihList.length,
+            itemBuilder: (context, index) {
+              final pelatih = pelatihList[index];
+              return PelatihListTile(
+                pelatih: pelatih,
+                pelatihService: _pelatihService,
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: Implement navigation to add coach screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  AddEditPelatihScreen(pelatihService: _pelatihService),
+            ),
+          );
         },
+        tooltip: 'Tambah Pelatih',
         child: const Icon(Icons.add),
       ),
     );
