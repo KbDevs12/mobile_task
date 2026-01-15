@@ -54,10 +54,6 @@ class _MyAppState extends State<MyApp> {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       final token = await messaging.getToken();
       debugPrint('✅ FCM Token: $token');
-
-      if (token != null) {
-        await _saveTokenToFirestore(token);
-      }
     }
   }
 
