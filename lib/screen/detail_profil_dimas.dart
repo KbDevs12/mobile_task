@@ -1,9 +1,17 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'login_page.dart';
 
 class DetailProfilDimas extends StatelessWidget {
   const DetailProfilDimas({super.key});
+
+  void logout(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +77,7 @@ class DetailProfilDimas extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 6),
+                              border: Border.all(color: Colors.white, width: 6),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.indigo.withOpacity(0.3),
@@ -162,8 +170,7 @@ class DetailProfilDimas extends StatelessWidget {
                             height: 1.4,
                           ),
                         ),
-                      )
-
+                      ),
                     ],
                   ),
                 ),
@@ -173,33 +180,30 @@ class DetailProfilDimas extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [
-                          Colors.indigo.shade50,
-                          Colors.blue.shade50,
-                        ],
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        blurRadius: 15,
-                        spreadRadius: 2,
+                        colors: [Colors.indigo.shade50, Colors.blue.shade50],
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _buildStatItem('24', 'Projects', Icons.folder_special),
-                      _buildVerticalDivider(),
-                      _buildStatItem('1.5K', 'Followers', Icons.people),
-                      _buildVerticalDivider(),
-                      _buildStatItem('342', 'Following', Icons.person_add),
-                    ],
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          blurRadius: 15,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _buildStatItem('24', 'Projects', Icons.folder_special),
+                        _buildVerticalDivider(),
+                        _buildStatItem('1.5K', 'Followers', Icons.people),
+                        _buildVerticalDivider(),
+                        _buildStatItem('342', 'Following', Icons.person_add),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-               // Personal Information Section
+                // Personal Information Section
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -213,7 +217,7 @@ class DetailProfilDimas extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      
+
                       _buildInfoCard(
                         icon: Icons.email_rounded,
                         title: 'Email',
@@ -221,8 +225,8 @@ class DetailProfilDimas extends StatelessWidget {
                         color: Colors.red,
                         onTap: () {},
                       ),
-const SizedBox(height: 12),
-                      
+                      const SizedBox(height: 12),
+
                       _buildInfoCard(
                         icon: Icons.phone_android,
                         title: 'Phone',
@@ -231,7 +235,7 @@ const SizedBox(height: 12),
                         onTap: () {},
                       ),
                       const SizedBox(height: 12),
-                      
+
                       _buildInfoCard(
                         icon: Icons.cake_rounded,
                         title: 'Birthday',
@@ -240,7 +244,7 @@ const SizedBox(height: 12),
                         onTap: () {},
                       ),
                       const SizedBox(height: 12),
-                      
+
                       _buildInfoCard(
                         icon: Icons.location_on_rounded,
                         title: 'Location',
@@ -249,7 +253,7 @@ const SizedBox(height: 12),
                         onTap: () {},
                       ),
                       const SizedBox(height: 12),
-                      
+
                       _buildInfoCard(
                         icon: Icons.work_rounded,
                         title: 'Company',
@@ -258,7 +262,7 @@ const SizedBox(height: 12),
                         onTap: () {},
                       ),
                       const SizedBox(height: 12),
-                      
+
                       _buildInfoCard(
                         icon: Icons.school_rounded,
                         title: 'Education',
@@ -266,7 +270,7 @@ const SizedBox(height: 12),
                         color: Colors.teal,
                         onTap: () {},
                       ),
-                      
+
                       const SizedBox(height: 30),
 
                       // Skills Section
@@ -278,7 +282,7 @@ const SizedBox(height: 12),
                         ),
                       ),
                       const SizedBox(height: 15),
-                      
+
                       Wrap(
                         spacing: 10,
                         runSpacing: 10,
@@ -305,7 +309,7 @@ const SizedBox(height: 12),
                         ),
                       ),
                       const SizedBox(height: 15),
-                      
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -345,7 +349,9 @@ const SizedBox(height: 12),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.indigo,
                                 foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
@@ -363,7 +369,9 @@ const SizedBox(height: 12),
                               label: const Text('Share'),
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: Colors.indigo,
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
@@ -416,10 +424,7 @@ const SizedBox(height: 12),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            side: const BorderSide(
-                              color: Colors.red,
-                              width: 2,
-                            ),
+                            side: const BorderSide(color: Colors.red, width: 2),
                           ),
                         ),
                       ),
@@ -436,14 +441,10 @@ const SizedBox(height: 12),
     );
   }
 
-Widget _buildStatItem(String value, String label, IconData icon) {
+  Widget _buildStatItem(String value, String label, IconData icon) {
     return Column(
       children: [
-        Icon(
-          icon,
-          color: Colors.indigo,
-          size: 28,
-        ),
+        Icon(icon, color: Colors.indigo, size: 28),
         const SizedBox(height: 8),
         Text(
           value,
@@ -456,23 +457,16 @@ Widget _buildStatItem(String value, String label, IconData icon) {
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(
-            fontSize: 13,
-            color: Colors.grey.shade600,
-          ),
+          style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
         ),
       ],
     );
   }
 
   Widget _buildVerticalDivider() {
-    return Container(
-      height: 60,
-      width: 1,
-      color: Colors.grey.shade300,
-    );
+    return Container(height: 60, width: 1, color: Colors.grey.shade300);
   }
-  
+
   Widget _buildInfoCard({
     required IconData icon,
     required String title,
@@ -497,7 +491,7 @@ Widget _buildStatItem(String value, String label, IconData icon) {
             ),
           ],
         ),
- child: Row(
+        child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(12),
@@ -505,11 +499,7 @@ Widget _buildStatItem(String value, String label, IconData icon) {
                 color: color.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(
-                icon,
-                color: color,
-                size: 26,
-              ),
+              child: Icon(icon, color: color, size: 26),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -546,16 +536,14 @@ Widget _buildStatItem(String value, String label, IconData icon) {
       ),
     );
   }
+
   Widget _buildSkillChip(String label, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: color.withOpacity(0.3),
-          width: 1.5,
-        ),
+        border: Border.all(color: color.withOpacity(0.3), width: 1.5),
       ),
       child: Text(
         label,
@@ -582,9 +570,7 @@ Widget _buildStatItem(String value, String label, IconData icon) {
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: color.withOpacity(0.3),
-          ),
+          border: Border.all(color: color.withOpacity(0.3)),
         ),
         child: Column(
           children: [
@@ -603,13 +589,12 @@ Widget _buildStatItem(String value, String label, IconData icon) {
       ),
     );
   }
+
   void _showEditDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Edit Profile'),
         content: const Text('Fitur edit profile akan segera hadir!'),
         actions: [
@@ -621,13 +606,12 @@ Widget _buildStatItem(String value, String label, IconData icon) {
       ),
     );
   }
+
   void _showShareDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Share Profile'),
         content: const Text('Pilih platform untuk membagikan profile Anda'),
         actions: [
@@ -643,13 +627,12 @@ Widget _buildStatItem(String value, String label, IconData icon) {
       ),
     );
   }
+
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Logout'),
         content: const Text('Apakah Anda yakin ingin keluar?'),
         actions: [
@@ -660,11 +643,9 @@ Widget _buildStatItem(String value, String label, IconData icon) {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              // Tambahkan logika logout di sini
+              logout(context);
             },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Logout'),
           ),
         ],
@@ -672,41 +653,35 @@ Widget _buildStatItem(String value, String label, IconData icon) {
     );
   }
 
-
-
-
-
-
-
-void _showMoreOptions(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    builder: (context) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.qr_code),
-            title: const Text('Show QR Code'),
-            onTap: () => Navigator.pop(context),
-          ),
-          ListTile(
-            leading: const Icon(Icons.download),
-            title: const Text('Download Profile'),
-            onTap: () => Navigator.pop(context),
-          ),
-          ListTile(
-            leading: const Icon(Icons.report),
-            title: const Text('Report Issue'),
-            onTap: () => Navigator.pop(context),
-          ),
-        ],
+  void _showMoreOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-    ),
-  );
-}
+      builder: (context) => Container(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.qr_code),
+              title: const Text('Show QR Code'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.download),
+              title: const Text('Download Profile'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.report),
+              title: const Text('Report Issue'),
+              onTap: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
