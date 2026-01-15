@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tugas_mobile/screen/register_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'dashboard.dart';
 
 class LoginPage extends StatefulWidget {
@@ -32,9 +36,30 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => loading = true);
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      final user = userCredential.user;
+      if (user == null) {
+        throw FirebaseAuthException(
+          code: 'user-not-found',
+          message: 'No user found for that email.',
+        );
+      }
+
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'email': user.email,
+          'fcm_token': FieldValue.arrayUnion([fcmToken]),
+          'updated_at': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      }
+
+      await http.post(
+        Uri.parse("https://firebase-api-pi.vercel.app/"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"uid": user.uid, "fcm_token": fcmToken}),
       );
 
       if (!mounted) return;
