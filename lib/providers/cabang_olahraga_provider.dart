@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/cabang_olahraga.dart';
-import '../services/cabang_olahraga.dart'; // Correct import
-import 'package:cloud_firestore/cloud_firestore.dart'; // For DocumentSnapshot
+import '../services/cabang_olahraga.dart';
 
 class CabangOlahragaProvider with ChangeNotifier {
   final CabangOlahragaService _cabangOlahragaService = CabangOlahragaService();
-  
+
   List<CabangOlahraga> _cabangOlahragaList = [];
   String? _errorMessage;
 
@@ -14,7 +13,9 @@ class CabangOlahragaProvider with ChangeNotifier {
 
   Stream<List<CabangOlahraga>> get cabangOlahragaStream {
     return _cabangOlahragaService.getCabang().map((snapshot) {
-      _cabangOlahragaList = snapshot.map((cabangOlahraga) => cabangOlahraga).toList();
+      _cabangOlahragaList = snapshot
+          .map((cabangOlahraga) => cabangOlahraga)
+          .toList();
       notifyListeners();
       return _cabangOlahragaList;
     });
@@ -38,7 +39,10 @@ class CabangOlahragaProvider with ChangeNotifier {
       if (cabangOlahraga.id == null) {
         throw Exception("CabangOlahraga ID cannot be null for update.");
       }
-      await _cabangOlahragaService.updateCabang(cabangOlahraga.id!, cabangOlahraga);
+      await _cabangOlahragaService.updateCabang(
+        cabangOlahraga.id!,
+        cabangOlahraga,
+      );
       _errorMessage = null;
       notifyListeners();
       return true;
