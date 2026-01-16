@@ -12,18 +12,18 @@ https://global.ac.id/
 
 </div>
 
-## 📋 Project UAS
+## Project UAS
 
 - **Mata Kuliah** : Aplikasi Mobile
 - **Kelas** : TI SE 23 P 2
 - **Semester** : GANJIL
 - **Tahun Akademik** : 2025 - 2026
 
-## 📖 About The Project
+## About The Project
 
 **Atlet Manager** adalah aplikasi manajemen olahraga yang memudahkan pengelolaan data pelatih, atlet, dan cabang olahraga. Aplikasi ini dirancang untuk membantu klub atau organisasi olahraga agar administrasi menjadi lebih efisien dan terstruktur.
 
-### ✨ Key Features
+### Key Features
 
 - **Modern UI/UX Design** - Antarmuka yang clean dan user-friendly
 - **Manajemen Pelatih** - Kelola data pelatih dengan mudah dan terstruktur
@@ -35,7 +35,7 @@ https://global.ac.id/
 - **Search & Filter** - Pencarian cepat data pelatih dan atlet
 - **Offline Mode** - Akses data tanpa koneksi internet
 
-## 📱 Screenshots
+## Screenshots
 
 <div align="center">
   <img src="screenshots/splash_screen.png" alt="Splash Screen" width="200"/>
@@ -50,7 +50,7 @@ https://global.ac.id/
   <img src="screenshots/sport_category.png" alt="Sport Category" width="200"/>
 </div>
 
-## 🎥 Demo Video
+## Demo Video
 
 Lihat video demo aplikasi kami untuk melihat semua fitur dalam aksi!
 
@@ -58,7 +58,7 @@ Lihat video demo aplikasi kami untuk melihat semua fitur dalam aksi!
 
 Alternative link: **[Google Drive Demo](https://drive.google.com/file/d/YOUR_FILE_ID/view)**
 
-## 📥 Download APK
+## Download APK
 
 Download versi terbaru aplikasi Atlet Manager:
 
@@ -71,7 +71,7 @@ Download versi terbaru aplikasi Atlet Manager:
 - Android 6.0 (API level 23) or higher
 - ~25MB free storage space
 
-## 🛠️ Built With
+## Built With
 
 - **[Flutter](https://flutter.dev/)** - UI Framework
 - **[Dart](https://dart.dev/)** - Programming Language
@@ -79,7 +79,7 @@ Download versi terbaru aplikasi Atlet Manager:
 - **[Firebase Realtime Database](https://firebase.google.com/products/realtime-database)** - Cloud Database
 - **[Provider](https://pub.dev/packages/provider)** - State Management
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -132,7 +132,7 @@ flutter build apk --release
 flutter build apk --split-per-abi
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 lib/
@@ -194,7 +194,7 @@ lib/
     └── sport_tile.dart
 ```
 
-## 🔐 Authentication Flow
+## Authentication Flow
 
 ```
 1. Splash Screen (Auto-login check)
@@ -209,7 +209,7 @@ lib/
 4. Profile & Settings
 ```
 
-## 🗄️ Database Schema (Firestore)
+## Database Schema (Firestore)
 
 ### Collection: `pelatih`
 
@@ -269,7 +269,7 @@ lib/
 }
 ```
 
-## 🤝 Development Workflow
+## Development Workflow
 
 1. Fork repository
 2. Create feature branch (`git checkout -b feature/AmazingFeature`)
@@ -277,7 +277,7 @@ lib/
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open Pull Request
 
-## 👥 Team Members & Contributions
+## Team Members & Contributions
 
 ### Development Team
 
@@ -288,11 +288,11 @@ lib/
 | **Fajri Khaerullah**     | Full Stack Developer             | - Splash screen<br>- Register screen<br>- Notification system<br>- Push notifications (FCM)       |
 | **Dimas Prasetyo**       | Mobile Developer                 | - Login screen<br>- Sport category management<br>- Search & filter features<br>- Testing & QA     |
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Flutter Community](https://flutter.dev/community) - For amazing packages
 - [Firebase](https://firebase.google.com/) - For backend services
