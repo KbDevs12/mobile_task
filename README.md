@@ -46,7 +46,7 @@ https://global.ac.id/
 
 <div align="center">
   <img src="screenshots/coach_list.png" alt="Coach List" width="200"/>
-  <img src="screenshots/athlete_list_detail.png" alt="Athlete List" width="200"/>
+  <img src="screenshots/athlete_list_.png" alt="Athlete List" width="200"/>
   <img src="screenshots/sport_category.png" alt="Sport Category" width="200"/>
 </div>
 
