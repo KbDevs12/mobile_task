@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/screen/detail_profil_dimas.dart';
+import 'package:atlet_manager/screen/detail_profil_dimas.dart';
 
 class ProfileDev4 extends StatelessWidget {
   const ProfileDev4({super.key});

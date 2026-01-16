@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/pelatih.dart';
-import 'package:tugas_mobile/services/pelatih_service.dart';
-import 'package:tugas_mobile/utils/notifikasi.dart';
-import 'package:tugas_mobile/views/add_edit_pelatih_screen.dart';
+import 'package:atlet_manager/models/pelatih.dart';
+import 'package:atlet_manager/services/pelatih_service.dart';
+import 'package:atlet_manager/utils/notifikasi.dart';
+import 'package:atlet_manager/views/add_edit_pelatih_screen.dart';
 
 class PelatihListTile extends StatelessWidget {
   final Pelatih pelatih;
@@ -25,8 +25,14 @@ class PelatihListTile extends StatelessWidget {
             // Trainer Avatar
             CircleAvatar(
               radius: 28,
-              backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-              child: Icon(Icons.person_outline, size: 30, color: Theme.of(context).colorScheme.secondary), // Generic trainer icon
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.secondary.withOpacity(0.1),
+              child: Icon(
+                Icons.person_outline,
+                size: 30,
+                color: Theme.of(context).colorScheme.secondary,
+              ), // Generic trainer icon
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -35,16 +41,26 @@ class PelatihListTile extends StatelessWidget {
                 children: [
                   Text(
                     pelatih.nama,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     '${pelatih.cabangOlahraga} - ${pelatih.umur} tahun',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.7),
+                    ),
                   ),
                   Text(
                     'Pengalaman: ${pelatih.pengalamanTahun} tahun',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.7),
+                    ),
                   ),
                 ],
               ),
@@ -54,7 +70,10 @@ class PelatihListTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
+                  icon: Icon(
+                    Icons.edit,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -68,13 +87,18 @@ class PelatihListTile extends StatelessWidget {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                   onPressed: () async {
                     final confirm = await showDialog<bool>(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text('Konfirmasi Hapus'),
-                        content: Text('Apakah Anda yakin ingin menghapus pelatih ${pelatih.nama}?'),
+                        content: Text(
+                          'Apakah Anda yakin ingin menghapus pelatih ${pelatih.nama}?',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context, false),
@@ -96,7 +120,11 @@ class PelatihListTile extends StatelessWidget {
                         }
                       } catch (e) {
                         if (context.mounted) {
-                          Notifikasi.show(context, 'Gagal menghapus data: $e', isSuccess: false);
+                          Notifikasi.show(
+                            context,
+                            'Gagal menghapus data: $e',
+                            isSuccess: false,
+                          );
                         }
                       }
                     }

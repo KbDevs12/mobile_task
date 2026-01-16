@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/pelatih.dart';
-import 'package:tugas_mobile/services/pelatih_service.dart';
-import 'package:tugas_mobile/views/add_edit_pelatih_screen.dart';
-import 'package:tugas_mobile/widgets/pelatih_list_tile.dart';
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
-import 'package:tugas_mobile/widgets/loading_skeleton.dart';
+import 'package:atlet_manager/models/pelatih.dart';
+import 'package:atlet_manager/services/pelatih_service.dart';
+import 'package:atlet_manager/views/add_edit_pelatih_screen.dart';
+import 'package:atlet_manager/widgets/pelatih_list_tile.dart';
+import 'package:atlet_manager/widgets/gradient_app_bar.dart';
+import 'package:atlet_manager/widgets/loading_skeleton.dart';
 
 class PelatihListScreen extends StatefulWidget {
   const PelatihListScreen({super.key});

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/atlet.dart'; // Import Atlet model
-import 'package:tugas_mobile/models/cabang_olahraga.dart'; // Import CabangOlahraga model
-import 'package:tugas_mobile/models/pelatih.dart'; // Import Pelatih model
-import 'package:tugas_mobile/services/atlet_service.dart'; // Import AtletService
-import 'package:tugas_mobile/services/cabang_olahraga.dart'; // Import CabangOlahragaService
-import 'package:tugas_mobile/services/pelatih_service.dart'; // Import PelatihService
-import 'package:tugas_mobile/views/atlet_by_cabang_screen.dart'; // Import AtletByCabangScreen
-import 'package:tugas_mobile/views/pelatih_detail_screen.dart'; // Import PelatihDetailScreen
+import 'package:atlet_manager/models/atlet.dart'; // Import Atlet model
+import 'package:atlet_manager/models/cabang_olahraga.dart'; // Import CabangOlahraga model
+import 'package:atlet_manager/models/pelatih.dart'; // Import Pelatih model
+import 'package:atlet_manager/services/atlet_service.dart'; // Import AtletService
+import 'package:atlet_manager/services/cabang_olahraga.dart'; // Import CabangOlahragaService
+import 'package:atlet_manager/services/pelatih_service.dart'; // Import PelatihService
+import 'package:atlet_manager/views/atlet_by_cabang_screen.dart'; // Import AtletByCabangScreen
+import 'package:atlet_manager/views/pelatih_detail_screen.dart'; // Import PelatihDetailScreen
 import '../widgets/info_card.dart';
 import '../widgets/sport_tile.dart';
 

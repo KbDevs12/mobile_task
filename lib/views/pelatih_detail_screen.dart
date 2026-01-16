@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/pelatih.dart';
-import 'package:tugas_mobile/services/pelatih_service.dart';
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
+import 'package:atlet_manager/models/pelatih.dart';
+import 'package:atlet_manager/services/pelatih_service.dart';
+import 'package:atlet_manager/widgets/gradient_app_bar.dart';
 
 class PelatihDetailScreen extends StatelessWidget {
   final String pelatihId;

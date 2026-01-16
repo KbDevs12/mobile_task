@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/atlet.dart';
-import 'package:tugas_mobile/services/atlet_service.dart'; // Change to AtletService
-import 'package:tugas_mobile/views/add_edit_atlet_screen.dart';
-import 'package:tugas_mobile/widgets/atlet_list_tile.dart';
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
-import 'package:tugas_mobile/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
+import 'package:atlet_manager/models/atlet.dart';
+import 'package:atlet_manager/services/atlet_service.dart'; // Change to AtletService
+import 'package:atlet_manager/views/add_edit_atlet_screen.dart';
+import 'package:atlet_manager/widgets/atlet_list_tile.dart';
+import 'package:atlet_manager/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:atlet_manager/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
 
 // Halaman utama yang menampilkan daftar atlet.
 class AtletListScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/screen/dashboard.dart';
-import 'package:tugas_mobile/screen/splash_screen.dart';
+import 'package:atlet_manager/screen/dashboard.dart';
+import 'package:atlet_manager/screen/splash_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/atlet.dart';
-import 'package:tugas_mobile/services/atlet_service.dart';
-import 'package:tugas_mobile/views/add_edit_atlet_screen.dart'; // For adding new atlet
-import 'package:tugas_mobile/widgets/atlet_list_tile.dart';
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart'; // Import GradientAppBar
-import 'package:tugas_mobile/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
+import 'package:atlet_manager/models/atlet.dart';
+import 'package:atlet_manager/services/atlet_service.dart';
+import 'package:atlet_manager/views/add_edit_atlet_screen.dart'; // For adding new atlet
+import 'package:atlet_manager/widgets/atlet_list_tile.dart';
+import 'package:atlet_manager/widgets/gradient_app_bar.dart'; // Import GradientAppBar
+import 'package:atlet_manager/widgets/loading_skeleton.dart'; // Import LoadingListSkeleton
 
 class AtletByCabangScreen extends StatefulWidget {
   final String cabangOlahragaId;
@@ -30,10 +30,13 @@ class _AtletByCabangScreenState extends State<AtletByCabangScreen> {
         title: 'Atlet ${widget.cabangOlahragaNama}', // Dynamic title
       ),
       body: StreamBuilder<List<Atlet>>(
-        stream: _atletService.getAtletStream().map((atletList) =>
-            atletList
-                .where((atlet) => atlet.cabangOlahragaId == widget.cabangOlahragaId)
-                .toList()),
+        stream: _atletService.getAtletStream().map(
+          (atletList) => atletList
+              .where(
+                (atlet) => atlet.cabangOlahragaId == widget.cabangOlahragaId,
+              )
+              .toList(),
+        ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingListSkeleton(); // Use LoadingListSkeleton
@@ -42,7 +45,11 @@ class _AtletByCabangScreenState extends State<AtletByCabangScreen> {
             return Center(child: Text('Terjadi kesalahan: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('Tidak ada atlet untuk cabang ${widget.cabangOlahragaNama}.'));
+            return Center(
+              child: Text(
+                'Tidak ada atlet untuk cabang ${widget.cabangOlahragaNama}.',
+              ),
+            );
           }
 
           final atletList = snapshot.data!;
@@ -51,10 +58,7 @@ class _AtletByCabangScreenState extends State<AtletByCabangScreen> {
             itemCount: atletList.length,
             itemBuilder: (context, index) {
               final atlet = atletList[index];
-              return AtletListTile(
-                atlet: atlet,
-                atletService: _atletService,
-              );
+              return AtletListTile(atlet: atlet, atletService: _atletService);
             },
           );
         },
@@ -64,7 +68,8 @@ class _AtletByCabangScreenState extends State<AtletByCabangScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddEditAtletScreen(atletService: _atletService),
+              builder: (context) =>
+                  AddEditAtletScreen(atletService: _atletService),
             ),
           );
         },

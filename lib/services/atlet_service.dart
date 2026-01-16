@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tugas_mobile/models/atlet.dart';
+import 'package:atlet_manager/models/atlet.dart';
 
 class AtletService {
-  final CollectionReference _atletCollection =
-      FirebaseFirestore.instance.collection('atlet');
+  final CollectionReference _atletCollection = FirebaseFirestore.instance
+      .collection('atlet');
 
   Future<void> addAtlet(Atlet atlet) {
     return _atletCollection.add(atlet.toMap());

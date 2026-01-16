@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/screen/home_page.dart';
-import 'package:tugas_mobile/screen/crud_menu_screen.dart';
+import 'package:atlet_manager/screen/home_page.dart';
+import 'package:atlet_manager/screen/crud_menu_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,13 +12,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _pages = <Widget>[
-    HomePage(),
-    CrudMenuScreen(),
-  ];
+  static const List<Widget> _pages = <Widget>[HomePage(), CrudMenuScreen()];
 
   void _onItemTapped(int index) {
-    if (index == 2) { // Logout button
+    if (index == 2) {
+      // Logout button
       _showLogoutDialog(context);
       return;
     }
@@ -45,7 +43,10 @@ class _MainScreenState extends State<MainScreen> {
               child: const Text('Logout'),
               onPressed: () {
                 Navigator.of(dialogContext).pop();
-                Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/login',
+                  (Route<dynamic> route) => false,
+                );
               },
             ),
           ],
@@ -58,24 +59,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     // The CrudMenuScreen has its own AppBar, so we don't need a dynamic one here.
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Atlit',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.logout),
-            label: 'Logout',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Atlit'),
+          BottomNavigationBarItem(icon: Icon(Icons.logout), label: 'Logout'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

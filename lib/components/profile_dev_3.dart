@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/screen/biodata_dava.dart';
+import 'package:atlet_manager/screen/biodata_dava.dart';
 
 class ProfileDev3 extends StatelessWidget {
   const ProfileDev3({super.key});

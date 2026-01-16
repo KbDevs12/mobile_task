@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/components/profile_dev_1.dart';
-import 'package:tugas_mobile/components/profile_dev_2.dart';
-import 'package:tugas_mobile/components/profile_dev_3.dart';
-import 'package:tugas_mobile/components/profile_dev_4.dart';
+import 'package:atlet_manager/components/profile_dev_1.dart';
+import 'package:atlet_manager/components/profile_dev_2.dart';
+import 'package:atlet_manager/components/profile_dev_3.dart';
+import 'package:atlet_manager/components/profile_dev_4.dart';
 
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
+import 'package:atlet_manager/widgets/gradient_app_bar.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});

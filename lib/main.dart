@@ -1,11 +1,9 @@
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_mobile/screen/dashboard.dart';
-import 'package:tugas_mobile/screen/splash_adit.dart';
+import 'package:atlet_manager/screen/dashboard.dart';
+import 'package:atlet_manager/screen/splash_adit.dart';
 import 'services/local_notification_service.dart';
 import 'firebase_options.dart';
 

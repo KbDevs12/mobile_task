@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/cabang_olahraga.dart';
-import 'package:tugas_mobile/services/atlet_service.dart';
-import 'package:tugas_mobile/services/cabang_olahraga.dart';
-import 'package:tugas_mobile/views/add_edit_cabang_olahraga_screen.dart';
-import 'package:tugas_mobile/widgets/cabang_olahraga_list_tile.dart';
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
-import 'package:tugas_mobile/widgets/loading_skeleton.dart';
+import 'package:atlet_manager/models/cabang_olahraga.dart';
+import 'package:atlet_manager/services/atlet_service.dart';
+import 'package:atlet_manager/services/cabang_olahraga.dart';
+import 'package:atlet_manager/views/add_edit_cabang_olahraga_screen.dart';
+import 'package:atlet_manager/widgets/cabang_olahraga_list_tile.dart';
+import 'package:atlet_manager/widgets/gradient_app_bar.dart';
+import 'package:atlet_manager/widgets/loading_skeleton.dart';
 
 class CabangOlahragaListScreen extends StatefulWidget {
   const CabangOlahragaListScreen({super.key});

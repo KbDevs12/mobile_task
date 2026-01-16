@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/models/atlet.dart';
-import 'package:tugas_mobile/services/atlet_service.dart';
-import 'package:tugas_mobile/utils/notifikasi.dart';
-import 'package:tugas_mobile/views/add_edit_atlet_screen.dart';
+import 'package:atlet_manager/models/atlet.dart';
+import 'package:atlet_manager/services/atlet_service.dart';
+import 'package:atlet_manager/utils/notifikasi.dart';
+import 'package:atlet_manager/views/add_edit_atlet_screen.dart';
 
 // Widget kustom untuk menampilkan satu item atlet di dalam daftar.
 class AtletListTile extends StatelessWidget {
@@ -26,8 +26,14 @@ class AtletListTile extends StatelessWidget {
             // Athlete Avatar
             CircleAvatar(
               radius: 28,
-              backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-              child: Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.primary),
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.primary.withOpacity(0.1),
+              child: Icon(
+                Icons.person,
+                size: 30,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -36,16 +42,26 @@ class AtletListTile extends StatelessWidget {
                 children: [
                   Text(
                     atlet.nama,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     '${atlet.cabangOlahragaNama} - ${atlet.umur} tahun',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.7),
+                    ),
                   ),
                   Text(
                     '${atlet.jenisKelamin}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.7),
+                    ),
                   ),
                 ],
               ),
@@ -55,24 +71,35 @@ class AtletListTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
+                  icon: Icon(
+                    Icons.edit,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AddEditAtletScreen(atlet: atlet, atletService: atletService),
+                        builder: (context) => AddEditAtletScreen(
+                          atlet: atlet,
+                          atletService: atletService,
+                        ),
                       ),
                     );
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                   onPressed: () async {
                     final confirm = await showDialog<bool>(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text('Konfirmasi Hapus'),
-                        content: Text('Apakah Anda yakin ingin menghapus data ${atlet.nama}?'),
+                        content: Text(
+                          'Apakah Anda yakin ingin menghapus data ${atlet.nama}?',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context, false),
@@ -90,11 +117,18 @@ class AtletListTile extends StatelessWidget {
                       try {
                         await atletService.deleteAtlet(atlet.id!);
                         if (context.mounted) {
-                          Notifikasi.show(context, 'Data atlet berhasil dihapus.');
+                          Notifikasi.show(
+                            context,
+                            'Data atlet berhasil dihapus.',
+                          );
                         }
                       } catch (e) {
                         if (context.mounted) {
-                          Notifikasi.show(context, 'Gagal menghapus data: $e', isSuccess: false);
+                          Notifikasi.show(
+                            context,
+                            'Gagal menghapus data: $e',
+                            isSuccess: false,
+                          );
                         }
                       }
                     }

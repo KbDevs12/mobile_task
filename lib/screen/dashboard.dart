@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_mobile/screen/profile.dart';
-import 'package:tugas_mobile/views/atlet_list_screen.dart';
-import 'package:tugas_mobile/views/cabang_olahraga_list_screen.dart';
-import 'package:tugas_mobile/views/pelatih_list_screen.dart';
-import 'package:tugas_mobile/widgets/gradient_app_bar.dart';
+import 'package:atlet_manager/screen/profile.dart';
+import 'package:atlet_manager/views/atlet_list_screen.dart';
+import 'package:atlet_manager/views/cabang_olahraga_list_screen.dart';
+import 'package:atlet_manager/views/pelatih_list_screen.dart';
+import 'package:atlet_manager/widgets/gradient_app_bar.dart';
 import 'dashboard_content.dart';
 
 class Dashboard extends StatefulWidget {

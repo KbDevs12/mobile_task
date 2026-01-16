@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tugas_mobile/models/pelatih.dart';
+import 'package:atlet_manager/models/pelatih.dart';
 
 class PelatihService {
   final CollectionReference _ref = FirebaseFirestore.instance.collection(

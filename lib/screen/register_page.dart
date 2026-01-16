@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tugas_mobile/screen/login_page.dart';
+import 'package:atlet_manager/screen/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
