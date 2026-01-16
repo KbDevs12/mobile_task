@@ -46,16 +46,15 @@ https://global.ac.id/
 
 <div align="center">
   <img src="screenshots/coach_list.png" alt="Coach List" width="200"/>
-  <img src="screenshots/athlete_detail.png" alt="Athlete Detail" width="200"/>
+  <img src="screenshots/athlete_list_detail.png" alt="Athlete List" width="200"/>
   <img src="screenshots/sport_category.png" alt="Sport Category" width="200"/>
-  <img src="screenshots/settings.png" alt="Settings" width="200"/>
 </div>
 
 ## 🎥 Demo Video
 
 Lihat video demo aplikasi kami untuk melihat semua fitur dalam aksi!
 
-**[Watch Full Demo on YouTube](https://youtube.com/watch?v=YOUR_VIDEO_ID)**
+**[Watch Full Demo on YouTube](https://youtu.be/2L0fR1C4tCg?si=Hy2MfFdGVPZhiPbN)**
 
 Alternative link: **[Google Drive Demo](https://drive.google.com/file/d/YOUR_FILE_ID/view)**
 
