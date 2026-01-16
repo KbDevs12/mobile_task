@@ -65,7 +65,7 @@ Download versi terbaru aplikasi Atlet Manager:
 
 ### Latest Release v1.0.0
 
-- [**Download APK (18.5 MB)**](https://github.com/KbDevs12/mobile_task/releases/download/v1.0.0/atlet-manager-v1.0.0.apk)
+- [**Download APK (18.5 MB)**](https://github.com/KbDevs12/mobile_task/releases/download/v1.0.0/app-release.apk)
 
 **Minimum Requirements:**
 
